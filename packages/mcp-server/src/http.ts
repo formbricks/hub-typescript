@@ -2,7 +2,7 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
-import { ClientOptions } from 'formbricks-hub';
+import { ClientOptions } from '@formbricks/hub';
 import express from 'express';
 import morgan from 'morgan';
 import morganBody from 'morgan-body';

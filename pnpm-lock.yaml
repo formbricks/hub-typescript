@@ -77,6 +77,9 @@ importers:
       '@cloudflare/cabidela':
         specifier: ^0.2.4
         version: 0.2.4
+      '@formbricks/hub':
+        specifier: workspace:*
+        version: link:../..
       '@modelcontextprotocol/sdk':
         specifier: ^1.25.2
         version: 1.25.2(hono@4.11.4)(zod@3.25.76)
@@ -92,9 +95,6 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
-      formbricks-hub:
-        specifier: workspace:*
-        version: link:../..
       fuse.js:
         specifier: ^7.1.0
         version: 7.1.0

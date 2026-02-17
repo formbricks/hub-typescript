@@ -1,5 +1,5 @@
 {
-  "name": "formbricks-hub",
+  "name": "@formbricks/hub",
   "version": "0.1.0",
   "description": "The official TypeScript library for the Hub API",
   "author": "Hub <hola@formbricks.com>",

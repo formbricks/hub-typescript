@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "formbricks-hub/*": ["./dist/src/*"],
-      "formbricks-hub": ["./dist/src/index.ts"]
+      "@formbricks/hub/*": ["./dist/src/*"],
+      "@formbricks/hub": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
