@@ -2,9 +2,9 @@
   "dxt_version": "0.2",
   "name": "hub-mcp",
   "version": "0.0.1",
-  "description": "The official MCP Server for the Hub API",
+  "description": "The official MCP Server for the Formbricks Hub API",
   "author": {
-    "name": "Hub",
+    "name": "Formbricks Hub",
     "email": "hola@formbricks.com"
   },
   "repository": {

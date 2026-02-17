@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Hub as default } from './client';
+export { FormbricksHub as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { Hub, type ClientOptions } from './client';
+export { FormbricksHub, type ClientOptions } from './client';
 export {
-  HubError,
+  FormbricksHubError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
