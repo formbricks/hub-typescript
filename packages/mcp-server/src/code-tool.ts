@@ -5,9 +5,9 @@ import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { readEnv, requireValue } from './util';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 import { SdkMethod } from './methods';
-import { Hub } from '@formbricks/hub';
+import { FormbricksHub } from '@formbricks/hub';
 
-const prompt = `Runs JavaScript code to interact with the Hub API.
+const prompt = `Runs JavaScript code to interact with the Formbricks Hub API.
 
 You are a skilled programmer writing code to interface with the service.
 Define an async function named "run" that takes a single parameter of an initialized SDK client and it will be run.
@@ -54,7 +54,7 @@ export function codeTool(params: { blockedMethods: SdkMethod[] | undefined }): M
       required: ['code'],
     },
   };
-  const handler = async (client: Hub, args: any): Promise<ToolCallResult> => {
+  const handler = async (client: FormbricksHub, args: any): Promise<ToolCallResult> => {
     const code = args.code as string;
     const intent = args.intent as string | undefined;
 
@@ -92,7 +92,7 @@ export function codeTool(params: { blockedMethods: SdkMethod[] | undefined }): M
             readEnv('HUB_API_KEY') ?? client.apiKey,
             'set HUB_API_KEY environment variable or provide apiKey client option',
           ),
-          HUB_BASE_URL: readEnv('HUB_BASE_URL') ?? client.baseURL ?? undefined,
+          FORMBRICKS_HUB_BASE_URL: readEnv('FORMBRICKS_HUB_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
       body: JSON.stringify({

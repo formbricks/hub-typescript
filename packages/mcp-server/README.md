@@ -1,4 +1,4 @@
-# Hub TypeScript MCP Server
+# Formbricks Hub TypeScript MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 

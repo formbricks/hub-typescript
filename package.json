@@ -1,8 +1,8 @@
 {
   "name": "@formbricks/hub",
   "version": "0.1.0",
-  "description": "The official TypeScript library for the Hub API",
-  "author": "Hub <hola@formbricks.com>",
+  "description": "The official TypeScript library for the Formbricks Hub API",
+  "author": "Formbricks Hub <hola@formbricks.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",

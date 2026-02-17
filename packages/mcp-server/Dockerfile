@@ -1,4 +1,4 @@
-# Dockerfile for Hub MCP Server
+# Dockerfile for Formbricks Hub MCP Server
 #
 # This Dockerfile builds a Docker image for the MCP Server.
 #
