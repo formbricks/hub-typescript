@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^hub-mcp$': '<rootDir>/src/index.ts',
-    '^hub-mcp/(.*)$': '<rootDir>/src/$1',
+    '^@formbricks/hub-mcp$': '<rootDir>/src/index.ts',
+    '^@formbricks/hub-mcp/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testPathIgnorePatterns: ['scripts'],
