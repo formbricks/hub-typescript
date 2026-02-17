@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "hub-mcp/*": ["./src/*"],
-      "hub-mcp": ["./src/index.ts"]
+      "@formbricks/hub-mcp/*": ["./src/*"],
+      "@formbricks/hub-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 
