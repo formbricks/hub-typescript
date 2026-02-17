@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2026-02-17)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/formbricks/hub-typescript/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* update SDK settings ([dd56f23](https://github.com/formbricks/hub-typescript/commit/dd56f234d617b33249b1448c97e4542d29eaec43))
+
 ## 0.3.0 (2026-02-17)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/formbricks/hub-typescript/compare/v0.2.0...v0.3.0)
