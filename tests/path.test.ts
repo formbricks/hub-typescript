@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'hub/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'formbricks-hub/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 
