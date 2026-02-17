@@ -8,10 +8,10 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stainless-sdks/hub-typescript.git",
+    "url": "git+https://github.com/formbricks/hub-typescript.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/stainless-sdks/hub-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/formbricks/hub-typescript/tree/main/packages/mcp-server#readme",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.27.0",
   "private": false,
