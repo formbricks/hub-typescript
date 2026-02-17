@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0 (2026-02-17)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/formbricks/hub-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** change name ([34e6d78](https://github.com/formbricks/hub-typescript/commit/34e6d780d318836c9f11a93545adae0de29a4556))
+
+
+### Chores
+
+* update SDK settings ([d4e6b53](https://github.com/formbricks/hub-typescript/commit/d4e6b53fefb9118a70af8987efaeb1e6438a4bf2))
+* update SDK settings ([d9109da](https://github.com/formbricks/hub-typescript/commit/d9109da7c87b6970a1ca9c1c71e231ab60b44f87))
+
 ## 0.1.0 (2026-02-17)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/formbricks/hub-typescript/compare/v0.0.1...v0.1.0)

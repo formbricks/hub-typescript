@@ -56,7 +56,7 @@ export const newMcpServer = async () =>
   new McpServer(
     {
       name: 'formbricks_hub_api',
-      version: '0.1.0',
+      version: '0.2.0',
     },
     {
       instructions: await getInstructions(),
