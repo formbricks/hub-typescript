@@ -92,12 +92,12 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
+      formbricks-hub:
+        specifier: workspace:*
+        version: link:../..
       fuse.js:
         specifier: ^7.1.0
         version: 7.1.0
-      hub:
-        specifier: workspace:*
-        version: link:../..
       jq-web:
         specifier: https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz
         version: https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz
