@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "formbricks-hub/*": ["./src/*"],
-      "formbricks-hub": ["./src/index.ts"]
+      "@formbricks/hub/*": ["./src/*"],
+      "@formbricks/hub": ["./src/index.ts"]
     },
     "noEmit": true,
 

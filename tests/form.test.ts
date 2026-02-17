@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'formbricks-hub/internal/uploads';
-import { toFile } from 'formbricks-hub/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@formbricks/hub/internal/uploads';
+import { toFile } from '@formbricks/hub/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

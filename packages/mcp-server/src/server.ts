@@ -7,8 +7,8 @@ import {
   ListToolsRequestSchema,
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { ClientOptions } from 'formbricks-hub';
-import Hub from 'formbricks-hub';
+import { ClientOptions } from '@formbricks/hub';
+import Hub from '@formbricks/hub';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { McpOptions } from './options';
