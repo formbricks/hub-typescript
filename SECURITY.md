@@ -16,9 +16,9 @@ before making any information public.
 ## Reporting Non-SDK Related Security Issues
 
 If you encounter security issues that are not directly related to SDKs but pertain to the services
-or products provided by Hub, please follow the respective company's security reporting guidelines.
+or products provided by Formbricks Hub, please follow the respective company's security reporting guidelines.
 
-### Hub Terms and Policies
+### Formbricks Hub Terms and Policies
 
 Please contact hola@formbricks.com for any questions or concerns regarding the security of our services.
 

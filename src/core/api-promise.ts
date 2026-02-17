@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type Hub } from '../client';
+import { type FormbricksHub } from '../client';
 
 import { type PromiseOrValue } from '../internal/types';
 import { APIResponseProps, defaultParseResponse } from '../internal/parse';
@@ -11,12 +11,15 @@ import { APIResponseProps, defaultParseResponse } from '../internal/parse';
  */
 export class APIPromise<T> extends Promise<T> {
   private parsedPromise: Promise<T> | undefined;
-  #client: Hub;
+  #client: FormbricksHub;
 
   constructor(
-    client: Hub,
+    client: FormbricksHub,
     private responsePromise: Promise<APIResponseProps>,
-    private parseResponse: (client: Hub, props: APIResponseProps) => PromiseOrValue<T> = defaultParseResponse,
+    private parseResponse: (
+      client: FormbricksHub,
+      props: APIResponseProps,
+    ) => PromiseOrValue<T> = defaultParseResponse,
   ) {
     super((resolve) => {
       // this is maybe a bit weird but this has to be a no-op to not implicitly

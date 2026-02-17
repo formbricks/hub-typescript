@@ -8,7 +8,7 @@ import {
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from '@formbricks/hub';
-import Hub from '@formbricks/hub';
+import FormbricksHub from '@formbricks/hub';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { McpOptions } from './options';
@@ -90,7 +90,7 @@ export async function initMcpServer(params: {
     error: logAtLevel('error'),
   };
 
-  let client = new Hub({
+  let client = new FormbricksHub({
     logger,
     ...params.clientOptions,
     defaultHeaders: {
@@ -162,7 +162,7 @@ export function selectTools(options?: McpOptions): McpTool[] {
  */
 export async function executeHandler(
   handler: HandlerFunction,
-  client: Hub,
+  client: FormbricksHub,
   args: Record<string, unknown> | undefined,
 ) {
   return await handler(client, args || {});
