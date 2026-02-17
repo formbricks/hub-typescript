@@ -1,0 +1,34 @@
+# Changelog
+
+## 0.1.0 (2026-02-17)
+
+Full Changelog: [v0.0.1...v0.1.0](https://github.com/formbricks/hub-typescript/compare/v0.0.1...v0.1.0)
+
+### Features
+
+* **mcp:** add initial server instructions ([104db9a](https://github.com/formbricks/hub-typescript/commit/104db9a4ac9c1bfba701700ca6a3d08ab9798479))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([8821037](https://github.com/formbricks/hub-typescript/commit/8821037b04b1c5bb56cfb8c5a136d836cb6619bf))
+* **client:** avoid removing abort listener too early ([f79ee0c](https://github.com/formbricks/hub-typescript/commit/f79ee0ceb6a9ce6f4bf8bf38bb876f9322191748))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([e9b363a](https://github.com/formbricks/hub-typescript/commit/e9b363a87d32ddbd5d5e81d1433f09a8d42f7c72))
+* **client:** restructure abort controller binding ([a8726ec](https://github.com/formbricks/hub-typescript/commit/a8726ec57a0af1453047facea62c18f811f6851a))
+* configure new SDK language ([9827812](https://github.com/formbricks/hub-typescript/commit/9827812bbd0c52bf2c7a66a3219d97b82c21c278))
+* **internal:** add health check to MCP server when running in HTTP mode ([a305c47](https://github.com/formbricks/hub-typescript/commit/a305c4778fe358764b95bb70266c3cf765124f2d))
+* **internal:** allow basic filtering of methods allowed for MCP code mode ([e4b5db4](https://github.com/formbricks/hub-typescript/commit/e4b5db4ebcb817f76ce960b85f97fff31b5dc96b))
+* **internal:** always generate MCP server dockerfiles and upgrade associated dependencies ([d2dbd77](https://github.com/formbricks/hub-typescript/commit/d2dbd7761644ee8a9ef95eb2edc2773379cee2d5))
+* **internal:** avoid type checking errors with ts-reset ([30887f7](https://github.com/formbricks/hub-typescript/commit/30887f746af24581cdcbf1cd55fd24d2610fc5b2))
+* **internal:** configure MCP Server hosting ([3e8aa93](https://github.com/formbricks/hub-typescript/commit/3e8aa9331cdcdaaa21e5f5fb56ebe6628e2cdb7c))
+* **internal:** improve layout of generated MCP server files ([116112c](https://github.com/formbricks/hub-typescript/commit/116112c52788bf1b7b9af931e53148cab07befaf))
+* **internal:** improve reliability of MCP servers when using local code mode execution ([2405f84](https://github.com/formbricks/hub-typescript/commit/2405f84873b9fb62722925c42faf83942b90cea2))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([b94ae48](https://github.com/formbricks/hub-typescript/commit/b94ae48feb2633f13f70821697e4f6d8ab4e3323))
+* **internal:** support oauth authorization code flow for MCP servers ([57e5b81](https://github.com/formbricks/hub-typescript/commit/57e5b811a768b95d97b76b422bdc8ad30355b91d))
+* **internal:** upgrade pnpm ([eca7a75](https://github.com/formbricks/hub-typescript/commit/eca7a75b9824baf74be68519ced176c15711cac3))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([6986e02](https://github.com/formbricks/hub-typescript/commit/6986e026509bd0a2fcdb78a397073d39ffcb2059))
+* update SDK settings ([f8b4001](https://github.com/formbricks/hub-typescript/commit/f8b4001b7dbeeaf7232c4fb4a9a885762adf318b))
