@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2026-02-17)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/formbricks/hub-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** change hub mcp name ([4728a2b](https://github.com/formbricks/hub-typescript/commit/4728a2b478ea630ce41ec754ffabcbaa7b438307))
+
 ## 0.2.0 (2026-02-17)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/formbricks/hub-typescript/compare/v0.1.0...v0.2.0)
