@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Hub } from 'hub';
+import { Hub } from 'formbricks-hub';
 
 const { stringifyQuery } = Hub.prototype as any;
 

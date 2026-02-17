@@ -7,8 +7,8 @@ import {
   ListToolsRequestSchema,
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { ClientOptions } from 'hub';
-import Hub from 'hub';
+import { ClientOptions } from 'formbricks-hub';
+import Hub from 'formbricks-hub';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { McpOptions } from './options';
@@ -55,7 +55,7 @@ async function getInstructions() {
 export const newMcpServer = async () =>
   new McpServer(
     {
-      name: 'hub_api',
+      name: 'formbricks_hub_api',
       version: '0.1.0',
     },
     {
