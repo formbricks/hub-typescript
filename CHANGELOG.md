@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.2 (2026-02-20)
+
+Full Changelog: [v0.3.1...v0.3.2](https://github.com/formbricks/hub-typescript/compare/v0.3.1...v0.3.2)
+
+### Bug Fixes
+
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([d8af0e7](https://github.com/formbricks/hub-typescript/commit/d8af0e79ab7c35e3fce6a5c5353fc8e3e081b7c6))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([25f798e](https://github.com/formbricks/hub-typescript/commit/25f798efec8dda86d151e8a10b397ff457abf848))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([1e47337](https://github.com/formbricks/hub-typescript/commit/1e473379957d4f35fd889d94df76bc391d2f00df))
+* **internal:** cache fetch instruction calls in MCP server ([0942424](https://github.com/formbricks/hub-typescript/commit/094242469fb464a154f88567fd9ced348dca7e9d))
+* **internal:** remove mock server code ([cb34f47](https://github.com/formbricks/hub-typescript/commit/cb34f477a8864545dbb236ccf7323a70aa399a13))
+* **mcp:** correctly update version in sync with sdk ([4d61e88](https://github.com/formbricks/hub-typescript/commit/4d61e8889edb59c2afff2cdaff368381e2011436))
+* update mock server docs ([4aa2c95](https://github.com/formbricks/hub-typescript/commit/4aa2c95e1926c38a60e0727b65b2c13568770960))
+
 ## 0.3.1 (2026-02-17)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/formbricks/hub-typescript/compare/v0.3.0...v0.3.1)

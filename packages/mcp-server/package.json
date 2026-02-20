@@ -1,6 +1,6 @@
 {
   "name": "@formbricks/hub-mcp",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "The official MCP Server for the Formbricks Hub API",
   "author": "Formbricks Hub <hola@formbricks.com>",
   "types": "dist/index.d.ts",
