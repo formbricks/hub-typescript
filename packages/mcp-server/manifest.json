@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "@formbricks/hub-mcp",
-  "version": "0.0.1",
+  "version": "0.3.2",
   "description": "The official MCP Server for the Formbricks Hub API",
   "author": {
     "name": "Formbricks Hub",
@@ -18,7 +18,9 @@
     "entry_point": "index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/index.js"],
+      "args": [
+        "${__dirname}/index.js"
+      ],
       "env": {
         "HUB_API_KEY": "${user_config.HUB_API_KEY}"
       }
@@ -39,5 +41,7 @@
       "node": ">=18.0.0"
     }
   },
-  "keywords": ["api"]
+  "keywords": [
+    "api"
+  ]
 }
