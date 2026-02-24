@@ -11,3 +11,13 @@ export {
   type FeedbackRecordBulkDeleteParams,
 } from './feedback-records';
 export { Health, type HealthCheckResponse } from './health';
+export {
+  Webhooks,
+  type WebhookCreateResponse,
+  type WebhookRetrieveResponse,
+  type WebhookUpdateResponse,
+  type WebhookListResponse,
+  type WebhookCreateParams,
+  type WebhookUpdateParams,
+  type WebhookListParams,
+} from './webhooks';

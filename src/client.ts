@@ -27,6 +27,16 @@ import {
   FeedbackRecords,
 } from './resources/feedback-records';
 import { Health, HealthCheckResponse } from './resources/health';
+import {
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookListParams,
+  WebhookListResponse,
+  WebhookRetrieveResponse,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+} from './resources/webhooks';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -741,10 +751,12 @@ export class FormbricksHub {
 
   health: API.Health = new API.Health(this);
   feedbackRecords: API.FeedbackRecords = new API.FeedbackRecords(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 FormbricksHub.Health = Health;
 FormbricksHub.FeedbackRecords = FeedbackRecords;
+FormbricksHub.Webhooks = Webhooks;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -760,5 +772,16 @@ export declare namespace FormbricksHub {
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookRetrieveResponse as WebhookRetrieveResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListParams as WebhookListParams,
   };
 }
