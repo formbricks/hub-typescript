@@ -60,7 +60,7 @@ $ yarn link @formbricks/hub
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @formbricks/hub
+$ pnpm link --global @formbricks/hub
 ```
 
 ## Running tests
