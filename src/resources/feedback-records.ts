@@ -17,6 +17,7 @@ export class FeedbackRecords extends APIResource {
    *     field_id: 'q1',
    *     field_type: 'rating',
    *     source_type: 'survey',
+   *     submission_id: '550e8400-e29b-41d4-a716-446655440000',
    *     field_label: 'How satisfied are you?',
    *     language: 'en',
    *     source_id: 'survey-123',
@@ -143,12 +144,17 @@ export interface FeedbackRecordData {
   /**
    * Type of field
    */
-  field_type: string;
+  field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';
 
   /**
    * Type of feedback source
    */
   source_type: string;
+
+  /**
+   * Identifier for the logical submission this record belongs to (required).
+   */
+  submission_id: string;
 
   /**
    * When this record was last updated
@@ -272,6 +278,14 @@ export interface FeedbackRecordCreateParams {
    * allowed.
    */
   source_type: string;
+
+  /**
+   * Identifier for the logical submission this record belongs to (tenant-scoped).
+   * Required. Enables grouping multi-field submissions and idempotent ingestion.
+   * Unique per (tenant_id, submission_id, field_id). If a record has no logical
+   * submission, use e.g. field_id.
+   */
+  submission_id: string;
 
   /**
    * When the feedback was collected (defaults to now). Must be between 1970-01-01
@@ -399,7 +413,7 @@ export interface FeedbackRecordListParams {
   /**
    * Filter by field type. NULL bytes not allowed.
    */
-  field_type?: string;
+  field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';
 
   /**
    * Number of results to return (max 1000)
@@ -426,6 +440,12 @@ export interface FeedbackRecordListParams {
    * Filter by source type. NULL bytes not allowed.
    */
   source_type?: string;
+
+  /**
+   * Filter by submission ID to group records belonging to one logical submission.
+   * NULL bytes not allowed.
+   */
+  submission_id?: string;
 
   /**
    * Filter by tenant ID (for multi-tenant deployments). NULL bytes not allowed.
