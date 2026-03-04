@@ -15,6 +15,7 @@ describe('resource feedbackRecords', () => {
       field_type: 'rating',
       source_type: 'survey',
       submission_id: '550e8400-e29b-41d4-a716-446655440000',
+      tenant_id: 'org-123',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -32,6 +33,7 @@ describe('resource feedbackRecords', () => {
       field_type: 'rating',
       source_type: 'survey',
       submission_id: '550e8400-e29b-41d4-a716-446655440000',
+      tenant_id: 'org-123',
       collected_at: '2019-12-27T18:11:19.117Z',
       field_group_id: 'feature_priority',
       field_group_label: 'Rank these features by importance',
@@ -40,7 +42,6 @@ describe('resource feedbackRecords', () => {
       metadata: { foo: 'bar' },
       source_id: 'survey-123',
       source_name: 'Q1 NPS Survey',
-      tenant_id: 'org-123',
       user_identifier: 'user-abc-123',
       value_boolean: true,
       value_date: '2019-12-27T18:11:19.117Z',
@@ -74,8 +75,8 @@ describe('resource feedbackRecords', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.feedbackRecords.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.feedbackRecords.list({ tenant_id: 'org-123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -86,27 +87,21 @@ describe('resource feedbackRecords', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.feedbackRecords.list(
-        {
-          field_group_id: 'field_group_id',
-          field_id: 'field_id',
-          field_type: 'text',
-          limit: 1,
-          offset: 0,
-          since: '2019-12-27T18:11:19.117Z',
-          source_id: 'source_id',
-          source_type: 'source_type',
-          submission_id: 'submission_id',
-          tenant_id: 'tenant_id',
-          until: '2019-12-27T18:11:19.117Z',
-          user_identifier: 'user_identifier',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(FormbricksHub.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.feedbackRecords.list({
+      tenant_id: 'org-123',
+      field_group_id: 'feature_priority',
+      field_id: 'q1',
+      field_type: 'text',
+      limit: 1,
+      offset: 0,
+      since: '2024-01-01T00:00:00Z',
+      source_id: 'survey-123',
+      source_type: 'survey',
+      submission_id: '550e8400-e29b-41d4-a716-446655440000',
+      until: '2024-12-31T23:59:59Z',
+      user_identifier: 'user-abc-123',
+    });
   });
 
   // Mock server tests are disabled
@@ -123,7 +118,7 @@ describe('resource feedbackRecords', () => {
 
   // Mock server tests are disabled
   test.skip('bulkDelete: only required params', async () => {
-    const responsePromise = client.feedbackRecords.bulkDelete({ user_identifier: 'user_identifier' });
+    const responsePromise = client.feedbackRecords.bulkDelete({ user_identifier: 'user-abc-123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -136,8 +131,33 @@ describe('resource feedbackRecords', () => {
   // Mock server tests are disabled
   test.skip('bulkDelete: required and optional params', async () => {
     const response = await client.feedbackRecords.bulkDelete({
-      user_identifier: 'user_identifier',
-      tenant_id: 'tenant_id',
+      user_identifier: 'user-abc-123',
+      tenant_id: 'org-123',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveSimilar: only required params', async () => {
+    const responsePromise = client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', {
+      tenant_id: 'org-123',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveSimilar: required and optional params', async () => {
+    const response = await client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', {
+      tenant_id: 'org-123',
+      cursor: 'eyJkIjowLjEsImkiOiIwMThlMTIzNC01Njc4LTlhYmMtZGVmMC0xMTExMTExMTExMTEifQ==',
+      limit: 1,
+      min_score: 0,
+      offset: 0,
     });
   });
 });
