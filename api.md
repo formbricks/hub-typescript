@@ -12,18 +12,30 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/feedback-records.ts">FeedbackRecordData</a></code>
-- <code><a href="./src/resources/feedback-records.ts">FeedbackRecordListResponse</a></code>
-- <code><a href="./src/resources/feedback-records.ts">FeedbackRecordBulkDeleteResponse</a></code>
+- <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordData</a></code>
+- <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordListResponse</a></code>
+- <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordBulkDeleteResponse</a></code>
+- <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordRetrieveSimilarResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">create</a>({ ...params }) -> FeedbackRecordData</code>
-- <code title="get /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">retrieve</a>(id) -> FeedbackRecordData</code>
-- <code title="patch /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">update</a>(id, { ...params }) -> FeedbackRecordData</code>
-- <code title="get /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">list</a>({ ...params }) -> FeedbackRecordListResponse</code>
-- <code title="delete /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">delete</a>(id) -> void</code>
-- <code title="delete /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records.ts">bulkDelete</a>({ ...params }) -> FeedbackRecordBulkDeleteResponse</code>
+- <code title="post /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">create</a>({ ...params }) -> FeedbackRecordData</code>
+- <code title="get /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">retrieve</a>(id) -> FeedbackRecordData</code>
+- <code title="patch /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">update</a>(id, { ...params }) -> FeedbackRecordData</code>
+- <code title="get /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">list</a>({ ...params }) -> FeedbackRecordListResponse</code>
+- <code title="delete /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">delete</a>(id) -> void</code>
+- <code title="delete /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">bulkDelete</a>({ ...params }) -> FeedbackRecordBulkDeleteResponse</code>
+- <code title="get /v1/feedback-records/{id}/similar">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">retrieveSimilar</a>(id, { ...params }) -> FeedbackRecordRetrieveSimilarResponse</code>
+
+## Search
+
+Types:
+
+- <code><a href="./src/resources/feedback-records/search.ts">SearchPerformSemanticSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/feedback-records/search/semantic">client.feedbackRecords.search.<a href="./src/resources/feedback-records/search.ts">performSemanticSearch</a>({ ...params }) -> SearchPerformSemanticSearchResponse</code>
 
 # Webhooks
 

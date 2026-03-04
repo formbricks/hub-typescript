@@ -26,14 +26,14 @@ describe('resource webhooks', () => {
       url: 'https://example.com/hub-events',
       enabled: true,
       event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],
-      signing_key: 'signing_key',
-      tenant_id: 'tenant_id',
+      signing_key: 'whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      tenant_id: 'org-123',
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.webhooks.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.webhooks.retrieve('018e1234-5678-9abc-def0-123456789abc');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,7 +45,7 @@ describe('resource webhooks', () => {
 
   // Mock server tests are disabled
   test.skip('update', async () => {
-    const responsePromise = client.webhooks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {});
+    const responsePromise = client.webhooks.update('018e1234-5678-9abc-def0-123456789abc', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,7 +76,7 @@ describe('resource webhooks', () => {
           enabled: true,
           limit: 1,
           offset: 0,
-          tenant_id: 'tenant_id',
+          tenant_id: 'org-123',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -85,7 +85,7 @@ describe('resource webhooks', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.webhooks.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.webhooks.delete('018e1234-5678-9abc-def0-123456789abc');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

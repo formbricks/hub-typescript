@@ -53,6 +53,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/feedback-records',
   },
   {
+    clientCallName: 'client.feedbackRecords.retrieveSimilar',
+    fullyQualifiedName: 'feedbackRecords.retrieveSimilar',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records/{id}/similar',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.search.performSemanticSearch',
+    fullyQualifiedName: 'feedbackRecords.search.performSemanticSearch',
+    httpMethod: 'post',
+    httpPath: '/v1/feedback-records/search/semantic',
+  },
+  {
     clientCallName: 'client.webhooks.create',
     fullyQualifiedName: 'webhooks.create',
     httpMethod: 'post',

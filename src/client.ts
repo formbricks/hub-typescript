@@ -17,16 +17,6 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  FeedbackRecordBulkDeleteParams,
-  FeedbackRecordBulkDeleteResponse,
-  FeedbackRecordCreateParams,
-  FeedbackRecordData,
-  FeedbackRecordListParams,
-  FeedbackRecordListResponse,
-  FeedbackRecordUpdateParams,
-  FeedbackRecords,
-} from './resources/feedback-records';
 import { Health, HealthCheckResponse } from './resources/health';
 import {
   WebhookCreateParams,
@@ -38,6 +28,18 @@ import {
   WebhookUpdateResponse,
   Webhooks,
 } from './resources/webhooks';
+import {
+  FeedbackRecordBulkDeleteParams,
+  FeedbackRecordBulkDeleteResponse,
+  FeedbackRecordCreateParams,
+  FeedbackRecordData,
+  FeedbackRecordListParams,
+  FeedbackRecordListResponse,
+  FeedbackRecordRetrieveSimilarParams,
+  FeedbackRecordRetrieveSimilarResponse,
+  FeedbackRecordUpdateParams,
+  FeedbackRecords,
+} from './resources/feedback-records/feedback-records';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -756,10 +758,12 @@ export declare namespace FormbricksHub {
     type FeedbackRecordData as FeedbackRecordData,
     type FeedbackRecordListResponse as FeedbackRecordListResponse,
     type FeedbackRecordBulkDeleteResponse as FeedbackRecordBulkDeleteResponse,
+    type FeedbackRecordRetrieveSimilarResponse as FeedbackRecordRetrieveSimilarResponse,
     type FeedbackRecordCreateParams as FeedbackRecordCreateParams,
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
+    type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams,
   };
 
   export {

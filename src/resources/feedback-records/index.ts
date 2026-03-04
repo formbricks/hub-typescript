@@ -11,15 +11,9 @@ export {
   type FeedbackRecordListParams,
   type FeedbackRecordBulkDeleteParams,
   type FeedbackRecordRetrieveSimilarParams,
-} from './feedback-records/feedback-records';
-export { Health, type HealthCheckResponse } from './health';
+} from './feedback-records';
 export {
-  Webhooks,
-  type WebhookCreateResponse,
-  type WebhookRetrieveResponse,
-  type WebhookUpdateResponse,
-  type WebhookListResponse,
-  type WebhookCreateParams,
-  type WebhookUpdateParams,
-  type WebhookListParams,
-} from './webhooks';
+  Search,
+  type SearchPerformSemanticSearchResponse,
+  type SearchPerformSemanticSearchParams,
+} from './search';

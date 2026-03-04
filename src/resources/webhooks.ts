@@ -37,7 +37,7 @@ export class Webhooks extends APIResource {
    * @example
    * ```ts
    * const webhook = await client.webhooks.retrieve(
-   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   *   '018e1234-5678-9abc-def0-123456789abc',
    * );
    * ```
    */
@@ -51,7 +51,7 @@ export class Webhooks extends APIResource {
    * @example
    * ```ts
    * const webhook = await client.webhooks.update(
-   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   *   '018e1234-5678-9abc-def0-123456789abc',
    * );
    * ```
    */
@@ -80,7 +80,7 @@ export class Webhooks extends APIResource {
    * @example
    * ```ts
    * await client.webhooks.delete(
-   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   *   '018e1234-5678-9abc-def0-123456789abc',
    * );
    * ```
    */
