@@ -31,7 +31,6 @@ describe('resource search', () => {
       cursor: 'eyJkIjowLjEsImkiOiIwMThlMTIzNC01Njc4LTlhYmMtZGVmMC0xMTExMTExMTExMTEifQ==',
       limit: 1,
       min_score: 0,
-      offset: 0,
     });
   });
 });

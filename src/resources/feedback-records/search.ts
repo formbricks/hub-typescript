@@ -27,9 +27,9 @@ export class Search extends APIResource {
     params: SearchPerformSemanticSearchParams,
     options?: RequestOptions,
   ): APIPromise<SearchPerformSemanticSearchResponse> {
-    const { cursor, limit, min_score, offset, ...body } = params;
+    const { cursor, limit, min_score, ...body } = params;
     return this._client.post('/v1/feedback-records/search/semantic', {
-      query: { cursor, limit, min_score, offset },
+      query: { cursor, limit, min_score },
       body,
       ...options,
     });
@@ -94,8 +94,8 @@ export interface SearchPerformSemanticSearchParams {
 
   /**
    * Query param: Omit for the first page. For the next page, use the exact value
-   * from the previous response's next_cursor. Opaque (base64-encoded); when set,
-   * offset is ignored and the next page after this cursor is returned.
+   * from the previous response's next_cursor. Opaque (base64-encoded); keyset
+   * pagination.
    */
   cursor?: string;
 
@@ -110,12 +110,6 @@ export interface SearchPerformSemanticSearchParams {
    * min_score are returned. Default 0.7 to reduce noise.
    */
   min_score?: number;
-
-  /**
-   * Query param: Number of results to skip (OFFSET-based paging). Ignored if cursor
-   * is set. Capped at 1000 for performance.
-   */
-  offset?: number;
 }
 
 export declare namespace Search {

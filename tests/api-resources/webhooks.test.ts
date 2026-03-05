@@ -73,9 +73,9 @@ describe('resource webhooks', () => {
     await expect(
       client.webhooks.list(
         {
+          cursor: 'cursor',
           enabled: true,
           limit: 1,
-          offset: 0,
           tenant_id: 'org-123',
         },
         { path: '/_stainless_unknown_path' },

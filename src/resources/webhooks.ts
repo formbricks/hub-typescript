@@ -287,14 +287,10 @@ export interface WebhookListResponse {
   limit: number;
 
   /**
-   * Offset used in query
+   * Opaque cursor for the next page (keyset paging). Present only when there may be
+   * more results. Use as the cursor query param for the next page.
    */
-  offset: number;
-
-  /**
-   * Total count matching filters
-   */
-  total: number;
+  next_cursor?: string;
 }
 
 export namespace WebhookListResponse {
@@ -435,6 +431,12 @@ export interface WebhookUpdateParams {
 
 export interface WebhookListParams {
   /**
+   * Omit for the first page. For the next page, use the exact value from the
+   * previous response's next_cursor. Opaque (base64-encoded); keyset pagination.
+   */
+  cursor?: string;
+
+  /**
    * Filter by enabled status
    */
   enabled?: boolean;
@@ -443,11 +445,6 @@ export interface WebhookListParams {
    * Number of results to return (max 1000)
    */
   limit?: number;
-
-  /**
-   * Number of results to skip
-   */
-  offset?: number;
 
   /**
    * Filter by tenant ID. NULL bytes not allowed.
