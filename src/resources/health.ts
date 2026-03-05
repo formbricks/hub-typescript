@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Health check endpoints
+ */
 export class Health extends APIResource {
   /**
    * Returns OK if the service is running

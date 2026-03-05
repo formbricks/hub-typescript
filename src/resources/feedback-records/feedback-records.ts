@@ -8,6 +8,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Feedback record CRUD and search
+ */
 export class FeedbackRecords extends APIResource {
   search: SearchAPI.Search = new SearchAPI.Search(this._client);
 
@@ -312,19 +315,22 @@ export namespace FeedbackRecordRetrieveSimilarResponse {
     feedback_record_id: string;
 
     /**
+     * Label of the feedback field (included in embedding for context). May be empty if
+     * the source record had no label.
+     */
+    field_label: string;
+
+    /**
      * Similarity score (0..1)
      */
     score: number;
 
     /**
-     * Label of the feedback field (included in embedding for context)
+     * value_text of the feedback record (the text that was embedded). May be empty if
+     * the source had no text; embeddings are only created for records with non-empty
+     * value_text, but the field can be cleared after embedding creation.
      */
-    field_label?: string;
-
-    /**
-     * value_text of the feedback record (the text that was embedded); omitted if null
-     */
-    value_text?: string | null;
+    value_text: string;
   }
 }
 

@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Webhook subscription management
+ */
 export class Webhooks extends APIResource {
   /**
    * Creates a new webhook endpoint. When events occur (e.g.
@@ -358,7 +361,8 @@ export namespace WebhookListResponse {
 
 export interface WebhookCreateParams {
   /**
-   * URL to receive webhook POSTs. NULL bytes not allowed.
+   * URL to receive webhook POSTs. Must be an HTTP or HTTPS URL. NULL bytes not
+   * allowed.
    */
   url: string;
 
@@ -369,7 +373,7 @@ export interface WebhookCreateParams {
 
   /**
    * Event types this webhook subscribes to. Each value must be one of
-   * WebhookEventType. If empty or null, the webhook receives all event types.
+   * WebhookEventType. If empty, the webhook receives all event types.
    */
   event_types?: Array<
     | 'feedback_record.created'
@@ -418,13 +422,13 @@ export interface WebhookUpdateParams {
   signing_key?: string;
 
   /**
-   * Tenant/organization identifier. NULL bytes not allowed. Send empty string to
-   * clear (store as null).
+   * Omit or send null to leave unchanged. Send empty string to clear (store as
+   * null).
    */
   tenant_id?: string | null;
 
   /**
-   * New webhook URL. NULL bytes not allowed.
+   * New webhook URL. Must be an HTTP or HTTPS URL. NULL bytes not allowed.
    */
   url?: string;
 }

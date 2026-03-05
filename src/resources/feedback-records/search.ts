@@ -4,6 +4,9 @@ import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Feedback record CRUD and search
+ */
 export class Search extends APIResource {
   /**
    * Embeds the search query and returns feedback record IDs with similarity scores
@@ -64,19 +67,22 @@ export namespace SearchPerformSemanticSearchResponse {
     feedback_record_id: string;
 
     /**
+     * Label of the feedback field (included in embedding for context). May be empty if
+     * the source record had no label.
+     */
+    field_label: string;
+
+    /**
      * Similarity score (0..1)
      */
     score: number;
 
     /**
-     * Label of the feedback field (included in embedding for context)
+     * value_text of the feedback record (the text that was embedded). May be empty if
+     * the source had no text; embeddings are only created for records with non-empty
+     * value_text, but the field can be cleared after embedding creation.
      */
-    field_label?: string;
-
-    /**
-     * value_text of the feedback record (the text that was embedded); omitted if null
-     */
-    value_text?: string | null;
+    value_text: string;
   }
 }
 

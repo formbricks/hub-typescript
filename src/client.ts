@@ -739,8 +739,17 @@ export class FormbricksHub {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Health check endpoints
+   */
   health: API.Health = new API.Health(this);
+  /**
+   * Feedback record CRUD and search
+   */
   feedbackRecords: API.FeedbackRecords = new API.FeedbackRecords(this);
+  /**
+   * Webhook subscription management
+   */
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
