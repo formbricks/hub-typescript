@@ -266,14 +266,10 @@ export interface FeedbackRecordListResponse {
   limit: number;
 
   /**
-   * Offset used in query
+   * Opaque cursor for the next page (keyset paging). Present only when there may be
+   * more results. Use as the cursor query param for the next page.
    */
-  offset: number;
-
-  /**
-   * Total count of feedback records matching filters
-   */
-  total: number;
+  next_cursor?: string;
 }
 
 export interface FeedbackRecordBulkDeleteResponse {
@@ -478,6 +474,12 @@ export interface FeedbackRecordListParams {
   tenant_id: string;
 
   /**
+   * Omit for the first page. For the next page, use the exact value from the
+   * previous response's next_cursor. Opaque (base64-encoded); keyset pagination.
+   */
+  cursor?: string;
+
+  /**
    * Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.
    */
   field_group_id?: string;
@@ -496,11 +498,6 @@ export interface FeedbackRecordListParams {
    * Number of results to return (max 1000)
    */
   limit?: number;
-
-  /**
-   * Number of results to skip
-   */
-  offset?: number;
 
   /**
    * Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01
@@ -558,8 +555,7 @@ export interface FeedbackRecordRetrieveSimilarParams {
 
   /**
    * Omit for the first page. For the next page, use the exact value from the
-   * previous response's next_cursor. Opaque (base64-encoded); when set, offset is
-   * ignored and the next page after this cursor is returned.
+   * previous response's next_cursor. Opaque (base64-encoded); keyset pagination.
    */
   cursor?: string;
 
@@ -574,12 +570,6 @@ export interface FeedbackRecordRetrieveSimilarParams {
    * returned. Default 0.7 to reduce noise.
    */
   min_score?: number;
-
-  /**
-   * Number of results to skip (OFFSET-based paging). Ignored if cursor is set.
-   * Capped at 1000 for performance.
-   */
-  offset?: number;
 }
 
 FeedbackRecords.Search = Search;

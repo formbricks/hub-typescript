@@ -90,11 +90,12 @@ describe('resource feedbackRecords', () => {
   test.skip('list: required and optional params', async () => {
     const response = await client.feedbackRecords.list({
       tenant_id: 'org-123',
+      cursor:
+        'eyJ0IjoiMjAyNC0wMS0xNVQxMDozMDowMFoiLCJpIjoiMDE4ZTEyMzQtNTY3OC05YWJjLWRlZjAtMTIzNDU2Nzg5YWJjIn0=',
       field_group_id: 'feature_priority',
       field_id: 'q1',
       field_type: 'text',
       limit: 1,
-      offset: 0,
       since: '2024-01-01T00:00:00Z',
       source_id: 'survey-123',
       source_type: 'survey',
@@ -157,7 +158,6 @@ describe('resource feedbackRecords', () => {
       cursor: 'eyJkIjowLjEsImkiOiIwMThlMTIzNC01Njc4LTlhYmMtZGVmMC0xMTExMTExMTExMTEifQ==',
       limit: 1,
       min_score: 0,
-      offset: 0,
     });
   });
 });
