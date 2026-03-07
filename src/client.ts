@@ -11,11 +11,23 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { Health, HealthCheckResponse } from './resources/health';
+import {
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookListParams,
+  WebhookListResponse,
+  WebhookRetrieveResponse,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+} from './resources/webhooks';
 import {
   FeedbackRecordBulkDeleteParams,
   FeedbackRecordBulkDeleteResponse,
@@ -23,10 +35,11 @@ import {
   FeedbackRecordData,
   FeedbackRecordListParams,
   FeedbackRecordListResponse,
+  FeedbackRecordRetrieveSimilarParams,
+  FeedbackRecordRetrieveSimilarResponse,
   FeedbackRecordUpdateParams,
   FeedbackRecords,
-} from './resources/feedback-records';
-import { Health, HealthCheckResponse } from './resources/health';
+} from './resources/feedback-records/feedback-records';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -223,21 +236,8 @@ export class FormbricksHub {
   /**
    * Basic re-implementation of `qs.stringify` for primitive types.
    */
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.FormbricksHubError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -269,12 +269,13 @@ export class FormbricksHub {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -579,9 +580,9 @@ export class FormbricksHub {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -707,6 +708,14 @@ export class FormbricksHub {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -731,12 +740,23 @@ export class FormbricksHub {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Health check endpoints
+   */
   health: API.Health = new API.Health(this);
+  /**
+   * Feedback record CRUD and search
+   */
   feedbackRecords: API.FeedbackRecords = new API.FeedbackRecords(this);
+  /**
+   * Webhook subscription management
+   */
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 FormbricksHub.Health = Health;
 FormbricksHub.FeedbackRecords = FeedbackRecords;
+FormbricksHub.Webhooks = Webhooks;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -748,9 +768,22 @@ export declare namespace FormbricksHub {
     type FeedbackRecordData as FeedbackRecordData,
     type FeedbackRecordListResponse as FeedbackRecordListResponse,
     type FeedbackRecordBulkDeleteResponse as FeedbackRecordBulkDeleteResponse,
+    type FeedbackRecordRetrieveSimilarResponse as FeedbackRecordRetrieveSimilarResponse,
     type FeedbackRecordCreateParams as FeedbackRecordCreateParams,
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
+    type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookRetrieveResponse as WebhookRetrieveResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListParams as WebhookListParams,
   };
 }

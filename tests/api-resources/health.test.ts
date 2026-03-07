@@ -8,7 +8,7 @@ const client = new FormbricksHub({
 });
 
 describe('resource health', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('check', async () => {
     const responsePromise = client.health.check();
     const rawResponse = await responsePromise.asResponse();
