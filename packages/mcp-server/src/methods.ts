@@ -52,6 +52,48 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/v1/feedback-records',
   },
+  {
+    clientCallName: 'client.feedbackRecords.retrieveSimilar',
+    fullyQualifiedName: 'feedbackRecords.retrieveSimilar',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records/{id}/similar',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.search.performSemanticSearch',
+    fullyQualifiedName: 'feedbackRecords.search.performSemanticSearch',
+    httpMethod: 'post',
+    httpPath: '/v1/feedback-records/search/semantic',
+  },
+  {
+    clientCallName: 'client.webhooks.create',
+    fullyQualifiedName: 'webhooks.create',
+    httpMethod: 'post',
+    httpPath: '/v1/webhooks',
+  },
+  {
+    clientCallName: 'client.webhooks.retrieve',
+    fullyQualifiedName: 'webhooks.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/webhooks/{id}',
+  },
+  {
+    clientCallName: 'client.webhooks.update',
+    fullyQualifiedName: 'webhooks.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/webhooks/{id}',
+  },
+  {
+    clientCallName: 'client.webhooks.list',
+    fullyQualifiedName: 'webhooks.list',
+    httpMethod: 'get',
+    httpPath: '/v1/webhooks',
+  },
+  {
+    clientCallName: 'client.webhooks.delete',
+    fullyQualifiedName: 'webhooks.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/webhooks/{id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
