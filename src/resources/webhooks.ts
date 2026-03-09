@@ -35,7 +35,8 @@ export class Webhooks extends APIResource {
   }
 
   /**
-   * Retrieves a single webhook endpoint by its UUID
+   * Retrieves a single webhook endpoint by its UUID. signing_key is omitted for
+   * security.
    *
    * @example
    * ```ts
@@ -156,6 +157,9 @@ export interface WebhookCreateResponse {
   tenant_id?: string;
 }
 
+/**
+ * Webhook data for GET and LIST responses; signing_key is omitted for security
+ */
 export interface WebhookRetrieveResponse {
   /**
    * Webhook ID (UUID)
@@ -173,11 +177,6 @@ export interface WebhookRetrieveResponse {
   enabled: boolean;
 
   /**
-   * Key used to sign payloads (Standard Webhooks)
-   */
-  signing_key: string;
-
-  /**
    * When the webhook was last updated
    */
   updated_at: string;
@@ -188,14 +187,12 @@ export interface WebhookRetrieveResponse {
   url: string;
 
   /**
-   * Read-only. When the webhook was disabled. Omitted when null. Cleared when the
-   * webhook is re-enabled via PATCH.
+   * Read-only. When the webhook was disabled. Omitted when null.
    */
   disabled_at?: string | null;
 
   /**
-   * Read-only. Set by the system when the webhook was disabled (e.g. after 410 Gone
-   * or max delivery failures). Omitted when null.
+   * Read-only. Set by the system when the webhook was disabled. Omitted when null.
    */
   disabled_reason?: string | null;
 
@@ -217,6 +214,9 @@ export interface WebhookRetrieveResponse {
   tenant_id?: string;
 }
 
+/**
+ * Webhook data for GET and LIST responses; signing_key is omitted for security
+ */
 export interface WebhookUpdateResponse {
   /**
    * Webhook ID (UUID)
@@ -234,11 +234,6 @@ export interface WebhookUpdateResponse {
   enabled: boolean;
 
   /**
-   * Key used to sign payloads (Standard Webhooks)
-   */
-  signing_key: string;
-
-  /**
    * When the webhook was last updated
    */
   updated_at: string;
@@ -249,14 +244,12 @@ export interface WebhookUpdateResponse {
   url: string;
 
   /**
-   * Read-only. When the webhook was disabled. Omitted when null. Cleared when the
-   * webhook is re-enabled via PATCH.
+   * Read-only. When the webhook was disabled. Omitted when null.
    */
   disabled_at?: string | null;
 
   /**
-   * Read-only. Set by the system when the webhook was disabled (e.g. after 410 Gone
-   * or max delivery failures). Omitted when null.
+   * Read-only. Set by the system when the webhook was disabled. Omitted when null.
    */
   disabled_reason?: string | null;
 
@@ -280,7 +273,7 @@ export interface WebhookUpdateResponse {
 
 export interface WebhookListResponse {
   /**
-   * List of webhooks
+   * List of webhooks (signing_key omitted for security)
    */
   data: Array<WebhookListResponse.Data>;
 
@@ -294,9 +287,23 @@ export interface WebhookListResponse {
    * more results. Use as the cursor query param for the next page.
    */
   next_cursor?: string;
+
+  /**
+   * Offset used in query (present when offset-based; omitted when using cursor)
+   */
+  offset?: number;
+
+  /**
+   * Total count matching filters (present when offset-based; omitted when using
+   * cursor)
+   */
+  total?: number;
 }
 
 export namespace WebhookListResponse {
+  /**
+   * Webhook data for GET and LIST responses; signing_key is omitted for security
+   */
   export interface Data {
     /**
      * Webhook ID (UUID)
@@ -314,11 +321,6 @@ export namespace WebhookListResponse {
     enabled: boolean;
 
     /**
-     * Key used to sign payloads (Standard Webhooks)
-     */
-    signing_key: string;
-
-    /**
      * When the webhook was last updated
      */
     updated_at: string;
@@ -329,14 +331,12 @@ export namespace WebhookListResponse {
     url: string;
 
     /**
-     * Read-only. When the webhook was disabled. Omitted when null. Cleared when the
-     * webhook is re-enabled via PATCH.
+     * Read-only. When the webhook was disabled. Omitted when null.
      */
     disabled_at?: string | null;
 
     /**
-     * Read-only. Set by the system when the webhook was disabled (e.g. after 410 Gone
-     * or max delivery failures). Omitted when null.
+     * Read-only. Set by the system when the webhook was disabled. Omitted when null.
      */
     disabled_reason?: string | null;
 

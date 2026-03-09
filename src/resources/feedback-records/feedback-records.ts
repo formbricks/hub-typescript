@@ -380,12 +380,12 @@ export interface FeedbackRecordCreateParams {
   /**
    * Human-readable question text for the group
    */
-  field_group_label?: string;
+  field_group_label?: string | null;
 
   /**
    * The actual question text
    */
-  field_label?: string;
+  field_label?: string | null;
 
   /**
    * ISO language code. NULL bytes not allowed.
@@ -401,12 +401,12 @@ export interface FeedbackRecordCreateParams {
   /**
    * Reference to survey/form/ticket ID
    */
-  source_id?: string;
+  source_id?: string | null;
 
   /**
    * Human-readable name
    */
-  source_name?: string;
+  source_name?: string | null;
 
   /**
    * Anonymous ID or email hash
