@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.1 (2026-03-10)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/formbricks/hub-typescript/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** codegen related update ([9705ee4](https://github.com/formbricks/hub-typescript/commit/9705ee4cb3af7d1a02048c5a52286e4c50a2cf6c))
+* **internal:** update dependencies to address dependabot vulnerabilities ([b1ee26e](https://github.com/formbricks/hub-typescript/commit/b1ee26e9ba9beb6f0d9beb6bb570cfe91fb21287))
+* update SDK settings ([7d37a29](https://github.com/formbricks/hub-typescript/commit/7d37a2983c5c469b9cd8266b2eec2273be4030b9))
+* update SDK settings ([21b7534](https://github.com/formbricks/hub-typescript/commit/21b7534c3a5da4896d7f6a74ee51a1fb472918fb))
+
 ## 0.4.0 (2026-03-09)
 
 Full Changelog: [v0.3.1...v0.4.0](https://github.com/formbricks/hub-typescript/compare/v0.3.1...v0.4.0)
