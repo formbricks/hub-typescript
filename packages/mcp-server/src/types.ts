@@ -45,6 +45,7 @@ export type ToolCallResult = {
 export type McpRequestContext = {
   client: FormbricksHub;
   stainlessApiKey?: string | undefined;
+  upstreamClientEnvs?: Record<string, string> | undefined;
 };
 
 export type HandlerFunction = ({
