@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.4.2 (2026-03-17)
+
+Full Changelog: [v0.4.1...v0.4.2](https://github.com/formbricks/hub-typescript/compare/v0.4.1...v0.4.2)
+
+### Chores
+
+* Google Vertex AI support ([a5ee88f](https://github.com/formbricks/hub-typescript/commit/a5ee88fa3b8ffe1a76a9362e3062b44d8116cf3a))
+* **internal:** codegen related update ([4009a58](https://github.com/formbricks/hub-typescript/commit/4009a58b101741eb51ba24904d56a65b7ed5d6ee))
+* **internal:** codegen related update ([ccfee0a](https://github.com/formbricks/hub-typescript/commit/ccfee0a38f14157afdb951e1cd364e36ebc98b31))
+* **internal:** codegen related update ([40c92d5](https://github.com/formbricks/hub-typescript/commit/40c92d5c773251cad0191cfc9cae39bf9f693970))
+* **internal:** codegen related update ([cb61137](https://github.com/formbricks/hub-typescript/commit/cb61137f4606077dd7372cc1b173235c64de667e))
+* **internal:** codegen related update ([00bdd4e](https://github.com/formbricks/hub-typescript/commit/00bdd4e6551fbda5fdc7710201c7f6298dc3282f))
+* **internal:** codegen related update ([81dafcc](https://github.com/formbricks/hub-typescript/commit/81dafcc0c4c44bfd11394bc71e032f9a3f525460))
+* **internal:** codegen related update ([bef048c](https://github.com/formbricks/hub-typescript/commit/bef048c11d2d8004567a333b5f68168db0460f00))
+* **internal:** codegen related update ([4662e2b](https://github.com/formbricks/hub-typescript/commit/4662e2bb7cfa8d00158e3d8a38b239eac1bd9f79))
+* **internal:** codegen related update ([25c70d4](https://github.com/formbricks/hub-typescript/commit/25c70d401dcd5329a432fc0e3216b107bb7c7c0d))
+* **internal:** codegen related update ([ccfb19c](https://github.com/formbricks/hub-typescript/commit/ccfb19c69c183a09986b5c774c6d6d9b126b0c7f))
+* **internal:** codegen related update ([6118c55](https://github.com/formbricks/hub-typescript/commit/6118c55b2e0f67343d141a4e7d40aa6229a5c23a))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([a23cc61](https://github.com/formbricks/hub-typescript/commit/a23cc6127d61df85aeb869ac34ee9b2b1eaebf1a))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([ff5b514](https://github.com/formbricks/hub-typescript/commit/ff5b5148c975be199d3877d099bdd48cd80ae7f0))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([8dbe8db](https://github.com/formbricks/hub-typescript/commit/8dbe8dbaa5fc12336ff17616882362a415163e03))
+* **internal:** tweak CI branches ([51c14db](https://github.com/formbricks/hub-typescript/commit/51c14dbd3b9cbaaa0c17debbd089830595d53efd))
+* **internal:** update lock file ([9eca1d6](https://github.com/formbricks/hub-typescript/commit/9eca1d6f23f60b6f9e4cc9618d19a970a4822117))
+* **internal:** update lockfile ([5a40fac](https://github.com/formbricks/hub-typescript/commit/5a40facea96bacde3d0a6fa8ee9819a0fd9af454))
+
 ## 0.4.1 (2026-03-10)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/formbricks/hub-typescript/compare/v0.4.0...v0.4.1)
