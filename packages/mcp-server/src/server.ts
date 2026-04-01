@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'formbricks_hub_api',
-      version: '0.4.2',
+      version: '0.4.3',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),

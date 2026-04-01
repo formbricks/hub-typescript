@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.4.3 (2026-04-01)
+
+Full Changelog: [v0.4.2...v0.4.3](https://github.com/formbricks/hub-typescript/compare/v0.4.2...v0.4.3)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([4069db2](https://github.com/formbricks/hub-typescript/commit/4069db2ff4158540c7df39c94d4d6b5d013cc628))
+
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([db02dff](https://github.com/formbricks/hub-typescript/commit/db02dff486da29fe979b38e7bcabd3a6f78c7fb5))
+* **ci:** skip lint on metadata-only changes ([b87e8b4](https://github.com/formbricks/hub-typescript/commit/b87e8b4e057d872de040de418152850d0744bf6a))
+* **internal:** fix MCP server TS errors that occur with required client options ([e86f0a9](https://github.com/formbricks/hub-typescript/commit/e86f0a99bbcf89d98f0b58e9d227e05ce858e305))
+* **internal:** improve local docs search for MCP servers ([93e4bda](https://github.com/formbricks/hub-typescript/commit/93e4bdaec56cdc3f4407b756b0177f3e4accd76e))
+* **internal:** improve local docs search for MCP servers ([709a944](https://github.com/formbricks/hub-typescript/commit/709a944f1e3f22f980512f681f3bdaa9465f9769))
+* **internal:** support custom-instructions-path flag in MCP servers ([829ce32](https://github.com/formbricks/hub-typescript/commit/829ce32c186b67a9b38cf61fb2423814994478b2))
+* **internal:** support local docs search in MCP servers ([579f58b](https://github.com/formbricks/hub-typescript/commit/579f58b13c38a8ddd6b565eee305d2c557fb4273))
+* **internal:** update gitignore ([7afa43a](https://github.com/formbricks/hub-typescript/commit/7afa43a05eca0e28b0ac9997b4147e192caa9edb))
+* **mcp-server:** add support for session id, forward client info ([a0c1d7d](https://github.com/formbricks/hub-typescript/commit/a0c1d7d0c420d1ada329973c1db906c831eee477))
+
 ## 0.4.2 (2026-03-17)
 
 Full Changelog: [v0.4.1...v0.4.2](https://github.com/formbricks/hub-typescript/compare/v0.4.1...v0.4.2)
