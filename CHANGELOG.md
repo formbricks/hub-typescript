@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.4 (2026-04-10)
+
+Full Changelog: [v0.4.3...v0.4.4](https://github.com/formbricks/hub-typescript/compare/v0.4.3...v0.4.4)
+
+### Chores
+
+* **internal:** codegen related update ([0739fce](https://github.com/formbricks/hub-typescript/commit/0739fce1654209416037f517e244d54a92114b29))
+* **internal:** fix MCP server import ordering ([7e77df7](https://github.com/formbricks/hub-typescript/commit/7e77df76e3e2b9b28123b82ae38c71e1ba0c2cb2))
+* **internal:** show error causes in MCP servers when running in local mode ([e99bb20](https://github.com/formbricks/hub-typescript/commit/e99bb20da160377df4886d4fec24140e8c27439e))
+* **internal:** support type annotations when running MCP in local execution mode ([819033c](https://github.com/formbricks/hub-typescript/commit/819033cee84aa1b4834cbff913c01b3ec5ce7655))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([79579ac](https://github.com/formbricks/hub-typescript/commit/79579ac4bf4c34ea5959dd8d01f543049b341557))
+* **mcp-server:** log client info ([8683d8c](https://github.com/formbricks/hub-typescript/commit/8683d8ce060bcaf64f11948f726fc7c58049c5eb))
+
 ## 0.4.3 (2026-04-01)
 
 Full Changelog: [v0.4.2...v0.4.3](https://github.com/formbricks/hub-typescript/compare/v0.4.2...v0.4.3)
