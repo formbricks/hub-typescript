@@ -66,11 +66,7 @@ export class FeedbackRecords extends APIResource {
    *   );
    * ```
    */
-  update(
-    id: string,
-    body: FeedbackRecordUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<FeedbackRecordData> {
+  update(id: string, body: FeedbackRecordUpdateParams, options?: RequestOptions): APIPromise<FeedbackRecordData> {
     return this._client.patch(path`/v1/feedback-records/${id}`, { body, ...options });
   }
 
@@ -99,10 +95,7 @@ export class FeedbackRecords extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/feedback-records/${id}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/v1/feedback-records/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -117,11 +110,8 @@ export class FeedbackRecords extends APIResource {
    * });
    * ```
    */
-  bulkDelete(
-    params: FeedbackRecordBulkDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<FeedbackRecordBulkDeleteResponse> {
-    const { user_identifier, tenant_id } = params;
+  bulkDelete(params: FeedbackRecordBulkDeleteParams, options?: RequestOptions): APIPromise<FeedbackRecordBulkDeleteResponse> {
+    const { user_identifier, tenant_id } = params
     return this._client.delete('/v1/feedback-records', { query: { user_identifier, tenant_id }, ...options });
   }
 
@@ -142,11 +132,7 @@ export class FeedbackRecords extends APIResource {
    *   );
    * ```
    */
-  retrieveSimilar(
-    id: string,
-    query: FeedbackRecordRetrieveSimilarParams,
-    options?: RequestOptions,
-  ): APIPromise<FeedbackRecordRetrieveSimilarResponse> {
+  retrieveSimilar(id: string, query: FeedbackRecordRetrieveSimilarParams, options?: RequestOptions): APIPromise<FeedbackRecordRetrieveSimilarResponse> {
     return this._client.get(path`/v1/feedback-records/${id}/similar`, { query, ...options });
   }
 }
@@ -591,12 +577,12 @@ export declare namespace FeedbackRecords {
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
-    type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams,
+    type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams
   };
 
   export {
     Search as Search,
     type SearchPerformSemanticSearchResponse as SearchPerformSemanticSearchResponse,
-    type SearchPerformSemanticSearchParams as SearchPerformSemanticSearchParams,
+    type SearchPerformSemanticSearchParams as SearchPerformSemanticSearchParams
   };
 }
