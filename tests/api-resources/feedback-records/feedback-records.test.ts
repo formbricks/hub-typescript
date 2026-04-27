@@ -39,7 +39,7 @@ describe('resource feedbackRecords', () => {
     metadata: { foo: 'bar' },
     source_id: 'survey-123',
     source_name: 'Q1 NPS Survey',
-    user_identifier: 'user-abc-123',
+    user_id: 'user-abc-123',
     value_boolean: true,
     value_date: '2019-12-27T18:11:19.117Z',
     value_number: 9,
@@ -97,7 +97,7 @@ describe('resource feedbackRecords', () => {
     source_type: 'survey',
     submission_id: '550e8400-e29b-41d4-a716-446655440000',
     until: '2024-12-31T23:59:59Z',
-    user_identifier: 'user-abc-123',
+    user_id: 'user-abc-123',
   });
   });
 
@@ -115,7 +115,7 @@ describe('resource feedbackRecords', () => {
 
   // Mock server tests are disabled
   test.skip('bulkDelete: only required params', async () => {
-    const responsePromise = client.feedbackRecords.bulkDelete({ user_identifier: 'user-abc-123' });
+    const responsePromise = client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -127,7 +127,7 @@ describe('resource feedbackRecords', () => {
 
   // Mock server tests are disabled
   test.skip('bulkDelete: required and optional params', async () => {
-    const response = await client.feedbackRecords.bulkDelete({ user_identifier: 'user-abc-123', tenant_id: 'org-123' });
+    const response = await client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123', tenant_id: 'org-123' });
   });
 
   // Mock server tests are disabled

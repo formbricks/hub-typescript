@@ -30,7 +30,7 @@ export class FeedbackRecords extends APIResource {
    *     language: 'en',
    *     source_id: 'survey-123',
    *     source_name: 'Q1 NPS Survey',
-   *     user_identifier: 'user-abc-123',
+   *     user_id: 'user-abc-123',
    *     value_number: 9,
    *   });
    * ```
@@ -100,19 +100,18 @@ export class FeedbackRecords extends APIResource {
 
   /**
    * Permanently deletes all feedback record data points matching the specified
-   * user_identifier. This endpoint supports GDPR Article 17 (Right to Erasure)
-   * requests.
+   * user_id. This endpoint supports GDPR Article 17 (Right to Erasure) requests.
    *
    * @example
    * ```ts
    * const response = await client.feedbackRecords.bulkDelete({
-   *   user_identifier: 'user-abc-123',
+   *   user_id: 'user-abc-123',
    * });
    * ```
    */
   bulkDelete(params: FeedbackRecordBulkDeleteParams, options?: RequestOptions): APIPromise<FeedbackRecordBulkDeleteResponse> {
-    const { user_identifier, tenant_id } = params
-    return this._client.delete('/v1/feedback-records', { query: { user_identifier, tenant_id }, ...options });
+    const { user_id, tenant_id } = params
+    return this._client.delete('/v1/feedback-records', { query: { user_id, tenant_id }, ...options });
   }
 
   /**
@@ -219,9 +218,9 @@ export interface FeedbackRecordData {
   source_name?: string;
 
   /**
-   * User identifier
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * Boolean response
@@ -396,9 +395,9 @@ export interface FeedbackRecordCreateParams {
   source_name?: string | null;
 
   /**
-   * Anonymous ID or email hash
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * For yes/no questions
@@ -435,9 +434,9 @@ export interface FeedbackRecordUpdateParams {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Update user identifier
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * Update boolean response
@@ -521,17 +520,16 @@ export interface FeedbackRecordListParams {
   until?: string;
 
   /**
-   * Filter by user identifier. NULL bytes not allowed.
+   * Filter by user ID. NULL bytes not allowed.
    */
-  user_identifier?: string;
+  user_id?: string;
 }
 
 export interface FeedbackRecordBulkDeleteParams {
   /**
-   * Delete all records matching this user identifier (required). NULL bytes not
-   * allowed.
+   * Delete all records matching this user ID (required). NULL bytes not allowed.
    */
-  user_identifier: string;
+  user_id: string;
 
   /**
    * Filter by tenant ID (optional, for multi-tenant deployments). NULL bytes not
