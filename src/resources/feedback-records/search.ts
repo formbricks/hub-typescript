@@ -12,7 +12,8 @@ export class Search extends APIResource {
    * Embeds the search query and returns feedback record IDs with similarity scores
    * (cosine, 0..1). **Only available when embeddings are configured**
    * (EMBEDDING_PROVIDER and EMBEDDING_MODEL set). Supported providers: openai,
-   * google (AI Studio), google-vertex. When embeddings are disabled, this endpoint
+   * google (Gemini Developer API / Google AI Studio), google-gemini (Gemini
+   * Enterprise Agent Platform API). When embeddings are disabled, this endpoint
    * returns 503 Service Unavailable. Request body must include query and tenant_id
    * (required for tenant isolation).
    *
