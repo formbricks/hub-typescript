@@ -118,7 +118,8 @@ export class FeedbackRecords extends APIResource {
    * Returns feedback record IDs and similarity scores for records similar to the
    * given one (by embedding). **Only available when embeddings are configured**
    * (EMBEDDING_PROVIDER and EMBEDDING_MODEL set). Supported providers: openai,
-   * google (AI Studio), google-vertex. When embeddings are disabled, this endpoint
+   * google (Gemini Developer API / Google AI Studio), google-gemini (Gemini
+   * Enterprise Agent Platform API). When embeddings are disabled, this endpoint
    * returns 503 Service Unavailable. The source feedback record must belong to the
    * given tenant_id (enforced).
    *
