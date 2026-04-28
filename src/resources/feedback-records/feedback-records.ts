@@ -75,7 +75,8 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Lists feedback records with optional filters and pagination
+   * Lists feedback records for a required tenant_id with optional additional filters
+   * and pagination
    *
    * @example
    * ```ts
