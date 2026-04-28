@@ -28,9 +28,16 @@ export class Search extends APIResource {
    *   );
    * ```
    */
-  performSemanticSearch(params: SearchPerformSemanticSearchParams, options?: RequestOptions): APIPromise<SearchPerformSemanticSearchResponse> {
-    const { cursor, limit, min_score, ...body } = params
-    return this._client.post('/v1/feedback-records/search/semantic', { query: { cursor, limit, min_score }, body, ...options });
+  performSemanticSearch(
+    params: SearchPerformSemanticSearchParams,
+    options?: RequestOptions,
+  ): APIPromise<SearchPerformSemanticSearchResponse> {
+    const { cursor, limit, min_score, ...body } = params;
+    return this._client.post('/v1/feedback-records/search/semantic', {
+      query: { cursor, limit, min_score },
+      body,
+      ...options,
+    });
   }
 }
 
@@ -116,6 +123,6 @@ export interface SearchPerformSemanticSearchParams {
 export declare namespace Search {
   export {
     type SearchPerformSemanticSearchResponse as SearchPerformSemanticSearchResponse,
-    type SearchPerformSemanticSearchParams as SearchPerformSemanticSearchParams
+    type SearchPerformSemanticSearchParams as SearchPerformSemanticSearchParams,
   };
 }

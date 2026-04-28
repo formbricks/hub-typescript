@@ -7,79 +7,94 @@ export type SdkMethod = {
   fullyQualifiedName: string;
   httpMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'query';
   httpPath?: string;
-}
+};
 
-export const sdkMethods: SdkMethod[] = [{
-  clientCallName: 'client.health.check',
-  fullyQualifiedName: 'health.check',
-  httpMethod: 'get',
-  httpPath: '/health',
-},{
-  clientCallName: 'client.feedbackRecords.create',
-  fullyQualifiedName: 'feedbackRecords.create',
-  httpMethod: 'post',
-  httpPath: '/v1/feedback-records',
-},{
-  clientCallName: 'client.feedbackRecords.retrieve',
-  fullyQualifiedName: 'feedbackRecords.retrieve',
-  httpMethod: 'get',
-  httpPath: '/v1/feedback-records/{id}',
-},{
-  clientCallName: 'client.feedbackRecords.update',
-  fullyQualifiedName: 'feedbackRecords.update',
-  httpMethod: 'patch',
-  httpPath: '/v1/feedback-records/{id}',
-},{
-  clientCallName: 'client.feedbackRecords.list',
-  fullyQualifiedName: 'feedbackRecords.list',
-  httpMethod: 'get',
-  httpPath: '/v1/feedback-records',
-},{
-  clientCallName: 'client.feedbackRecords.delete',
-  fullyQualifiedName: 'feedbackRecords.delete',
-  httpMethod: 'delete',
-  httpPath: '/v1/feedback-records/{id}',
-},{
-  clientCallName: 'client.feedbackRecords.bulkDelete',
-  fullyQualifiedName: 'feedbackRecords.bulkDelete',
-  httpMethod: 'delete',
-  httpPath: '/v1/feedback-records',
-},{
-  clientCallName: 'client.feedbackRecords.retrieveSimilar',
-  fullyQualifiedName: 'feedbackRecords.retrieveSimilar',
-  httpMethod: 'get',
-  httpPath: '/v1/feedback-records/{id}/similar',
-},{
-  clientCallName: 'client.feedbackRecords.search.performSemanticSearch',
-  fullyQualifiedName: 'feedbackRecords.search.performSemanticSearch',
-  httpMethod: 'post',
-  httpPath: '/v1/feedback-records/search/semantic',
-},{
-  clientCallName: 'client.webhooks.create',
-  fullyQualifiedName: 'webhooks.create',
-  httpMethod: 'post',
-  httpPath: '/v1/webhooks',
-},{
-  clientCallName: 'client.webhooks.retrieve',
-  fullyQualifiedName: 'webhooks.retrieve',
-  httpMethod: 'get',
-  httpPath: '/v1/webhooks/{id}',
-},{
-  clientCallName: 'client.webhooks.update',
-  fullyQualifiedName: 'webhooks.update',
-  httpMethod: 'patch',
-  httpPath: '/v1/webhooks/{id}',
-},{
-  clientCallName: 'client.webhooks.list',
-  fullyQualifiedName: 'webhooks.list',
-  httpMethod: 'get',
-  httpPath: '/v1/webhooks',
-},{
-  clientCallName: 'client.webhooks.delete',
-  fullyQualifiedName: 'webhooks.delete',
-  httpMethod: 'delete',
-  httpPath: '/v1/webhooks/{id}',
-}];
+export const sdkMethods: SdkMethod[] = [
+  {
+    clientCallName: 'client.health.check',
+    fullyQualifiedName: 'health.check',
+    httpMethod: 'get',
+    httpPath: '/health',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.create',
+    fullyQualifiedName: 'feedbackRecords.create',
+    httpMethod: 'post',
+    httpPath: '/v1/feedback-records',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.retrieve',
+    fullyQualifiedName: 'feedbackRecords.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records/{id}',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.update',
+    fullyQualifiedName: 'feedbackRecords.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/feedback-records/{id}',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.list',
+    fullyQualifiedName: 'feedbackRecords.list',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.delete',
+    fullyQualifiedName: 'feedbackRecords.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/feedback-records/{id}',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.bulkDelete',
+    fullyQualifiedName: 'feedbackRecords.bulkDelete',
+    httpMethod: 'delete',
+    httpPath: '/v1/feedback-records',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.retrieveSimilar',
+    fullyQualifiedName: 'feedbackRecords.retrieveSimilar',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records/{id}/similar',
+  },
+  {
+    clientCallName: 'client.feedbackRecords.search.performSemanticSearch',
+    fullyQualifiedName: 'feedbackRecords.search.performSemanticSearch',
+    httpMethod: 'post',
+    httpPath: '/v1/feedback-records/search/semantic',
+  },
+  {
+    clientCallName: 'client.webhooks.create',
+    fullyQualifiedName: 'webhooks.create',
+    httpMethod: 'post',
+    httpPath: '/v1/webhooks',
+  },
+  {
+    clientCallName: 'client.webhooks.retrieve',
+    fullyQualifiedName: 'webhooks.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/webhooks/{id}',
+  },
+  {
+    clientCallName: 'client.webhooks.update',
+    fullyQualifiedName: 'webhooks.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/webhooks/{id}',
+  },
+  {
+    clientCallName: 'client.webhooks.list',
+    fullyQualifiedName: 'webhooks.list',
+    httpMethod: 'get',
+    httpPath: '/v1/webhooks',
+  },
+  {
+    clientCallName: 'client.webhooks.delete',
+    fullyQualifiedName: 'webhooks.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/webhooks/{id}',
+  },
+];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
   if (!options) {
@@ -94,9 +109,9 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
 
     if (options.codeAllowHttpGets) {
       // Add all methods that map to an HTTP GET
-      sdkMethods.filter((method) => method.httpMethod === 'get').forEach(
-        (method) => allowedMethodsSet.add(method)
-      );
+      sdkMethods
+        .filter((method) => method.httpMethod === 'get')
+        .forEach((method) => allowedMethodsSet.add(method));
     }
 
     if (options.codeAllowedMethods) {
@@ -105,13 +120,15 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
         try {
           return new RegExp(pattern);
         } catch (e) {
-          throw new Error(`Invalid regex pattern for allowed method: "${pattern}": ${e instanceof Error ? e.message : e}`);
+          throw new Error(
+            `Invalid regex pattern for allowed method: "${pattern}": ${e instanceof Error ? e.message : e}`,
+          );
         }
       });
 
-      sdkMethods.filter((method) =>
-          allowedRegexps.some((regexp) => regexp.test(method.fullyQualifiedName))
-        ).forEach((method) => allowedMethodsSet.add(method));
+      sdkMethods
+        .filter((method) => allowedRegexps.some((regexp) => regexp.test(method.fullyQualifiedName)))
+        .forEach((method) => allowedMethodsSet.add(method));
     }
 
     allowedMethods = Array.from(allowedMethodsSet);
@@ -126,12 +143,14 @@ function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[]
       try {
         return new RegExp(pattern);
       } catch (e) {
-        throw new Error(`Invalid regex pattern for blocked method: "${pattern}": ${e instanceof Error ? e.message : e}`);
+        throw new Error(
+          `Invalid regex pattern for blocked method: "${pattern}": ${e instanceof Error ? e.message : e}`,
+        );
       }
     });
 
-    allowedMethods = allowedMethods.filter((method) =>
-      !blockedRegexps.some((regexp) => regexp.test(method.fullyQualifiedName))
+    allowedMethods = allowedMethods.filter(
+      (method) => !blockedRegexps.some((regexp) => regexp.test(method.fullyQualifiedName)),
     );
   }
 
