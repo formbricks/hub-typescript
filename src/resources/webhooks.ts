@@ -71,7 +71,10 @@ export class Webhooks extends APIResource {
    * const webhooks = await client.webhooks.list();
    * ```
    */
-  list(query: WebhookListParams | null | undefined = {}, options?: RequestOptions): APIPromise<WebhookListResponse> {
+  list(
+    query: WebhookListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<WebhookListResponse> {
     return this._client.get('/v1/webhooks', { query, ...options });
   }
 
@@ -86,7 +89,10 @@ export class Webhooks extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/webhooks/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/v1/webhooks/${id}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 }
 
@@ -136,7 +142,14 @@ export interface WebhookCreateResponse {
   /**
    * Event types this webhook subscribes to (empty = all)
    */
-  event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+  event_types?: Array<
+    | 'feedback_record.created'
+    | 'feedback_record.updated'
+    | 'feedback_record.deleted'
+    | 'webhook.created'
+    | 'webhook.updated'
+    | 'webhook.deleted'
+  >;
 
   /**
    * Tenant/organization identifier
@@ -186,7 +199,14 @@ export interface WebhookRetrieveResponse {
   /**
    * Event types this webhook subscribes to (empty = all)
    */
-  event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+  event_types?: Array<
+    | 'feedback_record.created'
+    | 'feedback_record.updated'
+    | 'feedback_record.deleted'
+    | 'webhook.created'
+    | 'webhook.updated'
+    | 'webhook.deleted'
+  >;
 
   /**
    * Tenant/organization identifier
@@ -236,7 +256,14 @@ export interface WebhookUpdateResponse {
   /**
    * Event types this webhook subscribes to (empty = all)
    */
-  event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+  event_types?: Array<
+    | 'feedback_record.created'
+    | 'feedback_record.updated'
+    | 'feedback_record.deleted'
+    | 'webhook.created'
+    | 'webhook.updated'
+    | 'webhook.deleted'
+  >;
 
   /**
    * Tenant/organization identifier
@@ -316,7 +343,14 @@ export namespace WebhookListResponse {
     /**
      * Event types this webhook subscribes to (empty = all)
      */
-    event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+    event_types?: Array<
+      | 'feedback_record.created'
+      | 'feedback_record.updated'
+      | 'feedback_record.deleted'
+      | 'webhook.created'
+      | 'webhook.updated'
+      | 'webhook.deleted'
+    >;
 
     /**
      * Tenant/organization identifier
@@ -341,7 +375,14 @@ export interface WebhookCreateParams {
    * Event types this webhook subscribes to. Each value must be one of
    * WebhookEventType. If empty, the webhook receives all event types.
    */
-  event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+  event_types?: Array<
+    | 'feedback_record.created'
+    | 'feedback_record.updated'
+    | 'feedback_record.deleted'
+    | 'webhook.created'
+    | 'webhook.updated'
+    | 'webhook.deleted'
+  >;
 
   /**
    * Optional. If omitted, a key is auto-generated (whsec\_...). Used to sign
@@ -366,7 +407,14 @@ export interface WebhookUpdateParams {
    * New list of event types (use empty array to clear). Each value must be one of
    * WebhookEventType.
    */
-  event_types?: Array<'feedback_record.created' | 'feedback_record.updated' | 'feedback_record.deleted' | 'webhook.created' | 'webhook.updated' | 'webhook.deleted'>;
+  event_types?: Array<
+    | 'feedback_record.created'
+    | 'feedback_record.updated'
+    | 'feedback_record.deleted'
+    | 'webhook.created'
+    | 'webhook.updated'
+    | 'webhook.deleted'
+  >;
 
   /**
    * New signing key. NULL bytes not allowed.
@@ -416,6 +464,6 @@ export declare namespace Webhooks {
     type WebhookListResponse as WebhookListResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
-    type WebhookListParams as WebhookListParams
+    type WebhookListParams as WebhookListParams,
   };
 }

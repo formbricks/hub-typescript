@@ -2,7 +2,10 @@
 
 import FormbricksHub from '@formbricks/hub';
 
-const client = new FormbricksHub({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new FormbricksHub({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource webhooks', () => {
   // Mock server tests are disabled
@@ -20,12 +23,12 @@ describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
-    url: 'https://example.com/hub-events',
-    enabled: true,
-    event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],
-    signing_key: 'whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    tenant_id: 'org-123',
-  });
+      url: 'https://example.com/hub-events',
+      enabled: true,
+      event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],
+      signing_key: 'whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      tenant_id: 'org-123',
+    });
   });
 
   // Mock server tests are disabled
@@ -67,14 +70,17 @@ describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.webhooks.list({
-    cursor: 'cursor',
-    enabled: true,
-    limit: 1,
-    tenant_id: 'org-123',
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(FormbricksHub.NotFoundError);
+    await expect(
+      client.webhooks.list(
+        {
+          cursor: 'cursor',
+          enabled: true,
+          limit: 1,
+          tenant_id: 'org-123',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(FormbricksHub.NotFoundError);
   });
 
   // Mock server tests are disabled

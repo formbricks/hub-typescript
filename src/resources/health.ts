@@ -18,14 +18,15 @@ export class Health extends APIResource {
    * ```
    */
   check(options?: RequestOptions): APIPromise<string> {
-    return this._client.get('/health', { ...options, headers: buildHeaders([{Accept: 'text/plain'}, options?.headers]) });
+    return this._client.get('/health', {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 }
 
-export type HealthCheckResponse = string
+export type HealthCheckResponse = string;
 
 export declare namespace Health {
-  export {
-    type HealthCheckResponse as HealthCheckResponse
-  };
+  export { type HealthCheckResponse as HealthCheckResponse };
 }
