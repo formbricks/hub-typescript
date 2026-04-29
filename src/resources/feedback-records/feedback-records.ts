@@ -107,8 +107,10 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Permanently deletes all feedback record data points matching the specified
-   * user_id. This endpoint supports GDPR Article 17 (Right to Erasure) requests.
+   * Permanently deletes feedback record data points matching the specified user_id.
+   * Omit tenant_id to delete that user_id across all tenants for GDPR Article 17
+   * (Right to Erasure) requests. Provide tenant_id to restrict deletion to that
+   * tenant only.
    *
    * @example
    * ```ts
@@ -543,13 +545,14 @@ export interface FeedbackRecordListParams {
 
 export interface FeedbackRecordBulkDeleteParams {
   /**
-   * Delete all records matching this user ID (required). NULL bytes not allowed.
+   * Delete records matching this user ID (required). NULL bytes not allowed.
    */
   user_id: string;
 
   /**
-   * Filter by tenant ID (optional, for multi-tenant deployments). NULL bytes not
-   * allowed.
+   * Optional tenant scope. Omit this parameter to delete all records matching
+   * user_id across tenants; provide it to delete only records for this tenant. Empty
+   * strings and NULL bytes are not allowed.
    */
   tenant_id?: string;
 }

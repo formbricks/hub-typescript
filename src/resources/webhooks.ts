@@ -14,12 +14,13 @@ export class Webhooks extends APIResource {
    * Creates a new webhook endpoint. When events occur (e.g.
    * feedback*record.created), the Hub POSTs a signed payload to the webhook URL. If
    * signing_key is omitted, a key is auto-generated (Standard Webhooks format,
-   * whsec*...). See WebhookDeliveryPayload for the payload structure sent to your
-   * URL.
+   * whsec*...). tenant_id is required; webhooks only receive events from that exact
+   * tenant. See WebhookDeliveryPayload for the payload structure sent to your URL.
    *
    * @example
    * ```ts
    * const webhook = await client.webhooks.create({
+   *   tenant_id: 'org-123',
    *   url: 'https://example.com/hub-events',
    *   enabled: true,
    *   event_types: [
@@ -361,6 +362,12 @@ export namespace WebhookListResponse {
 
 export interface WebhookCreateParams {
   /**
+   * Tenant/organization identifier. Required for webhook isolation; NULL bytes not
+   * allowed.
+   */
+  tenant_id: string;
+
+  /**
    * URL to receive webhook POSTs. Must be an HTTP or HTTPS URL. NULL bytes not
    * allowed.
    */
@@ -390,11 +397,6 @@ export interface WebhookCreateParams {
    * allowed.
    */
   signing_key?: string;
-
-  /**
-   * Tenant/organization identifier. NULL bytes not allowed.
-   */
-  tenant_id?: string;
 }
 
 export interface WebhookUpdateParams {
@@ -422,10 +424,9 @@ export interface WebhookUpdateParams {
   signing_key?: string;
 
   /**
-   * Omit or send null to leave unchanged. Send empty string to clear (store as
-   * null).
+   * Omit to leave unchanged. Empty strings are rejected; webhooks cannot be global.
    */
-  tenant_id?: string | null;
+  tenant_id?: string;
 
   /**
    * New webhook URL. Must be an HTTP or HTTPS URL. NULL bytes not allowed.
