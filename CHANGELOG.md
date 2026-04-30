@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.5.0 (2026-04-30)
+
+Full Changelog: [v0.4.4...v0.5.0](https://github.com/formbricks/hub-typescript/compare/v0.4.4...v0.5.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** rename user identifier to user id
+
+### Features
+
+* support setting headers via env ([80c84a6](https://github.com/formbricks/hub-typescript/commit/80c84a665a71e9d5c613f6ca4f96237ad49c9693))
+
+
+### Bug Fixes
+
+* enforce tenant scope on webhooks ([1abf2ea](https://github.com/formbricks/hub-typescript/commit/1abf2ea329674e38c42e9bd050e5613e9b950773))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([c76d1a7](https://github.com/formbricks/hub-typescript/commit/c76d1a70ca1eb92b678a2fa5b5c9b97af2db9299))
+* **format:** run eslint and prettier separately ([61345de](https://github.com/formbricks/hub-typescript/commit/61345ded02d717be11f1a805e074c53c1439ed6b))
+* **formatter:** run prettier and eslint separately ([ef198dd](https://github.com/formbricks/hub-typescript/commit/ef198dddf23da64ebab47520849d9a8a34a39e3d))
+* **internal:** codegen related update ([a4f6c04](https://github.com/formbricks/hub-typescript/commit/a4f6c0469a18e14f4902144430e24cf91ed8c4ff))
+* **internal:** more robust bootstrap script ([fe8bd98](https://github.com/formbricks/hub-typescript/commit/fe8bd984be73990f9d092ecac5eff3b07fac3974))
+* restructure docs search code ([7c84afa](https://github.com/formbricks/hub-typescript/commit/7c84afa6f97817a620b66de5db7536484a8e0e5d))
+
+
+### Documentation
+
+* fix Hub documentation inconsistencies ([effaee5](https://github.com/formbricks/hub-typescript/commit/effaee53ca149c1d6556ce509a3dbb2b3421a236))
+
+
+### Refactors
+
+* **api:** rename user identifier to user id ([391eeaa](https://github.com/formbricks/hub-typescript/commit/391eeaad473f4dd7330b8234ebabab3627fc26ea))
+* rename google vertex provider to gemini ([27bf670](https://github.com/formbricks/hub-typescript/commit/27bf6706fd3df74b26e309d45e2e398776741820))
+
 ## 0.4.4 (2026-04-10)
 
 Full Changelog: [v0.4.3...v0.4.4](https://github.com/formbricks/hub-typescript/compare/v0.4.3...v0.4.4)
