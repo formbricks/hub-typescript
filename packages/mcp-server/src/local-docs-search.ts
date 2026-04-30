@@ -62,13 +62,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## check\n\n`client.health.check(): string`\n\n**get** `/health`\n\nReturns OK if the service is running\n\n### Returns\n\n- `string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.health.check();\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
-        example: 'curl http://localhost:8080/health \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.health.check',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.health.check();\n\nconsole.log(response);",
+      },
+      http: {
+        example: 'curl http://localhost:8080/health \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -77,7 +77,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/v1/feedback-records',
     httpMethod: 'get',
     summary: 'List feedback records with filters',
-    description: 'Lists feedback records with optional filters and pagination',
+    description:
+      'Lists feedback records for a required tenant_id with optional additional filters and pagination',
     stainlessPath: '(resource) feedback_records > (method) list',
     qualified: 'client.feedbackRecords.list',
     params: [
@@ -92,21 +93,21 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'source_type?: string;',
       'submission_id?: string;',
       'until?: string;',
-      'user_identifier?: string;',
+      'user_id?: string;',
     ],
     response:
-      "{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]; limit: number; next_cursor?: string; }",
+      "{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]; limit: number; next_cursor?: string; }",
     markdown:
-      "## list\n\n`client.feedbackRecords.list(tenant_id: string, cursor?: string, field_group_id?: string, field_id?: string, field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date', limit?: number, since?: string, source_id?: string, source_type?: string, submission_id?: string, until?: string, user_identifier?: string): { data: feedback_record_data[]; limit: number; next_cursor?: string; }`\n\n**get** `/v1/feedback-records`\n\nLists feedback records with optional filters and pagination\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant ID (required for isolation). NULL bytes not allowed.\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `field_group_id?: string`\n  Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.\n\n- `field_id?: string`\n  Filter by field ID. NULL bytes not allowed.\n\n- `field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  Filter by field type. NULL bytes not allowed.\n\n- `limit?: number`\n  Number of results to return (max 1000)\n\n- `since?: string`\n  Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `source_id?: string`\n  Filter by source ID (NULL bytes not allowed)\n\n- `source_type?: string`\n  Filter by source type. NULL bytes not allowed.\n\n- `submission_id?: string`\n  Filter by submission ID to group records belonging to one logical submission. NULL bytes not allowed.\n\n- `until?: string`\n  Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `user_identifier?: string`\n  Filter by user identifier. NULL bytes not allowed.\n\n### Returns\n\n- `{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecords = await client.feedbackRecords.list({ tenant_id: 'org-123' });\n\nconsole.log(feedbackRecords);\n```",
+      "## list\n\n`client.feedbackRecords.list(tenant_id: string, cursor?: string, field_group_id?: string, field_id?: string, field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date', limit?: number, since?: string, source_id?: string, source_type?: string, submission_id?: string, until?: string, user_id?: string): { data: feedback_record_data[]; limit: number; next_cursor?: string; }`\n\n**get** `/v1/feedback-records`\n\nLists feedback records for a required tenant_id with optional additional filters and pagination\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant ID (required for isolation). NULL bytes not allowed.\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `field_group_id?: string`\n  Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.\n\n- `field_id?: string`\n  Filter by field ID. NULL bytes not allowed.\n\n- `field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  Filter by field type. NULL bytes not allowed.\n\n- `limit?: number`\n  Number of results to return (max 1000)\n\n- `since?: string`\n  Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `source_id?: string`\n  Filter by source ID (NULL bytes not allowed)\n\n- `source_type?: string`\n  Filter by source type. NULL bytes not allowed.\n\n- `submission_id?: string`\n  Filter by submission ID to group records belonging to one logical submission. NULL bytes not allowed.\n\n- `until?: string`\n  Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `user_id?: string`\n  Filter by user ID. NULL bytes not allowed.\n\n### Returns\n\n- `{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecords = await client.feedbackRecords.list({ tenant_id: 'org-123' });\n\nconsole.log(feedbackRecords);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.feedbackRecords.list',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst feedbackRecords = await client.feedbackRecords.list({ tenant_id: 'org-123' });\n\nconsole.log(feedbackRecords.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -132,25 +133,25 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'metadata?: object;',
       'source_id?: string;',
       'source_name?: string;',
-      'user_identifier?: string;',
+      'user_id?: string;',
       'value_boolean?: boolean;',
       'value_date?: string;',
       'value_number?: number;',
       'value_text?: string;',
     ],
     response:
-      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
+      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
     markdown:
-      "## create\n\n`client.feedbackRecords.create(field_id: string, field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date', source_type: string, submission_id: string, tenant_id: string, collected_at?: string, field_group_id?: string, field_group_label?: string, field_label?: string, language?: string, metadata?: object, source_id?: string, source_name?: string, user_identifier?: string, value_boolean?: boolean, value_date?: string, value_number?: number, value_text?: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**post** `/v1/feedback-records`\n\nCreates a new feedback record data point\n\n### Parameters\n\n- `field_id: string`\n  Identifier for the question/field. NULL bytes not allowed.\n\n- `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  Field type: text (enrichable), categorical, nps, csat, ces, rating, number, boolean, date\n\n- `source_type: string`\n  Type of feedback source (e.g., survey, review, feedback_form). NULL bytes not allowed.\n\n- `submission_id: string`\n  Identifier for the logical submission this record belongs to (tenant-scoped). Required.\nEnables grouping multi-field submissions and idempotent ingestion.\nUnique per (tenant_id, submission_id, field_id). If a record has no logical submission, use e.g. field_id.\n\n\n- `tenant_id: string`\n  Tenant/organization identifier for multi-tenancy. Required.\n\n- `collected_at?: string`\n  When the feedback was collected (defaults to now). Must be between 1970-01-01 and 2080-12-31.\n\n- `field_group_id?: string`\n  Stable identifier grouping related fields (for ranking, matrix, grid questions). NULL bytes not allowed.\n\n- `field_group_label?: string`\n  Human-readable question text for the group\n\n- `field_label?: string`\n  The actual question text\n\n- `language?: string`\n  ISO language code. NULL bytes not allowed.\n\n- `metadata?: object`\n  User agent, device, location, referrer, tags, etc. NULL bytes (\\x00 or \\u0000) are not allowed in JSON keys or values.\n\n- `source_id?: string`\n  Reference to survey/form/ticket ID\n\n- `source_name?: string`\n  Human-readable name\n\n- `user_identifier?: string`\n  Anonymous ID or email hash\n\n- `value_boolean?: boolean`\n  For yes/no questions\n\n- `value_date?: string`\n  For date responses. Must be between 1970-01-01 and 2080-12-31.\n\n- `value_number?: number`\n  For ratings, NPS scores, numeric responses. Must be between -1e15 and +1e15.\n\n- `value_text?: string`\n  For open-ended text responses. Omit or null if not applicable. NULL bytes not allowed when present.\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_identifier?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.create({\n  field_id: 'q1',\n  field_type: 'rating',\n  source_type: 'survey',\n  submission_id: '550e8400-e29b-41d4-a716-446655440000',\n  tenant_id: 'org-123',\n});\n\nconsole.log(feedbackRecordData);\n```",
+      "## create\n\n`client.feedbackRecords.create(field_id: string, field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date', source_type: string, submission_id: string, tenant_id: string, collected_at?: string, field_group_id?: string, field_group_label?: string, field_label?: string, language?: string, metadata?: object, source_id?: string, source_name?: string, user_id?: string, value_boolean?: boolean, value_date?: string, value_number?: number, value_text?: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**post** `/v1/feedback-records`\n\nCreates a new feedback record data point\n\n### Parameters\n\n- `field_id: string`\n  Identifier for the question/field. NULL bytes not allowed.\n\n- `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  Field type: text (enrichable), categorical, nps, csat, ces, rating, number, boolean, date\n\n- `source_type: string`\n  Type of feedback source (e.g., survey, review, feedback_form). NULL bytes not allowed.\n\n- `submission_id: string`\n  Identifier for the logical submission this record belongs to (tenant-scoped). Required.\nEnables grouping multi-field submissions and idempotent ingestion.\nUnique per (tenant_id, submission_id, field_id). If a record has no logical submission, use e.g. field_id.\n\n\n- `tenant_id: string`\n  Tenant/organization identifier for multi-tenancy. Required.\n\n- `collected_at?: string`\n  When the feedback was collected (defaults to now). Must be between 1970-01-01 and 2080-12-31.\n\n- `field_group_id?: string`\n  Stable identifier grouping related fields (for ranking, matrix, grid questions). NULL bytes not allowed.\n\n- `field_group_label?: string`\n  Human-readable question text for the group\n\n- `field_label?: string`\n  The actual question text\n\n- `language?: string`\n  ISO language code. NULL bytes not allowed.\n\n- `metadata?: object`\n  User agent, device, location, referrer, tags, etc. NULL bytes (\\x00 or \\u0000) are not allowed in JSON keys or values.\n\n- `source_id?: string`\n  Reference to survey/form/ticket ID\n\n- `source_name?: string`\n  Human-readable name\n\n- `user_id?: string`\n  User ID (e.g., anonymous ID or email hash)\n\n- `value_boolean?: boolean`\n  For yes/no questions\n\n- `value_date?: string`\n  For date responses. Must be between 1970-01-01 and 2080-12-31.\n\n- `value_number?: number`\n  For ratings, NPS scores, numeric responses. Must be between -1e15 and +1e15.\n\n- `value_text?: string`\n  For open-ended text responses. Omit or null if not applicable. NULL bytes not allowed when present.\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_id?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.create({\n  field_id: 'q1',\n  field_type: 'rating',\n  source_type: 'survey',\n  submission_id: '550e8400-e29b-41d4-a716-446655440000',\n  tenant_id: 'org-123',\n});\n\nconsole.log(feedbackRecordData);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "field_id": "q1",\n          "field_type": "rating",\n          "source_type": "survey",\n          "submission_id": "550e8400-e29b-41d4-a716-446655440000",\n          "tenant_id": "org-123"\n        }\'',
-      },
       typescript: {
         method: 'client.feedbackRecords.create',
         example:
-          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst feedbackRecordData = await client.feedbackRecords.create({\n  field_id: 'q1',\n  field_type: 'rating',\n  source_type: 'survey',\n  submission_id: '550e8400-e29b-41d4-a716-446655440000',\n  tenant_id: 'org-123',\n  field_label: 'How satisfied are you?',\n  language: 'en',\n  source_id: 'survey-123',\n  source_name: 'Q1 NPS Survey',\n  user_identifier: 'user-abc-123',\n  value_number: 9,\n});\n\nconsole.log(feedbackRecordData.id);",
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst feedbackRecordData = await client.feedbackRecords.create({\n  field_id: 'q1',\n  field_type: 'rating',\n  source_type: 'survey',\n  submission_id: '550e8400-e29b-41d4-a716-446655440000',\n  tenant_id: 'org-123',\n  field_label: 'How satisfied are you?',\n  language: 'en',\n  source_id: 'survey-123',\n  source_name: 'Q1 NPS Survey',\n  user_id: 'user-abc-123',\n  value_number: 9,\n});\n\nconsole.log(feedbackRecordData.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "field_id": "q1",\n          "field_type": "rating",\n          "source_type": "survey",\n          "submission_id": "550e8400-e29b-41d4-a716-446655440000",\n          "tenant_id": "org-123"\n        }\'',
       },
     },
   },
@@ -158,24 +159,24 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     name: 'bulk_delete',
     endpoint: '/v1/feedback-records',
     httpMethod: 'delete',
-    summary: 'Bulk delete feedback records by user identifier',
+    summary: 'Bulk delete feedback records by user ID',
     description:
-      'Permanently deletes all feedback record data points matching the specified user_identifier. This endpoint supports GDPR Article 17 (Right to Erasure) requests.',
+      'Permanently deletes feedback record data points matching the specified user_id. Omit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure) requests. Provide tenant_id to restrict deletion to that tenant only.',
     stainlessPath: '(resource) feedback_records > (method) bulk_delete',
     qualified: 'client.feedbackRecords.bulkDelete',
-    params: ['user_identifier: string;', 'tenant_id?: string;'],
+    params: ['user_id: string;', 'tenant_id?: string;'],
     response: '{ deleted_count: number; message: string; }',
     markdown:
-      "## bulk_delete\n\n`client.feedbackRecords.bulkDelete(user_identifier: string, tenant_id?: string): { deleted_count: number; message: string; }`\n\n**delete** `/v1/feedback-records`\n\nPermanently deletes all feedback record data points matching the specified user_identifier. This endpoint supports GDPR Article 17 (Right to Erasure) requests.\n\n### Parameters\n\n- `user_identifier: string`\n  Delete all records matching this user identifier (required). NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Filter by tenant ID (optional, for multi-tenant deployments). NULL bytes not allowed.\n\n### Returns\n\n- `{ deleted_count: number; message: string; }`\n\n  - `deleted_count: number`\n  - `message: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.bulkDelete({ user_identifier: 'user-abc-123' });\n\nconsole.log(response);\n```",
+      "## bulk_delete\n\n`client.feedbackRecords.bulkDelete(user_id: string, tenant_id?: string): { deleted_count: number; message: string; }`\n\n**delete** `/v1/feedback-records`\n\nPermanently deletes feedback record data points matching the specified user_id. Omit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure) requests. Provide tenant_id to restrict deletion to that tenant only.\n\n### Parameters\n\n- `user_id: string`\n  Delete records matching this user ID (required). NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Optional tenant scope. Omit this parameter to delete all records matching user_id across tenants; provide it to delete only records for this tenant. Empty strings and NULL bytes are not allowed.\n\n### Returns\n\n- `{ deleted_count: number; message: string; }`\n\n  - `deleted_count: number`\n  - `message: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.feedbackRecords.bulkDelete',
         example:
-          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedbackRecords.bulkDelete({ user_identifier: 'user-abc-123' });\n\nconsole.log(response.deleted_count);",
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123' });\n\nconsole.log(response.deleted_count);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -189,18 +190,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.feedbackRecords.retrieve',
     params: ['id: string;'],
     response:
-      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
+      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
     markdown:
-      "## retrieve\n\n`client.feedbackRecords.retrieve(id: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**get** `/v1/feedback-records/{id}`\n\nRetrieves a single feedback record data point by its UUID\n\n### Parameters\n\n- `id: string`\n  Feedback Record ID (UUID)\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_identifier?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(feedbackRecordData);\n```",
+      "## retrieve\n\n`client.feedbackRecords.retrieve(id: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**get** `/v1/feedback-records/{id}`\n\nRetrieves a single feedback record data point by its UUID\n\n### Parameters\n\n- `id: string`\n  Feedback Record ID (UUID)\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_id?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(feedbackRecordData);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records/$ID \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.feedbackRecords.retrieve',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst feedbackRecordData = await client.feedbackRecords.retrieve(\n  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n);\n\nconsole.log(feedbackRecordData.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records/$ID \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -216,14 +217,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.feedbackRecords.delete(id: string): void`\n\n**delete** `/v1/feedback-records/{id}`\n\nPermanently deletes a feedback record data point\n\n### Parameters\n\n- `id: string`\n  Feedback Record ID (UUID)\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nawait client.feedbackRecords.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e')\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.feedbackRecords.delete',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.feedbackRecords.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -239,25 +240,25 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'id: string;',
       'language?: string;',
       'metadata?: object;',
-      'user_identifier?: string;',
+      'user_id?: string;',
       'value_boolean?: boolean;',
       'value_date?: string;',
       'value_number?: number;',
       'value_text?: string;',
     ],
     response:
-      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
+      "{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }",
     markdown:
-      "## update\n\n`client.feedbackRecords.update(id: string, language?: string, metadata?: object, user_identifier?: string, value_boolean?: boolean, value_date?: string, value_number?: number, value_text?: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**patch** `/v1/feedback-records/{id}`\n\nUpdates specific fields of a feedback record data point\n\n### Parameters\n\n- `id: string`\n  Feedback Record ID (UUID)\n\n- `language?: string`\n  Update language. NULL bytes not allowed.\n\n- `metadata?: object`\n  Update metadata. NULL bytes (\\x00 or \\u0000) are not allowed in JSON keys or values.\n\n- `user_identifier?: string`\n  Update user identifier\n\n- `value_boolean?: boolean`\n  Update boolean response\n\n- `value_date?: string`\n  Update date response. Must be between 1970-01-01 and 2080-12-31.\n\n- `value_number?: number`\n  Update numeric response. Must be between -1e15 and +1e15.\n\n- `value_text?: string`\n  Update text response. NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_identifier?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_identifier?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(feedbackRecordData);\n```",
+      "## update\n\n`client.feedbackRecords.update(id: string, language?: string, metadata?: object, user_id?: string, value_boolean?: boolean, value_date?: string, value_number?: number, value_text?: string): { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n**patch** `/v1/feedback-records/{id}`\n\nUpdates specific fields of a feedback record data point\n\n### Parameters\n\n- `id: string`\n  Feedback Record ID (UUID)\n\n- `language?: string`\n  Update language. NULL bytes not allowed.\n\n- `metadata?: object`\n  Update metadata. NULL bytes (\\x00 or \\u0000) are not allowed in JSON keys or values.\n\n- `user_id?: string`\n  User ID (e.g., anonymous ID or email hash)\n\n- `value_boolean?: boolean`\n  Update boolean response\n\n- `value_date?: string`\n  Update date response. Must be between 1970-01-01 and 2080-12-31.\n\n- `value_number?: number`\n  Update numeric response. Must be between -1e15 and +1e15.\n\n- `value_text?: string`\n  Update text response. NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; }`\n\n  - `id: string`\n  - `collected_at: string`\n  - `created_at: string`\n  - `field_id: string`\n  - `field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  - `source_type: string`\n  - `submission_id: string`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `field_group_id?: string`\n  - `field_group_label?: string`\n  - `field_label?: string`\n  - `language?: string`\n  - `metadata?: object`\n  - `source_id?: string`\n  - `source_name?: string`\n  - `user_id?: string`\n  - `value_boolean?: boolean`\n  - `value_date?: string`\n  - `value_number?: number`\n  - `value_text?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst feedbackRecordData = await client.feedbackRecords.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(feedbackRecordData);\n```",
     perLanguage: {
-      http: {
-        example:
-          "curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $HUB_API_KEY\" \\\n    -d '{}'",
-      },
       typescript: {
         method: 'client.feedbackRecords.update',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst feedbackRecordData = await client.feedbackRecords.update(\n  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n  { value_text: 'Updated feedback text' },\n);\n\nconsole.log(feedbackRecordData.id);",
+      },
+      http: {
+        example:
+          "curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $HUB_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -267,7 +268,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get similar feedback records',
     description:
-      'Returns feedback record IDs and similarity scores for records similar to the given one (by embedding).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (AI Studio), google-vertex.\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nThe source feedback record must belong to the given tenant_id (enforced).\n',
+      'Returns feedback record IDs and similarity scores for records similar to the given one (by embedding).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (Gemini Developer API / Google AI Studio), google-gemini (Gemini Enterprise Agent Platform API).\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nThe source feedback record must belong to the given tenant_id (enforced).\n',
     stainlessPath: '(resource) feedback_records > (method) retrieve_similar',
     qualified: 'client.feedbackRecords.retrieveSimilar',
     params: [
@@ -280,16 +281,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }',
     markdown:
-      "## retrieve_similar\n\n`client.feedbackRecords.retrieveSimilar(id: string, tenant_id: string, cursor?: string, limit?: number, min_score?: number): { data: object[]; limit: number; next_cursor?: string; }`\n\n**get** `/v1/feedback-records/{id}/similar`\n\nReturns feedback record IDs and similarity scores for records similar to the given one (by embedding).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (AI Studio), google-vertex.\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nThe source feedback record must belong to the given tenant_id (enforced).\n\n\n### Parameters\n\n- `id: string`\n\n- `tenant_id: string`\n  Tenant ID (required for isolation; must match feedback record tenant_id)\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `limit?: number`\n  Number of results to return (default 10, max 100). Consistent with list endpoints.\n\n- `min_score?: number`\n  Minimum similarity score (0..1); only results with score >= min_score are returned. Default 0.7 to reduce noise.\n\n### Returns\n\n- `{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', { tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+      "## retrieve_similar\n\n`client.feedbackRecords.retrieveSimilar(id: string, tenant_id: string, cursor?: string, limit?: number, min_score?: number): { data: object[]; limit: number; next_cursor?: string; }`\n\n**get** `/v1/feedback-records/{id}/similar`\n\nReturns feedback record IDs and similarity scores for records similar to the given one (by embedding).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (Gemini Developer API / Google AI Studio), google-gemini (Gemini Enterprise Agent Platform API).\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nThe source feedback record must belong to the given tenant_id (enforced).\n\n\n### Parameters\n\n- `id: string`\n\n- `tenant_id: string`\n  Tenant ID (required for isolation; must match feedback record tenant_id)\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `limit?: number`\n  Number of results to return (default 10, max 100). Consistent with list endpoints.\n\n- `min_score?: number`\n  Minimum similarity score (0..1); only results with score >= min_score are returned. Default 0.7 to reduce noise.\n\n### Returns\n\n- `{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', { tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records/$ID/similar \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.feedbackRecords.retrieveSimilar',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedbackRecords.retrieveSimilar(\n  '018e1234-5678-9abc-def0-123456789abc',\n  { tenant_id: 'org-123' },\n);\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records/$ID/similar \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -299,7 +300,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Semantic search over feedback records',
     description:
-      'Embeds the search query and returns feedback record IDs with similarity scores (cosine, 0..1).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (AI Studio), google-vertex.\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nRequest body must include query and tenant_id (required for tenant isolation).\n',
+      'Embeds the search query and returns feedback record IDs with similarity scores (cosine, 0..1).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (Gemini Developer API / Google AI Studio), google-gemini (Gemini Enterprise Agent Platform API).\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nRequest body must include query and tenant_id (required for tenant isolation).\n',
     stainlessPath: '(resource) feedback_records.search > (method) perform_semantic_search',
     qualified: 'client.feedbackRecords.search.performSemanticSearch',
     params: [
@@ -312,16 +313,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }',
     markdown:
-      "## perform_semantic_search\n\n`client.feedbackRecords.search.performSemanticSearch(query: string, tenant_id: string, cursor?: string, limit?: number, min_score?: number): { data: object[]; limit: number; next_cursor?: string; }`\n\n**post** `/v1/feedback-records/search/semantic`\n\nEmbeds the search query and returns feedback record IDs with similarity scores (cosine, 0..1).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (AI Studio), google-vertex.\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nRequest body must include query and tenant_id (required for tenant isolation).\n\n\n### Parameters\n\n- `query: string`\n  Search query text (embedded and compared via cosine similarity)\n\n- `tenant_id: string`\n  Tenant ID (required for isolation; must match feedback record tenant_id)\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `limit?: number`\n  Number of results to return (default 10, max 100). Consistent with list endpoints.\n\n- `min_score?: number`\n  Minimum similarity score (0..1); only results with score >= min_score are returned. Default 0.7 to reduce noise.\n\n### Returns\n\n- `{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.search.performSemanticSearch({ query: 'What do users think about login speed?', tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+      "## perform_semantic_search\n\n`client.feedbackRecords.search.performSemanticSearch(query: string, tenant_id: string, cursor?: string, limit?: number, min_score?: number): { data: object[]; limit: number; next_cursor?: string; }`\n\n**post** `/v1/feedback-records/search/semantic`\n\nEmbeds the search query and returns feedback record IDs with similarity scores (cosine, 0..1).\n**Only available when embeddings are configured** (EMBEDDING_PROVIDER and EMBEDDING_MODEL set).\nSupported providers: openai, google (Gemini Developer API / Google AI Studio), google-gemini (Gemini Enterprise Agent Platform API).\nWhen embeddings are disabled, this endpoint returns 503 Service Unavailable.\nRequest body must include query and tenant_id (required for tenant isolation).\n\n\n### Parameters\n\n- `query: string`\n  Search query text (embedded and compared via cosine similarity)\n\n- `tenant_id: string`\n  Tenant ID (required for isolation; must match feedback record tenant_id)\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `limit?: number`\n  Number of results to return (default 10, max 100). Consistent with list endpoints.\n\n- `min_score?: number`\n  Minimum similarity score (0..1); only results with score >= min_score are returned. Default 0.7 to reduce noise.\n\n### Returns\n\n- `{ data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]; limit: number; next_cursor?: string; }`\n\n  - `data: { feedback_record_id: string; field_label: string; score: number; value_text: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.search.performSemanticSearch({ query: 'What do users think about login speed?', tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/feedback-records/search/semantic \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "query": "What do users think about login speed?",\n          "tenant_id": "org-123"\n        }\'',
-      },
       typescript: {
         method: 'client.feedbackRecords.search.performSemanticSearch',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedbackRecords.search.performSemanticSearch({\n  query: 'What do users think about login speed?',\n  tenant_id: 'org-123',\n});\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records/search/semantic \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "query": "What do users think about login speed?",\n          "tenant_id": "org-123"\n        }\'',
       },
     },
   },
@@ -339,13 +340,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.webhooks.list(cursor?: string, enabled?: boolean, limit?: number, tenant_id?: string): { data: object[]; limit: number; next_cursor?: string; offset?: number; total?: number; }`\n\n**get** `/v1/webhooks`\n\nLists webhook endpoints with optional filters and pagination\n\n### Parameters\n\n- `cursor?: string`\n  Omit for the first page. For the next page, use the exact value from the previous response's next_cursor.\nOpaque (base64-encoded); keyset pagination.\n\n\n- `enabled?: boolean`\n  Filter by enabled status\n\n- `limit?: number`\n  Number of results to return (max 1000)\n\n- `tenant_id?: string`\n  Filter by tenant ID. NULL bytes not allowed.\n\n### Returns\n\n- `{ data: { id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }[]; limit: number; next_cursor?: string; offset?: number; total?: number; }`\n\n  - `data: { id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }[]`\n  - `limit: number`\n  - `next_cursor?: string`\n  - `offset?: number`\n  - `total?: number`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks);\n```",
     perLanguage: {
-      http: {
-        example: 'curl http://localhost:8080/v1/webhooks \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.webhooks.list',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks.data);",
+      },
+      http: {
+        example: 'curl http://localhost:8080/v1/webhooks \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -355,29 +356,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Create a webhook',
     description:
-      'Creates a new webhook endpoint. When events occur (e.g. feedback_record.created),\nthe Hub POSTs a signed payload to the webhook URL. If signing_key is omitted,\na key is auto-generated (Standard Webhooks format, whsec_...).\nSee WebhookDeliveryPayload for the payload structure sent to your URL.\n',
+      'Creates a new webhook endpoint. When events occur (e.g. feedback_record.created),\nthe Hub POSTs a signed payload to the webhook URL. If signing_key is omitted,\na key is auto-generated (Standard Webhooks format, whsec_...).\ntenant_id is required; webhooks only receive events from that exact tenant.\nSee WebhookDeliveryPayload for the payload structure sent to your URL.\n',
     stainlessPath: '(resource) webhooks > (method) create',
     qualified: 'client.webhooks.create',
     params: [
+      'tenant_id: string;',
       'url: string;',
       'enabled?: boolean;',
       'event_types?: string[];',
       'signing_key?: string;',
-      'tenant_id?: string;',
     ],
     response:
       '{ id: string; created_at: string; enabled: boolean; signing_key: string; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }',
     markdown:
-      "## create\n\n`client.webhooks.create(url: string, enabled?: boolean, event_types?: string[], signing_key?: string, tenant_id?: string): { id: string; created_at: string; enabled: boolean; signing_key: string; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n**post** `/v1/webhooks`\n\nCreates a new webhook endpoint. When events occur (e.g. feedback_record.created),\nthe Hub POSTs a signed payload to the webhook URL. If signing_key is omitted,\na key is auto-generated (Standard Webhooks format, whsec_...).\nSee WebhookDeliveryPayload for the payload structure sent to your URL.\n\n\n### Parameters\n\n- `url: string`\n  URL to receive webhook POSTs. Must be an HTTP or HTTPS URL. NULL bytes not allowed.\n\n- `enabled?: boolean`\n  Whether the webhook is active (default true)\n\n- `event_types?: string[]`\n  Event types this webhook subscribes to. Each value must be one of WebhookEventType.\nIf empty, the webhook receives all event types.\n\n\n- `signing_key?: string`\n  Optional. If omitted, a key is auto-generated (whsec_...). Used to sign payloads (Standard Webhooks). When provided, max 255 characters; NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Tenant/organization identifier. NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; created_at: string; enabled: boolean; signing_key: string; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `enabled: boolean`\n  - `signing_key: string`\n  - `updated_at: string`\n  - `url: string`\n  - `disabled_at?: string`\n  - `disabled_reason?: string`\n  - `event_types?: string[]`\n  - `tenant_id?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhook = await client.webhooks.create({ url: 'https://example.com/hub-events' });\n\nconsole.log(webhook);\n```",
+      "## create\n\n`client.webhooks.create(tenant_id: string, url: string, enabled?: boolean, event_types?: string[], signing_key?: string): { id: string; created_at: string; enabled: boolean; signing_key: string; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n**post** `/v1/webhooks`\n\nCreates a new webhook endpoint. When events occur (e.g. feedback_record.created),\nthe Hub POSTs a signed payload to the webhook URL. If signing_key is omitted,\na key is auto-generated (Standard Webhooks format, whsec_...).\ntenant_id is required; webhooks only receive events from that exact tenant.\nSee WebhookDeliveryPayload for the payload structure sent to your URL.\n\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant/organization identifier. Required for webhook isolation; NULL bytes not allowed.\n\n- `url: string`\n  URL to receive webhook POSTs. Must be an HTTP or HTTPS URL. NULL bytes not allowed.\n\n- `enabled?: boolean`\n  Whether the webhook is active (default true)\n\n- `event_types?: string[]`\n  Event types this webhook subscribes to. Each value must be one of WebhookEventType.\nIf empty, the webhook receives all event types.\n\n\n- `signing_key?: string`\n  Optional. If omitted, a key is auto-generated (whsec_...). Used to sign payloads (Standard Webhooks). When provided, max 255 characters; NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; created_at: string; enabled: boolean; signing_key: string; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `enabled: boolean`\n  - `signing_key: string`\n  - `updated_at: string`\n  - `url: string`\n  - `disabled_at?: string`\n  - `disabled_reason?: string`\n  - `event_types?: string[]`\n  - `tenant_id?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhook = await client.webhooks.create({ tenant_id: 'org-123', url: 'https://example.com/hub-events' });\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "url": "https://example.com/hub-events",\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",\n          "tenant_id": "org-123"\n        }\'',
-      },
       typescript: {
         method: 'client.webhooks.create',
         example:
-          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.create({\n  url: 'https://example.com/hub-events',\n  enabled: true,\n  event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],\n});\n\nconsole.log(webhook.id);",
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.create({\n  tenant_id: 'org-123',\n  url: 'https://example.com/hub-events',\n  enabled: true,\n  event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],\n});\n\nconsole.log(webhook.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "tenant_id": "org-123",\n          "url": "https://example.com/hub-events",\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"\n        }\'',
       },
     },
   },
@@ -395,13 +396,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.webhooks.retrieve(id: string): { id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n**get** `/v1/webhooks/{id}`\n\nRetrieves a single webhook endpoint by its UUID. signing_key is omitted for security.\n\n### Parameters\n\n- `id: string`\n\n### Returns\n\n- `{ id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n  Webhook data for GET and LIST responses; signing_key is omitted for security\n\n  - `id: string`\n  - `created_at: string`\n  - `enabled: boolean`\n  - `updated_at: string`\n  - `url: string`\n  - `disabled_at?: string`\n  - `disabled_reason?: string`\n  - `event_types?: string[]`\n  - `tenant_id?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhook = await client.webhooks.retrieve('018e1234-5678-9abc-def0-123456789abc');\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
-        example: 'curl http://localhost:8080/v1/webhooks/$ID \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.webhooks.retrieve',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.retrieve('018e1234-5678-9abc-def0-123456789abc');\n\nconsole.log(webhook.id);",
+      },
+      http: {
+        example: 'curl http://localhost:8080/v1/webhooks/$ID \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
@@ -424,16 +425,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }',
     markdown:
-      "## update\n\n`client.webhooks.update(id: string, enabled?: boolean, event_types?: string[], signing_key?: string, tenant_id?: string, url?: string): { id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n**patch** `/v1/webhooks/{id}`\n\nUpdates specific fields of a webhook endpoint\n\n### Parameters\n\n- `id: string`\n\n- `enabled?: boolean`\n  Enable or disable the webhook\n\n- `event_types?: string[]`\n  New list of event types (use empty array to clear). Each value must be one of WebhookEventType.\n\n- `signing_key?: string`\n  New signing key. NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Omit or send null to leave unchanged. Send empty string to clear (store as null).\n\n- `url?: string`\n  New webhook URL. Must be an HTTP or HTTPS URL. NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n  Webhook data for GET and LIST responses; signing_key is omitted for security\n\n  - `id: string`\n  - `created_at: string`\n  - `enabled: boolean`\n  - `updated_at: string`\n  - `url: string`\n  - `disabled_at?: string`\n  - `disabled_reason?: string`\n  - `event_types?: string[]`\n  - `tenant_id?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhook = await client.webhooks.update('018e1234-5678-9abc-def0-123456789abc');\n\nconsole.log(webhook);\n```",
+      "## update\n\n`client.webhooks.update(id: string, enabled?: boolean, event_types?: string[], signing_key?: string, tenant_id?: string, url?: string): { id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n\n**patch** `/v1/webhooks/{id}`\n\nUpdates specific fields of a webhook endpoint\n\n### Parameters\n\n- `id: string`\n\n- `enabled?: boolean`\n  Enable or disable the webhook\n\n- `event_types?: string[]`\n  New list of event types (use empty array to clear). Each value must be one of WebhookEventType.\n\n- `signing_key?: string`\n  New signing key. NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Omit to leave unchanged. Empty strings are rejected; webhooks cannot be global.\n\n- `url?: string`\n  New webhook URL. Must be an HTTP or HTTPS URL. NULL bytes not allowed.\n\n### Returns\n\n- `{ id: string; created_at: string; enabled: boolean; updated_at: string; url: string; disabled_at?: string; disabled_reason?: string; event_types?: string[]; tenant_id?: string; }`\n  Webhook data for GET and LIST responses; signing_key is omitted for security\n\n  - `id: string`\n  - `created_at: string`\n  - `enabled: boolean`\n  - `updated_at: string`\n  - `url: string`\n  - `disabled_at?: string`\n  - `disabled_reason?: string`\n  - `event_types?: string[]`\n  - `tenant_id?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst webhook = await client.webhooks.update('018e1234-5678-9abc-def0-123456789abc');\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/webhooks/$ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",\n          "tenant_id": "org-123",\n          "url": "https://example.com/hub-events"\n        }\'',
-      },
       typescript: {
         method: 'client.webhooks.update',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.update('018e1234-5678-9abc-def0-123456789abc');\n\nconsole.log(webhook.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/webhooks/$ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",\n          "tenant_id": "org-123",\n          "url": "https://example.com/hub-events"\n        }\'',
       },
     },
   },
@@ -449,14 +450,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.webhooks.delete(id: string): void`\n\n**delete** `/v1/webhooks/{id}`\n\nPermanently deletes a webhook endpoint. It will no longer receive events.\n\n### Parameters\n\n- `id: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nawait client.webhooks.delete('018e1234-5678-9abc-def0-123456789abc')\n```",
     perLanguage: {
-      http: {
-        example:
-          'curl http://localhost:8080/v1/webhooks/$ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
-      },
       typescript: {
         method: 'client.webhooks.delete',
         example:
           "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.webhooks.delete('018e1234-5678-9abc-def0-123456789abc');",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/webhooks/$ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },
