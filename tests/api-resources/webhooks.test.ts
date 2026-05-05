@@ -10,7 +10,10 @@ const client = new FormbricksHub({
 describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.webhooks.create({ url: 'https://example.com/hub-events' });
+    const responsePromise = client.webhooks.create({
+      tenant_id: 'org-123',
+      url: 'https://example.com/hub-events',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,11 +26,11 @@ describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
+      tenant_id: 'org-123',
       url: 'https://example.com/hub-events',
       enabled: true,
       event_types: ['feedback_record.created', 'feedback_record.updated', 'feedback_record.deleted'],
       signing_key: 'whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-      tenant_id: 'org-123',
     });
   });
 

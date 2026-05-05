@@ -30,7 +30,7 @@ export class FeedbackRecords extends APIResource {
    *     language: 'en',
    *     source_id: 'survey-123',
    *     source_name: 'Q1 NPS Survey',
-   *     user_identifier: 'user-abc-123',
+   *     user_id: 'user-abc-123',
    *     value_number: 9,
    *   });
    * ```
@@ -75,7 +75,8 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Lists feedback records with optional filters and pagination
+   * Lists feedback records for a required tenant_id with optional additional filters
+   * and pagination
    *
    * @example
    * ```ts
@@ -106,14 +107,15 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Permanently deletes all feedback record data points matching the specified
-   * user_identifier. This endpoint supports GDPR Article 17 (Right to Erasure)
-   * requests.
+   * Permanently deletes feedback record data points matching the specified user_id.
+   * Omit tenant_id to delete that user_id across all tenants for GDPR Article 17
+   * (Right to Erasure) requests. Provide tenant_id to restrict deletion to that
+   * tenant only.
    *
    * @example
    * ```ts
    * const response = await client.feedbackRecords.bulkDelete({
-   *   user_identifier: 'user-abc-123',
+   *   user_id: 'user-abc-123',
    * });
    * ```
    */
@@ -121,15 +123,16 @@ export class FeedbackRecords extends APIResource {
     params: FeedbackRecordBulkDeleteParams,
     options?: RequestOptions,
   ): APIPromise<FeedbackRecordBulkDeleteResponse> {
-    const { user_identifier, tenant_id } = params;
-    return this._client.delete('/v1/feedback-records', { query: { user_identifier, tenant_id }, ...options });
+    const { user_id, tenant_id } = params;
+    return this._client.delete('/v1/feedback-records', { query: { user_id, tenant_id }, ...options });
   }
 
   /**
    * Returns feedback record IDs and similarity scores for records similar to the
    * given one (by embedding). **Only available when embeddings are configured**
    * (EMBEDDING_PROVIDER and EMBEDDING_MODEL set). Supported providers: openai,
-   * google (AI Studio), google-vertex. When embeddings are disabled, this endpoint
+   * google (Gemini Developer API / Google AI Studio), google-gemini (Gemini
+   * Enterprise Agent Platform API). When embeddings are disabled, this endpoint
    * returns 503 Service Unavailable. The source feedback record must belong to the
    * given tenant_id (enforced).
    *
@@ -233,9 +236,9 @@ export interface FeedbackRecordData {
   source_name?: string;
 
   /**
-   * User identifier
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * Boolean response
@@ -410,9 +413,9 @@ export interface FeedbackRecordCreateParams {
   source_name?: string | null;
 
   /**
-   * Anonymous ID or email hash
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * For yes/no questions
@@ -449,9 +452,9 @@ export interface FeedbackRecordUpdateParams {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Update user identifier
+   * User ID (e.g., anonymous ID or email hash)
    */
-  user_identifier?: string;
+  user_id?: string;
 
   /**
    * Update boolean response
@@ -535,21 +538,21 @@ export interface FeedbackRecordListParams {
   until?: string;
 
   /**
-   * Filter by user identifier. NULL bytes not allowed.
+   * Filter by user ID. NULL bytes not allowed.
    */
-  user_identifier?: string;
+  user_id?: string;
 }
 
 export interface FeedbackRecordBulkDeleteParams {
   /**
-   * Delete all records matching this user identifier (required). NULL bytes not
-   * allowed.
+   * Delete records matching this user ID (required). NULL bytes not allowed.
    */
-  user_identifier: string;
+  user_id: string;
 
   /**
-   * Filter by tenant ID (optional, for multi-tenant deployments). NULL bytes not
-   * allowed.
+   * Optional tenant scope. Omit this parameter to delete all records matching
+   * user_id across tenants; provide it to delete only records for this tenant. Empty
+   * strings and NULL bytes are not allowed.
    */
   tenant_id?: string;
 }
