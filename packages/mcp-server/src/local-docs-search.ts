@@ -151,7 +151,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl http://localhost:8080/v1/feedback-records \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "field_id": "q1",\n          "field_type": "rating",\n          "source_type": "survey",\n          "submission_id": "550e8400-e29b-41d4-a716-446655440000",\n          "tenant_id": "org-123"\n        }\'',
+          'curl http://localhost:8080/v1/feedback-records \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "field_id": "q1",\n          "field_type": "rating",\n          "source_type": "survey",\n          "submission_id": "550e8400-e29b-41d4-a716-446655440000",\n          "tenant_id": "org-123",\n          "field_group_id": "feature_priority",\n          "field_group_label": "Rank these features by importance",\n          "field_label": "How satisfied are you?",\n          "language": "en",\n          "source_id": "survey-123",\n          "source_name": "Q1 NPS Survey",\n          "user_id": "user-abc-123",\n          "value_boolean": true,\n          "value_number": 9,\n          "value_text": "Great service!"\n        }\'',
       },
     },
   },
@@ -258,7 +258,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $HUB_API_KEY\" \\\n    -d '{}'",
+          'curl http://localhost:8080/v1/feedback-records/$ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "value_text": "Updated feedback text"\n        }\'',
       },
     },
   },
@@ -378,7 +378,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl http://localhost:8080/v1/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "tenant_id": "org-123",\n          "url": "https://example.com/hub-events",\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"\n        }\'',
+          'curl http://localhost:8080/v1/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "tenant_id": "org-123",\n          "url": "https://example.com/hub-events",\n          "enabled": true,\n          "event_types": [\n            "feedback_record.created",\n            "feedback_record.updated",\n            "feedback_record.deleted"\n          ],\n          "signing_key": "whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"\n        }\'',
       },
     },
   },
