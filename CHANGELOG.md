@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.5.1 (2026-05-19)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/formbricks/hub-typescript/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([2f297fe](https://github.com/formbricks/hub-typescript/commit/2f297fe027beb4a94ae15c757d8a29acd29fc403))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([1c84b35](https://github.com/formbricks/hub-typescript/commit/1c84b35f6ea1f1b93211ec7172e6d7f5d2cd7ab9))
+* **tests:** remove redundant File import ([1edb70a](https://github.com/formbricks/hub-typescript/commit/1edb70ac156b1fdbba00ea6bb0346ee18b282c91))
+
+
+### Documentation
+
+* update http mcp docs ([98b71ae](https://github.com/formbricks/hub-typescript/commit/98b71aeddc2307c2608413237357b4e42be2930c))
+
 ## 0.5.0 (2026-05-01)
 
 Full Changelog: [v0.4.4...v0.5.0](https://github.com/formbricks/hub-typescript/compare/v0.4.4...v0.5.0)
