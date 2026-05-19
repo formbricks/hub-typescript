@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@formbricks/hub/internal/to-file';
 import { toFile } from '@formbricks/hub/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
