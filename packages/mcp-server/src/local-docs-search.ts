@@ -159,15 +159,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     name: 'bulk_delete',
     endpoint: '/v1/feedback-records',
     httpMethod: 'delete',
-    summary: 'Bulk delete feedback records by user ID',
+    summary: 'Delete feedback records by user ID',
     description:
-      'Permanently deletes feedback record data points matching the specified user_id. Omit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure) requests. Provide tenant_id to restrict deletion to that tenant only.',
+      'Permanently deletes feedback record data points for the specified user_id/data subject.\nOmit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure)\nrequests. Provide tenant_id to restrict deletion to that tenant only. Derived embeddings for deleted\nfeedback records are removed by database cascade. The operation is idempotent; repeated calls return\ndeleted_count 0 after matching records have already been deleted.\n',
     stainlessPath: '(resource) feedback_records > (method) bulk_delete',
     qualified: 'client.feedbackRecords.bulkDelete',
     params: ['user_id: string;', 'tenant_id?: string;'],
     response: '{ deleted_count: number; message: string; }',
     markdown:
-      "## bulk_delete\n\n`client.feedbackRecords.bulkDelete(user_id: string, tenant_id?: string): { deleted_count: number; message: string; }`\n\n**delete** `/v1/feedback-records`\n\nPermanently deletes feedback record data points matching the specified user_id. Omit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure) requests. Provide tenant_id to restrict deletion to that tenant only.\n\n### Parameters\n\n- `user_id: string`\n  Delete records matching this user ID (required). NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Optional tenant scope. Omit this parameter to delete all records matching user_id across tenants; provide it to delete only records for this tenant. Empty strings and NULL bytes are not allowed.\n\n### Returns\n\n- `{ deleted_count: number; message: string; }`\n\n  - `deleted_count: number`\n  - `message: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123' });\n\nconsole.log(response);\n```",
+      "## bulk_delete\n\n`client.feedbackRecords.bulkDelete(user_id: string, tenant_id?: string): { deleted_count: number; message: string; }`\n\n**delete** `/v1/feedback-records`\n\nPermanently deletes feedback record data points for the specified user_id/data subject.\nOmit tenant_id to delete that user_id across all tenants for GDPR Article 17 (Right to Erasure)\nrequests. Provide tenant_id to restrict deletion to that tenant only. Derived embeddings for deleted\nfeedback records are removed by database cascade. The operation is idempotent; repeated calls return\ndeleted_count 0 after matching records have already been deleted.\n\n\n### Parameters\n\n- `user_id: string`\n  Delete records matching this user ID (required). NULL bytes not allowed.\n\n- `tenant_id?: string`\n  Optional tenant scope. Omit this parameter to delete all records matching user_id across tenants; provide it to delete only records for this tenant. Empty strings and NULL bytes are not allowed.\n\n### Returns\n\n- `{ deleted_count: number; message: string; }`\n\n  - `deleted_count: number`\n  - `message: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.bulkDelete({ user_id: 'user-abc-123' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.feedbackRecords.bulkDelete',
@@ -458,6 +458,32 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl http://localhost:8080/v1/webhooks/$ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'delete_data',
+    endpoint: '/v1/tenants/{tenant_id}/data',
+    httpMethod: 'delete',
+    summary: 'Delete tenant data',
+    description:
+      'Permanently deletes Hub-owned data for the specified tenant_id. This endpoint is intended for\ntenant/account offboarding after the tenant has been deprovisioned and upstream writes for that\ntenant have stopped. This includes feedback records, derived embeddings, and webhooks for the\ntenant. This operation is synchronous and idempotent; repeated calls return zero counts after the\ntenant data has already been deleted. Concurrent writes for the same tenant_id are not serialized\nby Hub in this version.\nNo webhook events are published as part of this purge operation.\n',
+    stainlessPath: '(resource) tenants > (method) delete_data',
+    qualified: 'client.tenants.deleteData',
+    params: ['tenant_id: string;'],
+    response:
+      '{ deleted_embeddings: number; deleted_feedback_records: number; deleted_webhooks: number; message: string; tenant_id: string; }',
+    markdown:
+      "## delete_data\n\n`client.tenants.deleteData(tenant_id: string): { deleted_embeddings: number; deleted_feedback_records: number; deleted_webhooks: number; message: string; tenant_id: string; }`\n\n**delete** `/v1/tenants/{tenant_id}/data`\n\nPermanently deletes Hub-owned data for the specified tenant_id. This endpoint is intended for\ntenant/account offboarding after the tenant has been deprovisioned and upstream writes for that\ntenant have stopped. This includes feedback records, derived embeddings, and webhooks for the\ntenant. This operation is synchronous and idempotent; repeated calls return zero counts after the\ntenant data has already been deleted. Concurrent writes for the same tenant_id are not serialized\nby Hub in this version.\nNo webhook events are published as part of this purge operation.\n\n\n### Parameters\n\n- `tenant_id: string`\n\n### Returns\n\n- `{ deleted_embeddings: number; deleted_feedback_records: number; deleted_webhooks: number; message: string; tenant_id: string; }`\n\n  - `deleted_embeddings: number`\n  - `deleted_feedback_records: number`\n  - `deleted_webhooks: number`\n  - `message: string`\n  - `tenant_id: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.tenants.deleteData('org-123');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.tenants.deleteData',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.tenants.deleteData('org-123');\n\nconsole.log(response.tenant_id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/tenants/$TENANT_ID/data \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },

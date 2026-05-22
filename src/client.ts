@@ -18,6 +18,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
+import { TenantDeleteDataResponse, Tenants } from './resources/tenants';
 import {
   WebhookCreateParams,
   WebhookCreateResponse,
@@ -764,11 +765,16 @@ export class FormbricksHub {
    * Webhook subscription management
    */
   webhooks: API.Webhooks = new API.Webhooks(this);
+  /**
+   * Tenant-scoped data purge operations
+   */
+  tenants: API.Tenants = new API.Tenants(this);
 }
 
 FormbricksHub.Health = Health;
 FormbricksHub.FeedbackRecords = FeedbackRecords;
 FormbricksHub.Webhooks = Webhooks;
+FormbricksHub.Tenants = Tenants;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -798,4 +804,6 @@ export declare namespace FormbricksHub {
     type WebhookUpdateParams as WebhookUpdateParams,
     type WebhookListParams as WebhookListParams,
   };
+
+  export { Tenants as Tenants, type TenantDeleteDataResponse as TenantDeleteDataResponse };
 }
