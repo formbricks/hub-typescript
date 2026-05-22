@@ -53,3 +53,13 @@ Methods:
 - <code title="patch /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(id, { ...params }) -> WebhookUpdateResponse</code>
 - <code title="get /v1/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>({ ...params }) -> WebhookListResponse</code>
 - <code title="delete /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(id) -> void</code>
+
+# Tenants
+
+Types:
+
+- <code><a href="./src/resources/tenants.ts">TenantDeleteDataResponse</a></code>
+
+Methods:
+
+- <code title="delete /v1/tenants/{tenant_id}/data">client.tenants.<a href="./src/resources/tenants.ts">deleteData</a>(tenantID) -> TenantDeleteDataResponse</code>
