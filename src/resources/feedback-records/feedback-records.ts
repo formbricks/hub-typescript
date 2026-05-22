@@ -107,10 +107,12 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Permanently deletes feedback record data points matching the specified user_id.
-   * Omit tenant_id to delete that user_id across all tenants for GDPR Article 17
-   * (Right to Erasure) requests. Provide tenant_id to restrict deletion to that
-   * tenant only.
+   * Permanently deletes feedback record data points for the specified user_id/data
+   * subject. Omit tenant_id to delete that user_id across all tenants for GDPR
+   * Article 17 (Right to Erasure) requests. Provide tenant_id to restrict deletion
+   * to that tenant only. Derived embeddings for deleted feedback records are removed
+   * by database cascade. The operation is idempotent; repeated calls return
+   * deleted_count 0 after matching records have already been deleted.
    *
    * @example
    * ```ts

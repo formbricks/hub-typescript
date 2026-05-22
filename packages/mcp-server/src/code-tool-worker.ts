@@ -122,6 +122,7 @@ const fuse = new Fuse(
     'client.webhooks.list',
     'client.webhooks.retrieve',
     'client.webhooks.update',
+    'client.tenants.deleteData',
   ],
   { threshold: 1, shouldSort: true },
 );

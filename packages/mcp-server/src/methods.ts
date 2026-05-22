@@ -94,6 +94,12 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/v1/webhooks/{id}',
   },
+  {
+    clientCallName: 'client.tenants.deleteData',
+    fullyQualifiedName: 'tenants.deleteData',
+    httpMethod: 'delete',
+    httpPath: '/v1/tenants/{tenant_id}/data',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
