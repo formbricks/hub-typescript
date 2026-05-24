@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 (2026-05-24)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/formbricks/hub-typescript/compare/v0.5.1...v0.5.2)
+
+### Chores
+
+* tenant data bulk delete ([a4b80c3](https://github.com/formbricks/hub-typescript/commit/a4b80c313c247fb6e1b7566c5762e81d8c97e9b9))
+
 ## 0.5.1 (2026-05-19)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/formbricks/hub-typescript/compare/v0.5.0...v0.5.1)
