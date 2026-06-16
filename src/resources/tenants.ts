@@ -13,11 +13,21 @@ export class Tenants extends APIResource {
    * Permanently deletes Hub-owned data for the specified tenant_id. This endpoint is
    * intended for tenant/account offboarding after the tenant has been deprovisioned
    * and upstream writes for that tenant have stopped. This includes feedback
-   * records, derived embeddings, and webhooks for the tenant. This operation is
-   * synchronous and idempotent; repeated calls return zero counts after the tenant
-   * data has already been deleted. Concurrent writes for the same tenant_id are not
-   * serialized by Hub in this version. No webhook events are published as part of
-   * this purge operation.
+   * records, derived embeddings, taxonomy data, and webhooks for the tenant. This
+   * operation is synchronous and idempotent; repeated calls return zero counts after
+   * the tenant data has already been deleted.
+   *
+   * The purge is serialized against tenant-owned writes: while it runs, Hub-owned
+   * writes for the same tenant_id are rejected with HTTP 409 (code
+   * `tenant_write_conflict`); writes for other tenants are unaffected. If
+   * tenant-owned writes are in flight when the purge starts, the purge waits up to a
+   * configured lock timeout for them to drain and then returns a retryable 409.
+   *
+   * No webhook events are published as part of this purge operation, and writes
+   * rejected during the purge publish no events. Webhook deliveries already in
+   * flight when the purge commits complete normally, and previously enqueued
+   * delivery jobs no-op after the purge (their queued payloads are removed by the
+   * job queue's retention pruning rather than by this endpoint).
    */
   deleteData(tenantID: string, options?: RequestOptions): APIPromise<TenantDeleteDataResponse> {
     return this._client.delete(path`/v1/tenants/${tenantID}/data`, options);
