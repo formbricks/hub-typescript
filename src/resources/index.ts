@@ -13,7 +13,7 @@ export {
   type FeedbackRecordRetrieveSimilarParams,
 } from './feedback-records/feedback-records';
 export { Health, type HealthCheckResponse } from './health';
-export { Tenants, type TenantDeleteDataResponse } from './tenants';
+export { Tenants, type TenantDeleteDataResponse } from './tenants/tenants';
 export {
   Webhooks,
   type WebhookCreateResponse,

@@ -100,6 +100,18 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/v1/tenants/{tenant_id}/data',
   },
+  {
+    clientCallName: 'client.tenants.settings.retrieve',
+    fullyQualifiedName: 'tenants.settings.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/tenants/{tenant_id}/settings',
+  },
+  {
+    clientCallName: 'client.tenants.settings.update',
+    fullyQualifiedName: 'tenants.settings.update',
+    httpMethod: 'patch',
+    httpPath: '/v1/tenants/{tenant_id}/settings',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

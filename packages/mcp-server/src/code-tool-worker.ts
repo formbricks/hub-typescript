@@ -123,6 +123,8 @@ const fuse = new Fuse(
     'client.webhooks.retrieve',
     'client.webhooks.update',
     'client.tenants.deleteData',
+    'client.tenants.settings.retrieve',
+    'client.tenants.settings.update',
   ],
   { threshold: 1, shouldSort: true },
 );
