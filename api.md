@@ -58,8 +58,20 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tenants.ts">TenantDeleteDataResponse</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">TenantDeleteDataResponse</a></code>
 
 Methods:
 
-- <code title="delete /v1/tenants/{tenant_id}/data">client.tenants.<a href="./src/resources/tenants.ts">deleteData</a>(tenantID) -> TenantDeleteDataResponse</code>
+- <code title="delete /v1/tenants/{tenant_id}/data">client.tenants.<a href="./src/resources/tenants/tenants.ts">deleteData</a>(tenantID) -> TenantDeleteDataResponse</code>
+
+## Settings
+
+Types:
+
+- <code><a href="./src/resources/tenants/settings.ts">SettingRetrieveResponse</a></code>
+- <code><a href="./src/resources/tenants/settings.ts">SettingUpdateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">retrieve</a>(tenantID) -> SettingRetrieveResponse</code>
+- <code title="patch /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">update</a>(tenantID, { ...params }) -> SettingUpdateResponse</code>

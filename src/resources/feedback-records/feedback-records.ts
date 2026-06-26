@@ -237,6 +237,12 @@ export interface FeedbackRecordData {
   source_name?: string;
 
   /**
+   * BCP-47 target locale that value_text_translated was produced in (language
+   * enrichment). Read-only; absent until the record is enriched.
+   */
+  translation_lang_key?: string;
+
+  /**
    * User ID (e.g., anonymous ID or email hash)
    */
   user_id?: string;
@@ -260,6 +266,12 @@ export interface FeedbackRecordData {
    * Text response. NULL bytes not allowed.
    */
   value_text?: string;
+
+  /**
+   * value_text translated into the tenant's configured target language (language
+   * enrichment). Read-only; absent until the record is enriched.
+   */
+  value_text_translated?: string;
 }
 
 export interface FeedbackRecordListResponse {
