@@ -40,6 +40,13 @@ import {
   FeedbackRecordUpdateParams,
   FeedbackRecords,
 } from './resources/feedback-records/feedback-records';
+import {
+  Node,
+  Run,
+  Taxonomy,
+  TaxonomyListFieldsParams,
+  TaxonomyListFieldsResponse,
+} from './resources/taxonomy/taxonomy';
 import { TenantDeleteDataResponse, Tenants } from './resources/tenants/tenants';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -777,12 +784,17 @@ export class FormbricksHub {
    * Tenant-scoped data purge operations
    */
   tenants: API.Tenants = new API.Tenants(this);
+  /**
+   * Automatic topic/subtopic taxonomy generation, run history, tree browsing, and node edits
+   */
+  taxonomy: API.Taxonomy = new API.Taxonomy(this);
 }
 
 FormbricksHub.Health = Health;
 FormbricksHub.FeedbackRecords = FeedbackRecords;
 FormbricksHub.Webhooks = Webhooks;
 FormbricksHub.Tenants = Tenants;
+FormbricksHub.Taxonomy = Taxonomy;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -814,4 +826,12 @@ export declare namespace FormbricksHub {
   };
 
   export { Tenants as Tenants, type TenantDeleteDataResponse as TenantDeleteDataResponse };
+
+  export {
+    Taxonomy as Taxonomy,
+    type Run as Run,
+    type Node as Node,
+    type TaxonomyListFieldsResponse as TaxonomyListFieldsResponse,
+    type TaxonomyListFieldsParams as TaxonomyListFieldsParams,
+  };
 }

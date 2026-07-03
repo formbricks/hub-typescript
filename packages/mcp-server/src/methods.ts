@@ -112,6 +112,60 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'patch',
     httpPath: '/v1/tenants/{tenant_id}/settings',
   },
+  {
+    clientCallName: 'client.taxonomy.listFields',
+    fullyQualifiedName: 'taxonomy.listFields',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/fields',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.retrieve',
+    fullyQualifiedName: 'taxonomy.runs.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/runs/{run_id}',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.list',
+    fullyQualifiedName: 'taxonomy.runs.list',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/runs',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.getTree',
+    fullyQualifiedName: 'taxonomy.runs.getTree',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/runs/{run_id}/tree',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.start',
+    fullyQualifiedName: 'taxonomy.runs.start',
+    httpMethod: 'post',
+    httpPath: '/v1/taxonomy/runs',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.active.getTree',
+    fullyQualifiedName: 'taxonomy.runs.active.getTree',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/runs/active/tree',
+  },
+  {
+    clientCallName: 'client.taxonomy.nodes.listRecords',
+    fullyQualifiedName: 'taxonomy.nodes.listRecords',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/nodes/{node_id}/records',
+  },
+  {
+    clientCallName: 'client.taxonomy.nodes.rename',
+    fullyQualifiedName: 'taxonomy.nodes.rename',
+    httpMethod: 'patch',
+    httpPath: '/v1/taxonomy/nodes/{node_id}',
+  },
+  {
+    clientCallName: 'client.taxonomy.nodes.softRemove',
+    fullyQualifiedName: 'taxonomy.nodes.softRemove',
+    httpMethod: 'delete',
+    httpPath: '/v1/taxonomy/nodes/{node_id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
