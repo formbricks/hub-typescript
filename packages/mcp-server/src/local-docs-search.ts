@@ -531,6 +531,253 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'list_fields',
+    endpoint: '/v1/taxonomy/fields',
+    httpMethod: 'get',
+    summary: 'List taxonomy-capable fields',
+    description:
+      'Returns the feedback fields that can be used to generate a taxonomy for a tenant, along with the\nnumber of text records and embedded records available per field scope (source_type, source_id,\nfield_id). A field with no attributed source is exposed under the canonical "no source" bucket\n(empty source_id). Requires Hub embeddings to be configured; otherwise the endpoint returns 503.\n',
+    stainlessPath: '(resource) taxonomy > (method) list_fields',
+    qualified: 'client.taxonomy.listFields',
+    params: ['tenant_id: string;'],
+    response:
+      '{ data: { embedding_count: number; field_id: string; record_count: number; source_id: string; source_type: string; tenant_id: string; field_label?: string; source_name?: string; }[]; }',
+    markdown:
+      "## list_fields\n\n`client.taxonomy.listFields(tenant_id: string): { data: object[]; }`\n\n**get** `/v1/taxonomy/fields`\n\nReturns the feedback fields that can be used to generate a taxonomy for a tenant, along with the\nnumber of text records and embedded records available per field scope (source_type, source_id,\nfield_id). A field with no attributed source is exposed under the canonical \"no source\" bucket\n(empty source_id). Requires Hub embeddings to be configured; otherwise the endpoint returns 503.\n\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant whose taxonomy-capable fields should be listed.\n\n### Returns\n\n- `{ data: { embedding_count: number; field_id: string; record_count: number; source_id: string; source_type: string; tenant_id: string; field_label?: string; source_name?: string; }[]; }`\n\n  - `data: { embedding_count: number; field_id: string; record_count: number; source_id: string; source_type: string; tenant_id: string; field_label?: string; source_name?: string; }[]`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.listFields({ tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.listFields',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.listFields({ tenant_id: 'org-123' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/fields \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/v1/taxonomy/runs',
+    httpMethod: 'get',
+    summary: 'List taxonomy runs',
+    description:
+      'Returns taxonomy run history for a tenant, most recent first. Optionally filter by source_type,\nfield_id, and source_id. source_id is a tri-state filter: omit it for no source filter, pass an\nempty string to scope to the canonical "no source" bucket, or pass a concrete value to match that\nsource.\n',
+    stainlessPath: '(resource) taxonomy.runs > (method) list',
+    qualified: 'client.taxonomy.runs.list',
+    params: [
+      'tenant_id: string;',
+      'field_id?: string;',
+      'limit?: number;',
+      'source_id?: string;',
+      'source_type?: string;',
+    ],
+    response:
+      "{ data: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }[]; }",
+    markdown:
+      "## list\n\n`client.taxonomy.runs.list(tenant_id: string, field_id?: string, limit?: number, source_id?: string, source_type?: string): { data: run[]; }`\n\n**get** `/v1/taxonomy/runs`\n\nReturns taxonomy run history for a tenant, most recent first. Optionally filter by source_type,\nfield_id, and source_id. source_id is a tri-state filter: omit it for no source filter, pass an\nempty string to scope to the canonical \"no source\" bucket, or pass a concrete value to match that\nsource.\n\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant whose runs should be listed.\n\n- `field_id?: string`\n  Optional field_id filter.\n\n- `limit?: number`\n  Maximum number of runs to return.\n\n- `source_id?: string`\n  Optional source_id filter. Omit for no filter; empty string scopes to the \"no source\"\nbucket; a concrete value matches that source.\n\n\n- `source_type?: string`\n  Optional source_type filter.\n\n### Returns\n\n- `{ data: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }[]; }`\n\n  - `data: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }[]`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst runs = await client.taxonomy.runs.list({ tenant_id: 'org-123' });\n\nconsole.log(runs);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.list',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst runs = await client.taxonomy.runs.list({ tenant_id: 'org-123' });\n\nconsole.log(runs.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'start',
+    endpoint: '/v1/taxonomy/runs',
+    httpMethod: 'post',
+    summary: 'Start a taxonomy run',
+    description:
+      'Starts a manual taxonomy generation run for a field scope. Hub validates that the field has enough\nembedded text feedback (below the configured minimum returns 400 with an "insufficient data"\nvalidation error), creates the run, and hands it to the taxonomy compute service.\n\nIdempotent per scope: if a run is already pending or running for the same scope, the existing run\nis returned with `in_progress: true` (HTTP 200) instead of starting a new one; a newly created run\nreturns HTTP 202 with `in_progress: false`. While a tenant data purge runs for the same tenant_id,\nthe request is rejected with HTTP 409 (code `tenant_write_conflict`) and may be retried. Requires\nHub embeddings and the taxonomy service to be configured; otherwise returns 503.\n',
+    stainlessPath: '(resource) taxonomy.runs > (method) start',
+    qualified: 'client.taxonomy.runs.start',
+    params: [
+      'field_id: string;',
+      'source_type: string;',
+      'tenant_id: string;',
+      'actor_id?: string;',
+      'field_label?: string;',
+      'source_id?: string;',
+    ],
+    response:
+      "{ in_progress: boolean; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }",
+    markdown:
+      "## start\n\n`client.taxonomy.runs.start(field_id: string, source_type: string, tenant_id: string, actor_id?: string, field_label?: string, source_id?: string): { in_progress: boolean; run: run; }`\n\n**post** `/v1/taxonomy/runs`\n\nStarts a manual taxonomy generation run for a field scope. Hub validates that the field has enough\nembedded text feedback (below the configured minimum returns 400 with an \"insufficient data\"\nvalidation error), creates the run, and hands it to the taxonomy compute service.\n\nIdempotent per scope: if a run is already pending or running for the same scope, the existing run\nis returned with `in_progress: true` (HTTP 200) instead of starting a new one; a newly created run\nreturns HTTP 202 with `in_progress: false`. While a tenant data purge runs for the same tenant_id,\nthe request is rejected with HTTP 409 (code `tenant_write_conflict`) and may be retried. Requires\nHub embeddings and the taxonomy service to be configured; otherwise returns 503.\n\n\n### Parameters\n\n- `field_id: string`\n\n- `source_type: string`\n\n- `tenant_id: string`\n\n- `actor_id?: string`\n  Optional identifier of the actor starting the run.\n\n- `field_label?: string`\n  Optional human-readable field label.\n\n- `source_id?: string`\n  Optional; empty or omitted is the canonical \"no source\" bucket.\n\n### Returns\n\n- `{ in_progress: boolean; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }`\n\n  - `in_progress: boolean`\n  - `run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.runs.start({\n  field_id: 'feedback',\n  source_type: 'formbricks',\n  tenant_id: 'org-123',\n});\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.start',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.runs.start({\n  field_id: 'feedback',\n  source_type: 'formbricks',\n  tenant_id: 'org-123',\n  actor_id: 'user-42',\n  source_id: 'survey-abc',\n});\n\nconsole.log(response.in_progress);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "field_id": "feedback",\n          "source_type": "formbricks",\n          "tenant_id": "org-123",\n          "actor_id": "user-42",\n          "source_id": "survey-abc"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/v1/taxonomy/runs/{run_id}',
+    httpMethod: 'get',
+    summary: 'Get a taxonomy run',
+    description:
+      'Returns a single taxonomy run by ID, scoped to the tenant. Returns 404 if the run does not belong to the tenant.',
+    stainlessPath: '(resource) taxonomy.runs > (method) retrieve',
+    qualified: 'client.taxonomy.runs.retrieve',
+    params: ['run_id: string;', 'tenant_id: string;'],
+    response:
+      "{ id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }",
+    markdown:
+      "## retrieve\n\n`client.taxonomy.runs.retrieve(run_id: string, tenant_id: string): { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }`\n\n**get** `/v1/taxonomy/runs/{run_id}`\n\nReturns a single taxonomy run by ID, scoped to the tenant. Returns 404 if the run does not belong to the tenant.\n\n### Parameters\n\n- `run_id: string`\n\n- `tenant_id: string`\n  Tenant that owns the run.\n\n### Returns\n\n- `{ id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }`\n  A persisted taxonomy generation run.\n\n  - `id: string`\n  - `cluster_count: number`\n  - `created_at: string`\n  - `embedding_count: number`\n  - `field_id: string`\n  - `node_count: number`\n  - `record_count: number`\n  - `source_id: string`\n  - `source_type: string`\n  - `status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'`\n  - `tenant_id: string`\n  - `updated_at: string`\n  - `error?: string`\n  - `error_code?: string`\n  - `field_label?: string`\n  - `finished_at?: string`\n  - `metrics?: object`\n  - `params?: object`\n  - `started_at?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst run = await client.taxonomy.runs.retrieve('019f177f-9aa3-705e-8195-cea2aa187268', { tenant_id: 'org-123' });\n\nconsole.log(run);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.retrieve',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst run = await client.taxonomy.runs.retrieve('019f177f-9aa3-705e-8195-cea2aa187268', {\n  tenant_id: 'org-123',\n});\n\nconsole.log(run.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs/$RUN_ID \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_tree',
+    endpoint: '/v1/taxonomy/runs/{run_id}/tree',
+    httpMethod: 'get',
+    summary: "Get a taxonomy run's tree",
+    description:
+      'Returns the run and its taxonomy tree (visible nodes only; soft-removed nodes are excluded). Tenant-scoped; returns 404 if the run does not belong to the tenant.',
+    stainlessPath: '(resource) taxonomy.runs > (method) get_tree',
+    qualified: 'client.taxonomy.runs.getTree',
+    params: ['run_id: string;', 'tenant_id: string;'],
+    response:
+      "{ root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }",
+    markdown:
+      "## get_tree\n\n`client.taxonomy.runs.getTree(run_id: string, tenant_id: string): { root: node; run: run; }`\n\n**get** `/v1/taxonomy/runs/{run_id}/tree`\n\nReturns the run and its taxonomy tree (visible nodes only; soft-removed nodes are excluded). Tenant-scoped; returns 404 if the run does not belong to the tenant.\n\n### Parameters\n\n- `run_id: string`\n\n- `tenant_id: string`\n  Tenant that owns the run.\n\n### Returns\n\n- `{ root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }`\n\n  - `root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n  - `run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.runs.getTree('019f177f-9aa3-705e-8195-cea2aa187268', { tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.getTree',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.runs.getTree('019f177f-9aa3-705e-8195-cea2aa187268', {\n  tenant_id: 'org-123',\n});\n\nconsole.log(response.root);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs/$RUN_ID/tree \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_tree',
+    endpoint: '/v1/taxonomy/runs/active/tree',
+    httpMethod: 'get',
+    summary: 'Get the active taxonomy tree for a scope',
+    description:
+      'Returns the currently active taxonomy run and its tree for a field scope. Exactly one run is\nactive per scope at a time. Returns 404 when no run has been activated for the scope.\n',
+    stainlessPath: '(resource) taxonomy.runs.active > (method) get_tree',
+    qualified: 'client.taxonomy.runs.active.getTree',
+    params: ['field_id: string;', 'source_type: string;', 'tenant_id: string;', 'source_id?: string;'],
+    response:
+      "{ root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }",
+    markdown:
+      "## get_tree\n\n`client.taxonomy.runs.active.getTree(field_id: string, source_type: string, tenant_id: string, source_id?: string): { root: node; run: run; }`\n\n**get** `/v1/taxonomy/runs/active/tree`\n\nReturns the currently active taxonomy run and its tree for a field scope. Exactly one run is\nactive per scope at a time. Returns 404 when no run has been activated for the scope.\n\n\n### Parameters\n\n- `field_id: string`\n  Field ID of the scope.\n\n- `source_type: string`\n  Source type of the scope.\n\n- `tenant_id: string`\n  Tenant that owns the scope.\n\n- `source_id?: string`\n  Source ID of the scope; empty string is the canonical \"no source\" bucket.\n\n### Returns\n\n- `{ root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }; run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }; }`\n\n  - `root: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n  - `run: { id: string; cluster_count: number; created_at: string; embedding_count: number; field_id: string; node_count: number; record_count: number; source_id: string; source_type: string; status: 'pending' | 'running' | 'succeeded' | 'failed' | 'canceled'; tenant_id: string; updated_at: string; error?: string; error_code?: string; field_label?: string; finished_at?: string; metrics?: object; params?: object; started_at?: string; }`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.runs.active.getTree({\n  field_id: 'field_id',\n  source_type: 'source_type',\n  tenant_id: 'org-123',\n});\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.active.getTree',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.runs.active.getTree({\n  field_id: 'field_id',\n  source_type: 'source_type',\n  tenant_id: 'org-123',\n});\n\nconsole.log(response.root);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs/active/tree \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'rename',
+    endpoint: '/v1/taxonomy/nodes/{node_id}',
+    httpMethod: 'patch',
+    summary: 'Rename a taxonomy node',
+    description:
+      "Renames a taxonomy node's label and records a rename event attributed to actor_id. Tenant-scoped;\nreturns 404 if the node does not belong to the tenant. While a tenant data purge runs for the same\ntenant_id, the request is rejected with HTTP 409 (code `tenant_write_conflict`) and may be retried.\n",
+    stainlessPath: '(resource) taxonomy.nodes > (method) rename',
+    qualified: 'client.taxonomy.nodes.rename',
+    params: ['node_id: string;', 'actor_id: string;', 'label: string;', 'tenant_id: string;'],
+    response:
+      "{ id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }",
+    markdown:
+      "## rename\n\n`client.taxonomy.nodes.rename(node_id: string, actor_id: string, label: string, tenant_id: string): { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n\n**patch** `/v1/taxonomy/nodes/{node_id}`\n\nRenames a taxonomy node's label and records a rename event attributed to actor_id. Tenant-scoped;\nreturns 404 if the node does not belong to the tenant. While a tenant data purge runs for the same\ntenant_id, the request is rejected with HTTP 409 (code `tenant_write_conflict`) and may be retried.\n\n\n### Parameters\n\n- `node_id: string`\n\n- `actor_id: string`\n\n- `label: string`\n  New node label.\n\n- `tenant_id: string`\n\n### Returns\n\n- `{ id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n  A node in a taxonomy tree. Non-root nodes have a parent; leaf nodes reference the cluster they summarize.\n\n  - `id: string`\n  - `created_at: string`\n  - `label: string`\n  - `level: number`\n  - `node_type: 'root' | 'branch' | 'leaf'`\n  - `run_id: string`\n  - `sort_order: number`\n  - `updated_at: string`\n  - `children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]`\n  - `cluster_id?: string`\n  - `description?: string`\n  - `metadata?: object`\n  - `original_label?: string`\n  - `parent_id?: string`\n  - `removed_at?: string`\n  - `removed_by?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst node = await client.taxonomy.nodes.rename('019f177f-9abe-78cd-8008-f40b58e3147d', {\n  actor_id: 'user-42',\n  label: 'Authentication Problems',\n  tenant_id: 'org-123',\n});\n\nconsole.log(node);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.nodes.rename',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst node = await client.taxonomy.nodes.rename('019f177f-9abe-78cd-8008-f40b58e3147d', {\n  actor_id: 'user-42',\n  label: 'Authentication Problems',\n  tenant_id: 'org-123',\n});\n\nconsole.log(node.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/nodes/$NODE_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $HUB_API_KEY" \\\n    -d \'{\n          "actor_id": "user-42",\n          "label": "Authentication Problems",\n          "tenant_id": "org-123"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'soft_remove',
+    endpoint: '/v1/taxonomy/nodes/{node_id}',
+    httpMethod: 'delete',
+    summary: 'Soft-remove a taxonomy node',
+    description:
+      'Soft-removes a taxonomy node (sets removed_at/removed_by) and records a soft_remove event\nattributed to actor_id. The node is retained for audit but excluded from tree responses.\nTenant-scoped; returns 404 if the node does not belong to the tenant. While a tenant data purge\nruns for the same tenant_id, the request is rejected with HTTP 409 (code `tenant_write_conflict`).\n',
+    stainlessPath: '(resource) taxonomy.nodes > (method) soft_remove',
+    qualified: 'client.taxonomy.nodes.softRemove',
+    params: ['node_id: string;', 'actor_id: string;', 'tenant_id: string;'],
+    response:
+      "{ id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }",
+    markdown:
+      "## soft_remove\n\n`client.taxonomy.nodes.softRemove(node_id: string, actor_id: string, tenant_id: string): { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n\n**delete** `/v1/taxonomy/nodes/{node_id}`\n\nSoft-removes a taxonomy node (sets removed_at/removed_by) and records a soft_remove event\nattributed to actor_id. The node is retained for audit but excluded from tree responses.\nTenant-scoped; returns 404 if the node does not belong to the tenant. While a tenant data purge\nruns for the same tenant_id, the request is rejected with HTTP 409 (code `tenant_write_conflict`).\n\n\n### Parameters\n\n- `node_id: string`\n\n- `actor_id: string`\n  Identifier of the actor performing the removal (recorded in the audit event).\n\n- `tenant_id: string`\n  Tenant that owns the node.\n\n### Returns\n\n- `{ id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }`\n  A node in a taxonomy tree. Non-root nodes have a parent; leaf nodes reference the cluster they summarize.\n\n  - `id: string`\n  - `created_at: string`\n  - `label: string`\n  - `level: number`\n  - `node_type: 'root' | 'branch' | 'leaf'`\n  - `run_id: string`\n  - `sort_order: number`\n  - `updated_at: string`\n  - `children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: { id: string; created_at: string; label: string; level: number; node_type: 'root' | 'branch' | 'leaf'; run_id: string; sort_order: number; updated_at: string; children?: node[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]; cluster_id?: string; description?: string; metadata?: object; original_label?: string; parent_id?: string; removed_at?: string; removed_by?: string; }[]`\n  - `cluster_id?: string`\n  - `description?: string`\n  - `metadata?: object`\n  - `original_label?: string`\n  - `parent_id?: string`\n  - `removed_at?: string`\n  - `removed_by?: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst node = await client.taxonomy.nodes.softRemove('019f177f-9abe-78cd-8008-f40b58e3147d', { actor_id: 'actor_id', tenant_id: 'org-123' });\n\nconsole.log(node);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.nodes.softRemove',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst node = await client.taxonomy.nodes.softRemove('019f177f-9abe-78cd-8008-f40b58e3147d', {\n  actor_id: 'actor_id',\n  tenant_id: 'org-123',\n});\n\nconsole.log(node.id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/nodes/$NODE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_records',
+    endpoint: '/v1/taxonomy/nodes/{node_id}/records',
+    httpMethod: 'get',
+    summary: 'List feedback records for a taxonomy node',
+    description:
+      'Returns the feedback records assigned to a node and all of its (visible) descendant nodes, via the\nclusters those nodes reference. Tenant-scoped. The `limit` in the response reflects the applied cap.\n',
+    stainlessPath: '(resource) taxonomy.nodes > (method) list_records',
+    qualified: 'client.taxonomy.nodes.listRecords',
+    params: ['node_id: string;', 'tenant_id: string;', 'limit?: number;'],
+    response:
+      "{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; translation_lang_key?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; value_text_translated?: string; }[]; limit: number; }",
+    markdown:
+      "## list_records\n\n`client.taxonomy.nodes.listRecords(node_id: string, tenant_id: string, limit?: number): { data: feedback_record_data[]; limit: number; }`\n\n**get** `/v1/taxonomy/nodes/{node_id}/records`\n\nReturns the feedback records assigned to a node and all of its (visible) descendant nodes, via the\nclusters those nodes reference. Tenant-scoped. The `limit` in the response reflects the applied cap.\n\n\n### Parameters\n\n- `node_id: string`\n\n- `tenant_id: string`\n  Tenant that owns the node.\n\n- `limit?: number`\n  Maximum number of feedback records to return.\n\n### Returns\n\n- `{ data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; translation_lang_key?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; value_text_translated?: string; }[]; limit: number; }`\n\n  - `data: { id: string; collected_at: string; created_at: string; field_id: string; field_type: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'; source_type: string; submission_id: string; tenant_id: string; updated_at: string; field_group_id?: string; field_group_label?: string; field_label?: string; language?: string; metadata?: object; source_id?: string; source_name?: string; translation_lang_key?: string; user_id?: string; value_boolean?: boolean; value_date?: string; value_number?: number; value_text?: string; value_text_translated?: string; }[]`\n  - `limit: number`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.nodes.listRecords('019f177f-9abe-78cd-8008-f40b58e3147d', { tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.nodes.listRecords',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.nodes.listRecords('019f177f-9abe-78cd-8008-f40b58e3147d', {\n  tenant_id: 'org-123',\n});\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/nodes/$NODE_ID/records \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [

@@ -75,3 +75,52 @@ Methods:
 
 - <code title="get /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">retrieve</a>(tenantID) -> SettingRetrieveResponse</code>
 - <code title="patch /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">update</a>(tenantID, { ...params }) -> SettingUpdateResponse</code>
+
+# Taxonomy
+
+Types:
+
+- <code><a href="./src/resources/taxonomy/taxonomy.ts">Run</a></code>
+- <code><a href="./src/resources/taxonomy/taxonomy.ts">Node</a></code>
+- <code><a href="./src/resources/taxonomy/taxonomy.ts">TaxonomyListFieldsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/taxonomy/fields">client.taxonomy.<a href="./src/resources/taxonomy/taxonomy.ts">listFields</a>({ ...params }) -> TaxonomyListFieldsResponse</code>
+
+## Runs
+
+Types:
+
+- <code><a href="./src/resources/taxonomy/runs/runs.ts">RunListResponse</a></code>
+- <code><a href="./src/resources/taxonomy/runs/runs.ts">RunGetTreeResponse</a></code>
+- <code><a href="./src/resources/taxonomy/runs/runs.ts">RunStartResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/taxonomy/runs/{run_id}">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">retrieve</a>(runID, { ...params }) -> Run</code>
+- <code title="get /v1/taxonomy/runs">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
+- <code title="get /v1/taxonomy/runs/{run_id}/tree">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">getTree</a>(runID, { ...params }) -> RunGetTreeResponse</code>
+- <code title="post /v1/taxonomy/runs">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">start</a>({ ...params }) -> RunStartResponse</code>
+
+### Active
+
+Types:
+
+- <code><a href="./src/resources/taxonomy/runs/active.ts">ActiveGetTreeResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/taxonomy/runs/active/tree">client.taxonomy.runs.active.<a href="./src/resources/taxonomy/runs/active.ts">getTree</a>({ ...params }) -> ActiveGetTreeResponse</code>
+
+## Nodes
+
+Types:
+
+- <code><a href="./src/resources/taxonomy/nodes.ts">NodeListRecordsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/taxonomy/nodes/{node_id}/records">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">listRecords</a>(nodeID, { ...params }) -> NodeListRecordsResponse</code>
+- <code title="patch /v1/taxonomy/nodes/{node_id}">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">rename</a>(nodeID, { ...params }) -> Node</code>
+- <code title="delete /v1/taxonomy/nodes/{node_id}">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">softRemove</a>(nodeID, { ...params }) -> Node</code>
