@@ -79,6 +79,13 @@ export namespace SettingRetrieveResponse {
    */
   export interface Settings {
     /**
+     * Per-directory switch for sentiment enrichment. Absent means the default
+     * (enabled), so a tenant is enriched unless it has explicitly set this to false.
+     * The deployment-level sentiment provider/model gate applies on top of this.
+     */
+    sentiment_enabled?: boolean;
+
+    /**
      * Normalized BCP-47 locale (e.g. "en-US") that language enrichment translates
      * feedback records and topic labels into. Absent or empty means not configured.
      */
@@ -106,6 +113,13 @@ export namespace SettingUpdateResponse {
    */
   export interface Settings {
     /**
+     * Per-directory switch for sentiment enrichment. Absent means the default
+     * (enabled), so a tenant is enriched unless it has explicitly set this to false.
+     * The deployment-level sentiment provider/model gate applies on top of this.
+     */
+    sentiment_enabled?: boolean;
+
+    /**
      * Normalized BCP-47 locale (e.g. "en-US") that language enrichment translates
      * feedback records and topic labels into. Absent or empty means not configured.
      */
@@ -114,6 +128,12 @@ export namespace SettingUpdateResponse {
 }
 
 export interface SettingUpdateParams {
+  /**
+   * Enable or disable sentiment enrichment. Send null to restore the default
+   * (enabled); omit to leave it unchanged.
+   */
+  sentiment_enabled?: boolean | null;
+
   /**
    * Target BCP-47 locale to translate into; normalized to a canonical form (e.g.
    * "en-us" becomes "en-US"). Send null to remove it; omit to leave it unchanged. An
