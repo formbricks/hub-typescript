@@ -227,6 +227,18 @@ export interface FeedbackRecordData {
   metadata?: { [key: string]: unknown };
 
   /**
+   * Sentiment polarity inferred from value_text (sentiment enrichment). Read-only;
+   * absent until the record is enriched.
+   */
+  sentiment?: 'very_negative' | 'negative' | 'neutral' | 'positive' | 'very_positive' | 'mixed';
+
+  /**
+   * Signed sentiment polarity from -1.0 (very negative) to 1.0 (very positive)
+   * (sentiment enrichment). Read-only; absent until the record is enriched.
+   */
+  sentiment_score?: number;
+
+  /**
    * Reference to survey/form/ticket ID
    */
   source_id?: string;
