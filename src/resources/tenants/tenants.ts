@@ -55,6 +55,36 @@ export interface TenantDeleteDataResponse {
   deleted_feedback_records: number;
 
   /**
+   * Number of taxonomy active-run rows deleted
+   */
+  deleted_taxonomy_active_runs: number;
+
+  /**
+   * Number of taxonomy cluster memberships deleted
+   */
+  deleted_taxonomy_cluster_memberships: number;
+
+  /**
+   * Number of taxonomy clusters deleted
+   */
+  deleted_taxonomy_clusters: number;
+
+  /**
+   * Number of taxonomy node events deleted
+   */
+  deleted_taxonomy_node_events: number;
+
+  /**
+   * Number of taxonomy nodes deleted
+   */
+  deleted_taxonomy_nodes: number;
+
+  /**
+   * Number of taxonomy runs deleted
+   */
+  deleted_taxonomy_runs: number;
+
+  /**
    * Number of webhooks deleted
    */
   deleted_webhooks: number;
