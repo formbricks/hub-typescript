@@ -79,6 +79,13 @@ export namespace SettingRetrieveResponse {
    */
   export interface Settings {
     /**
+     * Per-directory switch for emotion enrichment. Absent means the default (enabled),
+     * so a tenant is enriched unless it has explicitly set this to false. The
+     * deployment-level emotions provider/model gate applies on top of this.
+     */
+    emotions_enabled?: boolean;
+
+    /**
      * Per-directory switch for sentiment enrichment. Absent means the default
      * (enabled), so a tenant is enriched unless it has explicitly set this to false.
      * The deployment-level sentiment provider/model gate applies on top of this.
@@ -113,6 +120,13 @@ export namespace SettingUpdateResponse {
    */
   export interface Settings {
     /**
+     * Per-directory switch for emotion enrichment. Absent means the default (enabled),
+     * so a tenant is enriched unless it has explicitly set this to false. The
+     * deployment-level emotions provider/model gate applies on top of this.
+     */
+    emotions_enabled?: boolean;
+
+    /**
      * Per-directory switch for sentiment enrichment. Absent means the default
      * (enabled), so a tenant is enriched unless it has explicitly set this to false.
      * The deployment-level sentiment provider/model gate applies on top of this.
@@ -128,6 +142,12 @@ export namespace SettingUpdateResponse {
 }
 
 export interface SettingUpdateParams {
+  /**
+   * Enable or disable emotion enrichment. Send null to restore the default
+   * (enabled); omit to leave it unchanged.
+   */
+  emotions_enabled?: boolean | null;
+
   /**
    * Enable or disable sentiment enrichment. Send null to restore the default
    * (enabled); omit to leave it unchanged.
