@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.0 (2026-07-03)
+
+Full Changelog: [v0.5.2...v0.6.0](https://github.com/formbricks/hub-typescript/compare/v0.5.2...v0.6.0)
+
+### Features
+
+* add tenant settings for language enrichment ([ca388ab](https://github.com/formbricks/hub-typescript/commit/ca388abba7e18f82a910b5be93354ddb3c1354be))
+* **sentiment:** add sentiment enrichment for open-text feedback ([4a61e37](https://github.com/formbricks/hub-typescript/commit/4a61e379ee6d85490c8a559c3fcd7a69a829a0c1))
+* serialize tenant-owned writes against tenant data purges (ENG-1013) ([266efe1](https://github.com/formbricks/hub-typescript/commit/266efe1f9ef1d3ea9df75b8b121a23b1be5e207c))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([6fca8e9](https://github.com/formbricks/hub-typescript/commit/6fca8e9c0a549ae264987a7eb328ba90034a5a2a))
+
+
+### Chores
+
+* adds openapi spec for taxonomy endpoints ([5c1496b](https://github.com/formbricks/hub-typescript/commit/5c1496b27aa60cbae867da8b0ed55f74b23d018a))
+* no tenant_id on similar search ([12b2c9c](https://github.com/formbricks/hub-typescript/commit/12b2c9c7f2a715c6ec9574b33838708e0ec840d7))
+* updates tenant deletion to also remove taxonomy data ([8a52caf](https://github.com/formbricks/hub-typescript/commit/8a52cafce071535caa4cc33fc5f5209605d25e9e))
+
 ## 0.5.2 (2026-05-24)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/formbricks/hub-typescript/compare/v0.5.1...v0.5.2)

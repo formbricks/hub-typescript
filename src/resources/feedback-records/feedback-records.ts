@@ -135,21 +135,20 @@ export class FeedbackRecords extends APIResource {
    * (EMBEDDING_PROVIDER and EMBEDDING_MODEL set). Supported providers: openai,
    * google (Gemini Developer API / Google AI Studio), google-gemini (Gemini
    * Enterprise Agent Platform API). When embeddings are disabled, this endpoint
-   * returns 503 Service Unavailable. The source feedback record must belong to the
-   * given tenant_id (enforced).
+   * returns 503 Service Unavailable. Hub derives the tenant from the source feedback
+   * record and scopes the nearest-neighbor search to that tenant.
    *
    * @example
    * ```ts
    * const response =
    *   await client.feedbackRecords.retrieveSimilar(
    *     '018e1234-5678-9abc-def0-123456789abc',
-   *     { tenant_id: 'org-123' },
    *   );
    * ```
    */
   retrieveSimilar(
     id: string,
-    query: FeedbackRecordRetrieveSimilarParams,
+    query: FeedbackRecordRetrieveSimilarParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<FeedbackRecordRetrieveSimilarResponse> {
     return this._client.get(path`/v1/feedback-records/${id}/similar`, { query, ...options });
@@ -228,6 +227,18 @@ export interface FeedbackRecordData {
   metadata?: { [key: string]: unknown };
 
   /**
+   * Sentiment polarity inferred from value_text (sentiment enrichment). Read-only;
+   * absent until the record is enriched.
+   */
+  sentiment?: 'very_negative' | 'negative' | 'neutral' | 'positive' | 'very_positive' | 'mixed';
+
+  /**
+   * Signed sentiment polarity from -1.0 (very negative) to 1.0 (very positive)
+   * (sentiment enrichment). Read-only; absent until the record is enriched.
+   */
+  sentiment_score?: number;
+
+  /**
    * Reference to survey/form/ticket ID
    */
   source_id?: string;
@@ -236,6 +247,12 @@ export interface FeedbackRecordData {
    * Human-readable name
    */
   source_name?: string;
+
+  /**
+   * BCP-47 target locale that value_text_translated was produced in (language
+   * enrichment). Read-only; absent until the record is enriched.
+   */
+  translation_lang_key?: string;
 
   /**
    * User ID (e.g., anonymous ID or email hash)
@@ -261,6 +278,12 @@ export interface FeedbackRecordData {
    * Text response. NULL bytes not allowed.
    */
   value_text?: string;
+
+  /**
+   * value_text translated into the tenant's configured target language (language
+   * enrichment). Read-only; absent until the record is enriched.
+   */
+  value_text_translated?: string;
 }
 
 export interface FeedbackRecordListResponse {
@@ -560,11 +583,6 @@ export interface FeedbackRecordBulkDeleteParams {
 }
 
 export interface FeedbackRecordRetrieveSimilarParams {
-  /**
-   * Tenant ID (required for isolation; must match feedback record tenant_id)
-   */
-  tenant_id: string;
-
   /**
    * Omit for the first page. For the next page, use the exact value from the
    * previous response's next_cursor. Opaque (base64-encoded); keyset pagination.

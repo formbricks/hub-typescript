@@ -18,7 +18,6 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import { TenantDeleteDataResponse, Tenants } from './resources/tenants';
 import {
   WebhookCreateParams,
   WebhookCreateResponse,
@@ -41,6 +40,14 @@ import {
   FeedbackRecordUpdateParams,
   FeedbackRecords,
 } from './resources/feedback-records/feedback-records';
+import {
+  Node,
+  Run,
+  Taxonomy,
+  TaxonomyListFieldsParams,
+  TaxonomyListFieldsResponse,
+} from './resources/taxonomy/taxonomy';
+import { TenantDeleteDataResponse, Tenants } from './resources/tenants/tenants';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -689,11 +696,19 @@ export class FormbricksHub {
     return () => controller.abort();
   }
 
-  private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
+  private buildBody({ options }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
   } {
+    const { body, headers: rawHeaders } = options;
     if (!body) {
+      // A resource method always passes a `body` key when its operation defines a
+      // request body, even if the caller omitted an optional body param. Keep the
+      // content-type for those, and only elide it for operations with no body at
+      // all (e.g. GET/DELETE).
+      if (body == null && 'body' in options) {
+        return this.#encoder({ body, headers: buildHeaders([rawHeaders]) });
+      }
       return { bodyHeaders: undefined, body: undefined };
     }
     const headers = buildHeaders([rawHeaders]);
@@ -769,12 +784,17 @@ export class FormbricksHub {
    * Tenant-scoped data purge operations
    */
   tenants: API.Tenants = new API.Tenants(this);
+  /**
+   * Automatic topic/subtopic taxonomy generation, run history, tree browsing, and node edits
+   */
+  taxonomy: API.Taxonomy = new API.Taxonomy(this);
 }
 
 FormbricksHub.Health = Health;
 FormbricksHub.FeedbackRecords = FeedbackRecords;
 FormbricksHub.Webhooks = Webhooks;
 FormbricksHub.Tenants = Tenants;
+FormbricksHub.Taxonomy = Taxonomy;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -806,4 +826,12 @@ export declare namespace FormbricksHub {
   };
 
   export { Tenants as Tenants, type TenantDeleteDataResponse as TenantDeleteDataResponse };
+
+  export {
+    Taxonomy as Taxonomy,
+    type Run as Run,
+    type Node as Node,
+    type TaxonomyListFieldsResponse as TaxonomyListFieldsResponse,
+    type TaxonomyListFieldsParams as TaxonomyListFieldsParams,
+  };
 }

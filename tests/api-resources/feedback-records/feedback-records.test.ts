@@ -138,10 +138,8 @@ describe('resource feedbackRecords', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveSimilar: only required params', async () => {
-    const responsePromise = client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', {
-      tenant_id: 'org-123',
-    });
+  test.skip('retrieveSimilar', async () => {
+    const responsePromise = client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -152,12 +150,18 @@ describe('resource feedbackRecords', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveSimilar: required and optional params', async () => {
-    const response = await client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc', {
-      tenant_id: 'org-123',
-      cursor: 'eyJkIjowLjEsImkiOiIwMThlMTIzNC01Njc4LTlhYmMtZGVmMC0xMTExMTExMTExMTEifQ==',
-      limit: 1,
-      min_score: 0,
-    });
+  test.skip('retrieveSimilar: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.feedbackRecords.retrieveSimilar(
+        '018e1234-5678-9abc-def0-123456789abc',
+        {
+          cursor: 'eyJkIjowLjEsImkiOiIwMThlMTIzNC01Njc4LTlhYmMtZGVmMC0xMTExMTExMTExMTEifQ==',
+          limit: 1,
+          min_score: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(FormbricksHub.NotFoundError);
   });
 });
