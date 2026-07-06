@@ -55,7 +55,13 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
-   * Updates specific fields of a feedback record data point
+   * Updates specific fields of a feedback record data point.
+   *
+   * Changing `value_text` clears the server-generated enrichment fields computed
+   * from it (`sentiment`, `sentiment_score`, `emotions`, `value_text_translated`,
+   * `translation_lang_key`) and queues re-enrichment; changing `language` clears and
+   * re-queues the translation pair only. The response reflects the cleared state —
+   * the fields are absent until the asynchronous re-enrichment completes.
    *
    * @example
    * ```ts
@@ -200,6 +206,12 @@ export interface FeedbackRecordData {
    * When this record was last updated
    */
   updated_at: string;
+
+  /**
+   * Emotions inferred from value_text (emotion enrichment); multi-label from a fixed
+   * set. Read-only; absent until the record is enriched, and never an empty array.
+   */
+  emotions?: Array<'joy' | 'anger' | 'sadness' | 'fear' | 'surprise' | 'disgust'>;
 
   /**
    * Stable identifier grouping related fields (for ranking, matrix, grid questions)
