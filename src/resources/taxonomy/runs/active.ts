@@ -10,15 +10,13 @@ import { RequestOptions } from '../../../internal/request-options';
  */
 export class Active extends APIResource {
   /**
-   * Returns the currently active taxonomy run and its tree for a field scope.
-   * Exactly one run is active per scope at a time. Returns 404 when no run has been
-   * activated for the scope.
+   * Returns the currently active taxonomy run and its tree for a field or directory
+   * scope. Exactly one run is active per scope at a time. Returns 404 when no run
+   * has been activated for the scope.
    *
    * @example
    * ```ts
    * const response = await client.taxonomy.runs.active.getTree({
-   *   field_id: 'field_id',
-   *   source_type: 'source_type',
    *   tenant_id: 'org-123',
    * });
    * ```
@@ -43,24 +41,30 @@ export interface ActiveGetTreeResponse {
 
 export interface ActiveGetTreeParams {
   /**
-   * Field ID of the scope.
-   */
-  field_id: string;
-
-  /**
-   * Source type of the scope.
-   */
-  source_type: string;
-
-  /**
    * Tenant that owns the scope.
    */
   tenant_id: string;
 
   /**
+   * Field ID of a field scope. Must be omitted for directory scope.
+   */
+  field_id?: string;
+
+  /**
+   * Scope type. Omit for field scope; use directory with tenant_id only for
+   * directory taxonomy.
+   */
+  scope_type?: 'field' | 'directory';
+
+  /**
    * Source ID of the scope; empty string is the canonical "no source" bucket.
    */
   source_id?: string;
+
+  /**
+   * Source type of a field scope. Must be omitted for directory scope.
+   */
+  source_type?: string;
 }
 
 export declare namespace Active {
