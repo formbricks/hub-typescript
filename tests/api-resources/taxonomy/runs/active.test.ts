@@ -10,11 +10,7 @@ const client = new FormbricksHub({
 describe('resource active', () => {
   // Mock server tests are disabled
   test.skip('getTree: only required params', async () => {
-    const responsePromise = client.taxonomy.runs.active.getTree({
-      field_id: 'field_id',
-      source_type: 'source_type',
-      tenant_id: 'org-123',
-    });
+    const responsePromise = client.taxonomy.runs.active.getTree({ tenant_id: 'org-123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -27,10 +23,11 @@ describe('resource active', () => {
   // Mock server tests are disabled
   test.skip('getTree: required and optional params', async () => {
     const response = await client.taxonomy.runs.active.getTree({
-      field_id: 'field_id',
-      source_type: 'source_type',
       tenant_id: 'org-123',
+      field_id: 'field_id',
+      scope_type: 'field',
       source_id: 'source_id',
+      source_type: 'source_type',
     });
   });
 });
