@@ -65,6 +65,29 @@ export class Runs extends APIResource {
   }
 
   /**
+   * Returns the feedback-record count for every visible node in a taxonomy run. Each
+   * count is a subtree total, so a topic (branch) reports the sum of its subtopics
+   * and the root reports the run total. Tenant-scoped; returns 404 if the run does
+   * not belong to the tenant.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.taxonomy.runs.retrieveRecordCounts(
+   *     '019f177f-9aa3-705e-8195-cea2aa187268',
+   *     { tenant_id: 'org-123' },
+   *   );
+   * ```
+   */
+  retrieveRecordCounts(
+    runID: string,
+    query: RunRetrieveRecordCountsParams,
+    options?: RequestOptions,
+  ): APIPromise<RunRetrieveRecordCountsResponse> {
+    return this._client.get(path`/v1/taxonomy/runs/${runID}/record-counts`, { query, ...options });
+  }
+
+  /**
    * Starts a manual taxonomy generation run for a field or directory scope. Hub
    * validates that the scope has enough embedded text feedback (below the configured
    * minimum returns 400 with an "insufficient data" validation error), creates the
@@ -112,6 +135,27 @@ export interface RunGetTreeResponse {
    * A persisted taxonomy generation run.
    */
   run: TaxonomyAPI.Run;
+}
+
+export interface RunRetrieveRecordCountsResponse {
+  /**
+   * Per-node feedback-record counts, one entry per visible node.
+   */
+  counts: Array<RunRetrieveRecordCountsResponse.Count>;
+}
+
+export namespace RunRetrieveRecordCountsResponse {
+  export interface Count {
+    /**
+     * Taxonomy node ID.
+     */
+    node_id: string;
+
+    /**
+     * Number of feedback records in the node's subtree.
+     */
+    record_count: number;
+  }
 }
 
 export interface RunStartResponse {
@@ -174,6 +218,13 @@ export interface RunGetTreeParams {
   tenant_id: string;
 }
 
+export interface RunRetrieveRecordCountsParams {
+  /**
+   * Tenant that owns the run.
+   */
+  tenant_id: string;
+}
+
 export interface RunStartParams {
   tenant_id: string;
 
@@ -217,10 +268,12 @@ export declare namespace Runs {
   export {
     type RunListResponse as RunListResponse,
     type RunGetTreeResponse as RunGetTreeResponse,
+    type RunRetrieveRecordCountsResponse as RunRetrieveRecordCountsResponse,
     type RunStartResponse as RunStartResponse,
     type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunGetTreeParams as RunGetTreeParams,
+    type RunRetrieveRecordCountsParams as RunRetrieveRecordCountsParams,
     type RunStartParams as RunStartParams,
   };
 
