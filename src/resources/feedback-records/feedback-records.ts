@@ -136,6 +136,21 @@ export class FeedbackRecords extends APIResource {
   }
 
   /**
+   * Returns the total number of feedback records matching the given filters.
+   * Supports the same query parameters as the list endpoint.
+   *
+   * @example
+   * ```ts
+   * const response = await client.feedbackRecords.count({
+   *   tenant_id: 'org-123',
+   * });
+   * ```
+   */
+  count(query: FeedbackRecordCountParams, options?: RequestOptions): APIPromise<FeedbackRecordCountResponse> {
+    return this._client.get('/v1/feedback-records/count', { query, ...options });
+  }
+
+  /**
    * Returns feedback record IDs and similarity scores for records similar to the
    * given one (by embedding). **Only available when embeddings are configured**
    * (EMBEDDING_PROVIDER and EMBEDDING_MODEL set). Supported providers: openai,
@@ -333,6 +348,13 @@ export interface FeedbackRecordBulkDeleteResponse {
    * Human-readable status message
    */
   message: string;
+}
+
+export interface FeedbackRecordCountResponse {
+  /**
+   * Number of feedback records matching the filters
+   */
+  count: number;
 }
 
 export interface FeedbackRecordRetrieveSimilarResponse {
@@ -623,6 +645,67 @@ export interface FeedbackRecordBulkDeleteParams {
   tenant_id?: string;
 }
 
+export interface FeedbackRecordCountParams {
+  /**
+   * Tenant ID (required for isolation). NULL bytes not allowed.
+   */
+  tenant_id: string;
+
+  /**
+   * Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.
+   */
+  field_group_id?: string;
+
+  /**
+   * Filter by field ID. NULL bytes not allowed.
+   */
+  field_id?: string;
+
+  /**
+   * Filter by field type. NULL bytes not allowed.
+   */
+  field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';
+
+  /**
+   * Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01
+   * and 2080-12-31.
+   */
+  since?: string;
+
+  /**
+   * Filter by source ID (NULL bytes not allowed)
+   */
+  source_id?: string;
+
+  /**
+   * Filter by source type. NULL bytes not allowed.
+   */
+  source_type?: string;
+
+  /**
+   * Filter by submission ID to group records belonging to one logical submission.
+   * NULL bytes not allowed.
+   */
+  submission_id?: string;
+
+  /**
+   * Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01
+   * and 2080-12-31.
+   */
+  until?: string;
+
+  /**
+   * Filter by user ID. NULL bytes not allowed.
+   */
+  user_id?: string;
+
+  /**
+   * Filter by the source system's stable option id (e.g. all records for one survey
+   * choice). NULL bytes not allowed.
+   */
+  value_id?: string;
+}
+
 export interface FeedbackRecordRetrieveSimilarParams {
   /**
    * Omit for the first page. For the next page, use the exact value from the
@@ -650,11 +733,13 @@ export declare namespace FeedbackRecords {
     type FeedbackRecordData as FeedbackRecordData,
     type FeedbackRecordListResponse as FeedbackRecordListResponse,
     type FeedbackRecordBulkDeleteResponse as FeedbackRecordBulkDeleteResponse,
+    type FeedbackRecordCountResponse as FeedbackRecordCountResponse,
     type FeedbackRecordRetrieveSimilarResponse as FeedbackRecordRetrieveSimilarResponse,
     type FeedbackRecordCreateParams as FeedbackRecordCreateParams,
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
+    type FeedbackRecordCountParams as FeedbackRecordCountParams,
     type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams,
   };
 

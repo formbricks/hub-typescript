@@ -16,6 +16,8 @@ import {
   RunListParams,
   RunListResponse,
   RunRetrieveParams,
+  RunRetrieveRecordCountsParams,
+  RunRetrieveRecordCountsResponse,
   RunStartParams,
   RunStartResponse,
   Runs,
@@ -250,10 +252,12 @@ export declare namespace Taxonomy {
     Runs as Runs,
     type RunListResponse as RunListResponse,
     type RunGetTreeResponse as RunGetTreeResponse,
+    type RunRetrieveRecordCountsResponse as RunRetrieveRecordCountsResponse,
     type RunStartResponse as RunStartResponse,
     type RunRetrieveParams as RunRetrieveParams,
     type RunListParams as RunListParams,
     type RunGetTreeParams as RunGetTreeParams,
+    type RunRetrieveRecordCountsParams as RunRetrieveRecordCountsParams,
     type RunStartParams as RunStartParams,
   };
 

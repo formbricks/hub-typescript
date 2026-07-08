@@ -15,6 +15,7 @@ Types:
 - <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordData</a></code>
 - <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordListResponse</a></code>
 - <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordBulkDeleteResponse</a></code>
+- <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordCountResponse</a></code>
 - <code><a href="./src/resources/feedback-records/feedback-records.ts">FeedbackRecordRetrieveSimilarResponse</a></code>
 
 Methods:
@@ -25,6 +26,7 @@ Methods:
 - <code title="get /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">list</a>({ ...params }) -> FeedbackRecordListResponse</code>
 - <code title="delete /v1/feedback-records/{id}">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">delete</a>(id) -> void</code>
 - <code title="delete /v1/feedback-records">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">bulkDelete</a>({ ...params }) -> FeedbackRecordBulkDeleteResponse</code>
+- <code title="get /v1/feedback-records/count">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">count</a>({ ...params }) -> FeedbackRecordCountResponse</code>
 - <code title="get /v1/feedback-records/{id}/similar">client.feedbackRecords.<a href="./src/resources/feedback-records/feedback-records.ts">retrieveSimilar</a>(id, { ...params }) -> FeedbackRecordRetrieveSimilarResponse</code>
 
 ## Search
@@ -94,6 +96,7 @@ Types:
 
 - <code><a href="./src/resources/taxonomy/runs/runs.ts">RunListResponse</a></code>
 - <code><a href="./src/resources/taxonomy/runs/runs.ts">RunGetTreeResponse</a></code>
+- <code><a href="./src/resources/taxonomy/runs/runs.ts">RunRetrieveRecordCountsResponse</a></code>
 - <code><a href="./src/resources/taxonomy/runs/runs.ts">RunStartResponse</a></code>
 
 Methods:
@@ -101,6 +104,7 @@ Methods:
 - <code title="get /v1/taxonomy/runs/{run_id}">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">retrieve</a>(runID, { ...params }) -> Run</code>
 - <code title="get /v1/taxonomy/runs">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
 - <code title="get /v1/taxonomy/runs/{run_id}/tree">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">getTree</a>(runID, { ...params }) -> RunGetTreeResponse</code>
+- <code title="get /v1/taxonomy/runs/{run_id}/record-counts">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">retrieveRecordCounts</a>(runID, { ...params }) -> RunRetrieveRecordCountsResponse</code>
 - <code title="post /v1/taxonomy/runs">client.taxonomy.runs.<a href="./src/resources/taxonomy/runs/runs.ts">start</a>({ ...params }) -> RunStartResponse</code>
 
 ### Active

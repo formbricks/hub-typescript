@@ -110,6 +110,7 @@ const fuse = new Fuse(
   [
     'client.health.check',
     'client.feedbackRecords.bulkDelete',
+    'client.feedbackRecords.count',
     'client.feedbackRecords.create',
     'client.feedbackRecords.delete',
     'client.feedbackRecords.list',
@@ -129,6 +130,7 @@ const fuse = new Fuse(
     'client.taxonomy.runs.getTree',
     'client.taxonomy.runs.list',
     'client.taxonomy.runs.retrieve',
+    'client.taxonomy.runs.retrieveRecordCounts',
     'client.taxonomy.runs.start',
     'client.taxonomy.runs.active.getTree',
     'client.taxonomy.nodes.listRecords',

@@ -5,11 +5,13 @@ export {
   type FeedbackRecordData,
   type FeedbackRecordListResponse,
   type FeedbackRecordBulkDeleteResponse,
+  type FeedbackRecordCountResponse,
   type FeedbackRecordRetrieveSimilarResponse,
   type FeedbackRecordCreateParams,
   type FeedbackRecordUpdateParams,
   type FeedbackRecordListParams,
   type FeedbackRecordBulkDeleteParams,
+  type FeedbackRecordCountParams,
   type FeedbackRecordRetrieveSimilarParams,
 } from './feedback-records/feedback-records';
 export { Health, type HealthCheckResponse } from './health';
