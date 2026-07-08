@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 (2026-07-08)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/formbricks/hub-typescript/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* add GET /v1/feedback-records/count endpoint ([f40fbd0](https://github.com/formbricks/hub-typescript/commit/f40fbd0d2bfd881fd7c3f00aa3413568b1735ae4))
+
 ## 0.8.0 (2026-07-08)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/formbricks/hub-typescript/compare/v0.7.0...v0.8.0)
