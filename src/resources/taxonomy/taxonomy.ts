@@ -71,6 +71,13 @@ export interface Run {
   record_count: number;
 
   /**
+   * Taxonomy input scope. `field` covers one (source_type, source_id, field_id)
+   * field scope. `directory` covers all text feedback records for the
+   * tenant/directory and must not include source_type, source_id, or field_id.
+   */
+  scope_type: 'field' | 'directory';
+
+  /**
    * Empty string is the canonical "no source" bucket.
    */
   source_id: string;

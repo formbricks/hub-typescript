@@ -45,6 +45,7 @@ describe('resource feedbackRecords', () => {
       user_id: 'user-abc-123',
       value_boolean: true,
       value_date: '2019-12-27T18:11:19.117Z',
+      value_id: 'opt_very_satisfied',
       value_number: 9,
       value_text: 'Great service!',
     });
@@ -102,6 +103,7 @@ describe('resource feedbackRecords', () => {
       submission_id: '550e8400-e29b-41d4-a716-446655440000',
       until: '2024-12-31T23:59:59Z',
       user_id: 'user-abc-123',
+      value_id: 'opt_very_satisfied',
     });
   });
 

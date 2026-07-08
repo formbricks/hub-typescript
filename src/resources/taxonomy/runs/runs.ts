@@ -32,9 +32,9 @@ export class Runs extends APIResource {
 
   /**
    * Returns taxonomy run history for a tenant, most recent first. Optionally filter
-   * by source_type, field_id, and source_id. source_id is a tri-state filter: omit
-   * it for no source filter, pass an empty string to scope to the canonical "no
-   * source" bucket, or pass a concrete value to match that source.
+   * by scope_type, source_type, field_id, and source_id. source_id is a tri-state
+   * filter: omit it for no source filter, pass an empty string to scope to the
+   * canonical "no source" bucket, or pass a concrete value to match that source.
    *
    * @example
    * ```ts
@@ -65,10 +65,12 @@ export class Runs extends APIResource {
   }
 
   /**
-   * Starts a manual taxonomy generation run for a field scope. Hub validates that
-   * the field has enough embedded text feedback (below the configured minimum
-   * returns 400 with an "insufficient data" validation error), creates the run, and
-   * hands it to the taxonomy compute service.
+   * Starts a manual taxonomy generation run for a field or directory scope. Hub
+   * validates that the scope has enough embedded text feedback (below the configured
+   * minimum returns 400 with an "insufficient data" validation error), creates the
+   * run, and hands it to the taxonomy compute service. Omit scope_type for the
+   * existing field scope behavior; use scope_type=directory with tenant_id only to
+   * generate one taxonomy over all text feedback in the directory.
    *
    * Idempotent per scope: if a run is already pending or running for the same scope,
    * the existing run is returned with `in_progress: true` (HTTP 200) instead of
@@ -81,11 +83,12 @@ export class Runs extends APIResource {
    * @example
    * ```ts
    * const response = await client.taxonomy.runs.start({
-   *   field_id: 'feedback',
-   *   source_type: 'formbricks',
    *   tenant_id: 'org-123',
    *   actor_id: 'user-42',
+   *   field_id: 'feedback',
+   *   scope_type: 'field',
    *   source_id: 'survey-abc',
+   *   source_type: 'formbricks',
    * });
    * ```
    */
@@ -148,6 +151,11 @@ export interface RunListParams {
   limit?: number;
 
   /**
+   * Optional scope type filter. Omitted means no scope type filter.
+   */
+  scope_type?: 'field' | 'directory';
+
+  /**
    * Optional source_id filter. Omit for no filter; empty string scopes to the "no
    * source" bucket; a concrete value matches that source.
    */
@@ -167,10 +175,6 @@ export interface RunGetTreeParams {
 }
 
 export interface RunStartParams {
-  field_id: string;
-
-  source_type: string;
-
   tenant_id: string;
 
   /**
@@ -179,14 +183,32 @@ export interface RunStartParams {
   actor_id?: string;
 
   /**
+   * Required for field scope; omit for directory scope.
+   */
+  field_id?: string;
+
+  /**
    * Optional human-readable field label.
    */
   field_label?: string;
 
   /**
-   * Optional; empty or omitted is the canonical "no source" bucket.
+   * Taxonomy input scope. `field` covers one (source_type, source_id, field_id)
+   * field scope. `directory` covers all text feedback records for the
+   * tenant/directory and must not include source_type, source_id, or field_id.
+   */
+  scope_type?: 'field' | 'directory';
+
+  /**
+   * Optional for field scope; empty or omitted is the canonical "no source" bucket.
+   * Omit for directory scope.
    */
   source_id?: string;
+
+  /**
+   * Required for field scope; omit for directory scope.
+   */
+  source_type?: string;
 }
 
 Runs.Active = Active;

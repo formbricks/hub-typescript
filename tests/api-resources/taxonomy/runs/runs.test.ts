@@ -47,6 +47,7 @@ describe('resource runs', () => {
       tenant_id: 'org-123',
       field_id: 'field_id',
       limit: 1,
+      scope_type: 'field',
       source_id: 'source_id',
       source_type: 'source_type',
     });
@@ -75,11 +76,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('start: only required params', async () => {
-    const responsePromise = client.taxonomy.runs.start({
-      field_id: 'feedback',
-      source_type: 'formbricks',
-      tenant_id: 'org-123',
-    });
+    const responsePromise = client.taxonomy.runs.start({ tenant_id: 'org-123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,12 +89,13 @@ describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('start: required and optional params', async () => {
     const response = await client.taxonomy.runs.start({
-      field_id: 'feedback',
-      source_type: 'formbricks',
       tenant_id: 'org-123',
       actor_id: 'user-42',
+      field_id: 'feedback',
       field_label: 'field_label',
+      scope_type: 'field',
       source_id: 'survey-abc',
+      source_type: 'formbricks',
     });
   });
 });
