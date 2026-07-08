@@ -282,6 +282,13 @@ export interface FeedbackRecordData {
   value_date?: string;
 
   /**
+   * Stable id of the selected option in the source system (e.g. a survey choice id),
+   * stored alongside value_text for durable option identity. Opaque to Hub. Absent
+   * for free-text/non-choice answers. NULL bytes not allowed.
+   */
+  value_id?: string;
+
+  /**
    * Numeric response
    */
   value_number?: number;
@@ -465,6 +472,15 @@ export interface FeedbackRecordCreateParams {
   value_date?: string;
 
   /**
+   * Stable id of the selected option in the source system (e.g. a survey choice id
+   * or matrix column id), stored alongside value_text so selected-choice answers
+   * keep a durable identity across label edits and languages. Opaque to Hub (not
+   * validated). Null for free-text/"other" answers, non-choice fields, and sources
+   * without option ids. NULL bytes not allowed when present.
+   */
+  value_id?: string | null;
+
+  /**
    * For ratings, NPS scores, numeric responses. Must be between -1e15 and +1e15.
    */
   value_number?: number;
@@ -502,6 +518,13 @@ export interface FeedbackRecordUpdateParams {
    * Update date response. Must be between 1970-01-01 and 2080-12-31.
    */
   value_date?: string;
+
+  /**
+   * Update the stable id of the selected option in the source system (e.g. a survey
+   * choice id), stored alongside value_text for durable option identity. Opaque to
+   * Hub. NULL bytes not allowed.
+   */
+  value_id?: string;
 
   /**
    * Update numeric response. Must be between -1e15 and +1e15.
@@ -578,6 +601,12 @@ export interface FeedbackRecordListParams {
    * Filter by user ID. NULL bytes not allowed.
    */
   user_id?: string;
+
+  /**
+   * Filter by the source system's stable option id (e.g. all records for one survey
+   * choice). NULL bytes not allowed.
+   */
+  value_id?: string;
 }
 
 export interface FeedbackRecordBulkDeleteParams {
