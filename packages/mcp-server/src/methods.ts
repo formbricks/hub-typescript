@@ -53,6 +53,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/feedback-records',
   },
   {
+    clientCallName: 'client.feedbackRecords.count',
+    fullyQualifiedName: 'feedbackRecords.count',
+    httpMethod: 'get',
+    httpPath: '/v1/feedback-records/count',
+  },
+  {
     clientCallName: 'client.feedbackRecords.retrieveSimilar',
     fullyQualifiedName: 'feedbackRecords.retrieveSimilar',
     httpMethod: 'get',
@@ -135,6 +141,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'taxonomy.runs.getTree',
     httpMethod: 'get',
     httpPath: '/v1/taxonomy/runs/{run_id}/tree',
+  },
+  {
+    clientCallName: 'client.taxonomy.runs.retrieveRecordCounts',
+    fullyQualifiedName: 'taxonomy.runs.retrieveRecordCounts',
+    httpMethod: 'get',
+    httpPath: '/v1/taxonomy/runs/{run_id}/record-counts',
   },
   {
     clientCallName: 'client.taxonomy.runs.start',

@@ -140,6 +140,35 @@ describe('resource feedbackRecords', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('count: only required params', async () => {
+    const responsePromise = client.feedbackRecords.count({ tenant_id: 'org-123' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('count: required and optional params', async () => {
+    const response = await client.feedbackRecords.count({
+      tenant_id: 'org-123',
+      field_group_id: 'feature_priority',
+      field_id: 'q1',
+      field_type: 'text',
+      since: '2024-01-01T00:00:00Z',
+      source_id: 'survey-123',
+      source_type: 'survey',
+      submission_id: '550e8400-e29b-41d4-a716-446655440000',
+      until: '2024-12-31T23:59:59Z',
+      user_id: 'user-abc-123',
+      value_id: 'opt_very_satisfied',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveSimilar', async () => {
     const responsePromise = client.feedbackRecords.retrieveSimilar('018e1234-5678-9abc-def0-123456789abc');
     const rawResponse = await responsePromise.asResponse();

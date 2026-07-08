@@ -293,6 +293,43 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'count',
+    endpoint: '/v1/feedback-records/count',
+    httpMethod: 'get',
+    summary: 'Count feedback records',
+    description:
+      'Returns the total number of feedback records matching the given filters. Supports the same query parameters as the list endpoint.',
+    stainlessPath: '(resource) feedback_records > (method) count',
+    qualified: 'client.feedbackRecords.count',
+    params: [
+      'tenant_id: string;',
+      'field_group_id?: string;',
+      'field_id?: string;',
+      "field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';",
+      'since?: string;',
+      'source_id?: string;',
+      'source_type?: string;',
+      'submission_id?: string;',
+      'until?: string;',
+      'user_id?: string;',
+      'value_id?: string;',
+    ],
+    response: '{ count: number; }',
+    markdown:
+      "## count\n\n`client.feedbackRecords.count(tenant_id: string, field_group_id?: string, field_id?: string, field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date', since?: string, source_id?: string, source_type?: string, submission_id?: string, until?: string, user_id?: string, value_id?: string): { count: number; }`\n\n**get** `/v1/feedback-records/count`\n\nReturns the total number of feedback records matching the given filters. Supports the same query parameters as the list endpoint.\n\n### Parameters\n\n- `tenant_id: string`\n  Tenant ID (required for isolation). NULL bytes not allowed.\n\n- `field_group_id?: string`\n  Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.\n\n- `field_id?: string`\n  Filter by field ID. NULL bytes not allowed.\n\n- `field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'`\n  Filter by field type. NULL bytes not allowed.\n\n- `since?: string`\n  Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `source_id?: string`\n  Filter by source ID (NULL bytes not allowed)\n\n- `source_type?: string`\n  Filter by source type. NULL bytes not allowed.\n\n- `submission_id?: string`\n  Filter by submission ID to group records belonging to one logical submission. NULL bytes not allowed.\n\n- `until?: string`\n  Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01 and 2080-12-31.\n\n- `user_id?: string`\n  Filter by user ID. NULL bytes not allowed.\n\n- `value_id?: string`\n  Filter by the source system's stable option id (e.g. all records for one survey choice). NULL bytes not allowed.\n\n### Returns\n\n- `{ count: number; }`\n\n  - `count: number`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.feedbackRecords.count({ tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.feedbackRecords.count',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.feedbackRecords.count({ tenant_id: 'org-123' });\n\nconsole.log(response.count);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/feedback-records/count \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'perform_semantic_search',
     endpoint: '/v1/feedback-records/search/semantic',
     httpMethod: 'post',
@@ -684,6 +721,31 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl http://localhost:8080/v1/taxonomy/runs/$RUN_ID/tree \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve_record_counts',
+    endpoint: '/v1/taxonomy/runs/{run_id}/record-counts',
+    httpMethod: 'get',
+    summary: 'Count feedback records per taxonomy node',
+    description:
+      'Returns the feedback-record count for every visible node in a taxonomy run. Each count is a subtree total, so a topic (branch) reports the sum of its subtopics and the root reports the run total. Tenant-scoped; returns 404 if the run does not belong to the tenant.',
+    stainlessPath: '(resource) taxonomy.runs > (method) retrieve_record_counts',
+    qualified: 'client.taxonomy.runs.retrieveRecordCounts',
+    params: ['run_id: string;', 'tenant_id: string;'],
+    response: '{ counts: { node_id: string; record_count: number; }[]; }',
+    markdown:
+      "## retrieve_record_counts\n\n`client.taxonomy.runs.retrieveRecordCounts(run_id: string, tenant_id: string): { counts: object[]; }`\n\n**get** `/v1/taxonomy/runs/{run_id}/record-counts`\n\nReturns the feedback-record count for every visible node in a taxonomy run. Each count is a subtree total, so a topic (branch) reports the sum of its subtopics and the root reports the run total. Tenant-scoped; returns 404 if the run does not belong to the tenant.\n\n### Parameters\n\n- `run_id: string`\n\n- `tenant_id: string`\n  Tenant that owns the run.\n\n### Returns\n\n- `{ counts: { node_id: string; record_count: number; }[]; }`\n\n  - `counts: { node_id: string; record_count: number; }[]`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.taxonomy.runs.retrieveRecordCounts('019f177f-9aa3-705e-8195-cea2aa187268', { tenant_id: 'org-123' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.taxonomy.runs.retrieveRecordCounts',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.taxonomy.runs.retrieveRecordCounts(\n  '019f177f-9aa3-705e-8195-cea2aa187268',\n  { tenant_id: 'org-123' },\n);\n\nconsole.log(response.counts);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/taxonomy/runs/$RUN_ID/record-counts \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
       },
     },
   },

@@ -31,6 +31,8 @@ import {
 import {
   FeedbackRecordBulkDeleteParams,
   FeedbackRecordBulkDeleteResponse,
+  FeedbackRecordCountParams,
+  FeedbackRecordCountResponse,
   FeedbackRecordCreateParams,
   FeedbackRecordData,
   FeedbackRecordListParams,
@@ -806,11 +808,13 @@ export declare namespace FormbricksHub {
     type FeedbackRecordData as FeedbackRecordData,
     type FeedbackRecordListResponse as FeedbackRecordListResponse,
     type FeedbackRecordBulkDeleteResponse as FeedbackRecordBulkDeleteResponse,
+    type FeedbackRecordCountResponse as FeedbackRecordCountResponse,
     type FeedbackRecordRetrieveSimilarResponse as FeedbackRecordRetrieveSimilarResponse,
     type FeedbackRecordCreateParams as FeedbackRecordCreateParams,
     type FeedbackRecordUpdateParams as FeedbackRecordUpdateParams,
     type FeedbackRecordListParams as FeedbackRecordListParams,
     type FeedbackRecordBulkDeleteParams as FeedbackRecordBulkDeleteParams,
+    type FeedbackRecordCountParams as FeedbackRecordCountParams,
     type FeedbackRecordRetrieveSimilarParams as FeedbackRecordRetrieveSimilarParams,
   };
 
