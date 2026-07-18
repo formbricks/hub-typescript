@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.0 (2026-07-18)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/formbricks/hub-typescript/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([56b855b](https://github.com/formbricks/hub-typescript/commit/56b855b3fdb53243b1e7665e7421ca4c0ed81129))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([82ee87e](https://github.com/formbricks/hub-typescript/commit/82ee87e1765d512b7c6341eace99f3e5575d2b1e))
+
 ## 0.9.0 (2026-07-08)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/formbricks/hub-typescript/compare/v0.8.0...v0.9.0)
