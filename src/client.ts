@@ -17,6 +17,12 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import {
+  EnrichmentStatus,
+  EnrichmentStatusRetrieveParams,
+  EnrichmentStatusRetrieveResponse,
+  TypeStatus,
+} from './resources/enrichment-status';
 import { Health, HealthCheckResponse } from './resources/health';
 import {
   WebhookCreateParams,
@@ -790,6 +796,10 @@ export class FormbricksHub {
    * Automatic topic/subtopic taxonomy generation, run history, tree browsing, and node edits
    */
   taxonomy: API.Taxonomy = new API.Taxonomy(this);
+  /**
+   * Tenant-scoped enrichment progress (translation, sentiment, emotions)
+   */
+  enrichmentStatus: API.EnrichmentStatus = new API.EnrichmentStatus(this);
 }
 
 FormbricksHub.Health = Health;
@@ -797,6 +807,7 @@ FormbricksHub.FeedbackRecords = FeedbackRecords;
 FormbricksHub.Webhooks = Webhooks;
 FormbricksHub.Tenants = Tenants;
 FormbricksHub.Taxonomy = Taxonomy;
+FormbricksHub.EnrichmentStatus = EnrichmentStatus;
 
 export declare namespace FormbricksHub {
   export type RequestOptions = Opts.RequestOptions;
@@ -837,5 +848,12 @@ export declare namespace FormbricksHub {
     type Node as Node,
     type TaxonomyListFieldsResponse as TaxonomyListFieldsResponse,
     type TaxonomyListFieldsParams as TaxonomyListFieldsParams,
+  };
+
+  export {
+    EnrichmentStatus as EnrichmentStatus,
+    type TypeStatus as TypeStatus,
+    type EnrichmentStatusRetrieveResponse as EnrichmentStatusRetrieveResponse,
+    type EnrichmentStatusRetrieveParams as EnrichmentStatusRetrieveParams,
   };
 }

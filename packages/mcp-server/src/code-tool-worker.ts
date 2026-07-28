@@ -136,6 +136,7 @@ const fuse = new Fuse(
     'client.taxonomy.nodes.listRecords',
     'client.taxonomy.nodes.rename',
     'client.taxonomy.nodes.softRemove',
+    'client.enrichmentStatus.retrieve',
   ],
   { threshold: 1, shouldSort: true },
 );
