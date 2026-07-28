@@ -178,6 +178,12 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/v1/taxonomy/nodes/{node_id}',
   },
+  {
+    clientCallName: 'client.enrichmentStatus.retrieve',
+    fullyQualifiedName: 'enrichmentStatus.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/enrichment-status',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

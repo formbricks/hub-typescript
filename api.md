@@ -128,3 +128,14 @@ Methods:
 - <code title="get /v1/taxonomy/nodes/{node_id}/records">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">listRecords</a>(nodeID, { ...params }) -> NodeListRecordsResponse</code>
 - <code title="patch /v1/taxonomy/nodes/{node_id}">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">rename</a>(nodeID, { ...params }) -> Node</code>
 - <code title="delete /v1/taxonomy/nodes/{node_id}">client.taxonomy.nodes.<a href="./src/resources/taxonomy/nodes.ts">softRemove</a>(nodeID, { ...params }) -> Node</code>
+
+# EnrichmentStatus
+
+Types:
+
+- <code><a href="./src/resources/enrichment-status.ts">TypeStatus</a></code>
+- <code><a href="./src/resources/enrichment-status.ts">EnrichmentStatusRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/enrichment-status">client.enrichmentStatus.<a href="./src/resources/enrichment-status.ts">retrieve</a>({ ...params }) -> EnrichmentStatusRetrieveResponse</code>
