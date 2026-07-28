@@ -1,6 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  EnrichmentStatus,
+  type TypeStatus,
+  type EnrichmentStatusRetrieveResponse,
+  type EnrichmentStatusRetrieveParams,
+} from './enrichment-status';
+export {
   FeedbackRecords,
   type FeedbackRecordData,
   type FeedbackRecordListResponse,
