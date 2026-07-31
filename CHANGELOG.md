@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 (2026-07-31)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/formbricks/hub-typescript/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* expose per-tenant enrichment status and backlog metric (ENG-1670) ([6c72606](https://github.com/formbricks/hub-typescript/commit/6c72606ec41b69a44d9d3e9197dc357d123a1ff2))
+
+
+### Bug Fixes
+
+* **taxonomy:** 404 node records on a tenant mismatch (ENG-1887) ([bd87201](https://github.com/formbricks/hub-typescript/commit/bd87201a5af334044acad1a9427820a07148e00d))
+
 ## 0.10.0 (2026-07-18)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/formbricks/hub-typescript/compare/v0.9.0...v0.10.0)
