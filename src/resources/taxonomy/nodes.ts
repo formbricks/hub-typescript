@@ -13,8 +13,10 @@ import { path } from '../../internal/utils/path';
 export class Nodes extends APIResource {
   /**
    * Returns the feedback records assigned to a node and all of its (visible)
-   * descendant nodes, via the clusters those nodes reference. Tenant-scoped. The
-   * `limit` in the response reflects the applied cap.
+   * descendant nodes, via the clusters those nodes reference. Tenant-scoped; returns
+   * 404 if the node does not belong to the tenant or has been removed. An empty
+   * `data` therefore means the node genuinely holds no records. The `limit` in the
+   * response reflects the applied cap.
    *
    * @example
    * ```ts
