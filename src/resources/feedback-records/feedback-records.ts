@@ -566,30 +566,122 @@ export interface FeedbackRecordListParams {
   tenant_id: string;
 
   /**
+   * Filter by created_at >= created_since (ISO 8601, inclusive). created_at is when
+   * Hub stored the record; collected_at (see `since`) is when the feedback was
+   * given. They diverge on a historical re-import, so this is the parameter for
+   * "what did this import bring in". Must be between 1970-01-01 and 2080-12-31.
+   */
+  created_since?: string;
+
+  /**
+   * Filter by created_at <= created_until (ISO 8601, inclusive). See created_since
+   * for how created_at differs from collected_at. Must be between 1970-01-01 and
+   * 2080-12-31.
+   */
+  created_until?: string;
+
+  /**
    * Omit for the first page. For the next page, use the exact value from the
    * previous response's next_cursor. Opaque (base64-encoded); keyset pagination.
+   *
+   * A cursor is a position within one specific ordering. Presenting it with a
+   * different sort or order returns 400 — restart pagination without a cursor
+   * instead. A cursor issued before sort control existed records no ordering; it is
+   * treated as a position in the default collected_at/desc listing and is accepted
+   * only there.
    */
   cursor?: string;
 
   /**
-   * Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.
+   * Filter by emotion label. Repeat the parameter to match ANY of the listed
+   * emotions: a record tagged {joy} and a record tagged {joy, anger} both match
+   * `?emotions=joy&emotions=anger`. There is no "must carry all of them" form. An
+   * empty value is ignored rather than rejected, so `?emotions=` is the same as
+   * omitting the filter.
    */
-  field_group_id?: string;
+  emotions?: Array<'joy' | 'anger' | 'sadness' | 'fear' | 'surprise' | 'disgust'>;
 
   /**
-   * Filter by field ID. NULL bytes not allowed.
+   * Filter by field group ID (for ranking/matrix questions). Repeat the parameter to
+   * match any of several groups; the values are OR-ed. NULL bytes not allowed.
    */
-  field_id?: string;
+  field_group_id?: Array<string>;
 
   /**
-   * Filter by field type. NULL bytes not allowed.
+   * Filter by field ID — every answer to one question. Repeat the parameter to match
+   * any of several fields; the values are OR-ed. NULL bytes not allowed.
    */
-  field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';
+  field_id?: Array<string>;
+
+  /**
+   * Filter by field type. Repeat the parameter to match any of several types; the
+   * values are OR-ed. An empty value is ignored rather than rejected, so
+   * `?field_type=` is the same as omitting the filter.
+   */
+  field_type?: Array<
+    'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'
+  >;
+
+  /**
+   * Filter on whether the record carries emotion labels: true selects records where
+   * emotions IS NOT NULL, false selects those where it IS NULL. Note that false
+   * covers both "not yet classified" and "classified, no emotion detected" — the two
+   * are indistinguishable here. Omit for no constraint.
+   */
+  has_emotions?: boolean;
+
+  /**
+   * Filter on whether sentiment enrichment has produced a label: true selects
+   * records where sentiment IS NOT NULL, false selects those where it IS NULL. Omit
+   * for no constraint.
+   */
+  has_sentiment?: boolean;
+
+  /**
+   * Filter on whether the record has been translated: true selects records where
+   * translation_lang_key IS NOT NULL, false selects those where it IS NULL. Omit for
+   * no constraint.
+   */
+  has_translation?: boolean;
+
+  /**
+   * Filter by the language the feedback was given in. Repeat the parameter to match
+   * any of several languages; the values are OR-ed. NULL bytes not allowed.
+   */
+  language?: Array<string>;
 
   /**
    * Number of results to return (max 1000)
    */
   limit?: number;
+
+  /**
+   * Sort direction. Defaults to desc. Rows tied on the sort column are ordered by id
+   * ascending.
+   */
+  order?: 'asc' | 'desc';
+
+  /**
+   * Filter by sentiment label. Repeat the parameter to match any of several labels
+   * (`?sentiment=negative&sentiment=very_negative`); the values are OR-ed. An empty
+   * value is ignored rather than rejected, so `?sentiment=` is the same as omitting
+   * the filter. Records that have not been enriched carry no sentiment and are
+   * therefore never matched — use has_sentiment=false to find them.
+   */
+  sentiment?: Array<'very_negative' | 'negative' | 'neutral' | 'positive' | 'very_positive' | 'mixed'>;
+
+  /**
+   * Filter by sentiment_score <= sentiment_score_max (inclusive). Records that have
+   * not been enriched are excluded.
+   */
+  sentiment_score_max?: number;
+
+  /**
+   * Filter by sentiment_score >= sentiment_score_min (inclusive). The score is
+   * continuous where the label is bucketed, so this is the parameter for "the most
+   * negative feedback". Records that have not been enriched are excluded.
+   */
+  sentiment_score_min?: number;
 
   /**
    * Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01
@@ -598,20 +690,39 @@ export interface FeedbackRecordListParams {
   since?: string;
 
   /**
-   * Filter by source ID (NULL bytes not allowed)
+   * Column to order by. Defaults to collected_at. Only columns that are non-null and
+   * immutable after insert are offered: a mutable sort key would let a row move
+   * across the cursor between pages and be silently skipped.
    */
-  source_id?: string;
+  sort?: 'collected_at' | 'created_at';
 
   /**
-   * Filter by source type. NULL bytes not allowed.
+   * Filter by source ID. Repeat the parameter to match any of several sources; the
+   * values are OR-ed. NULL bytes not allowed.
    */
-  source_type?: string;
+  source_id?: Array<string>;
+
+  /**
+   * Filter by source display name — the human-readable label stored alongside
+   * source_id. Prefer source_id where the records carry one: a name can be edited or
+   * translated, while the id is stable. Repeat the parameter to match any of several
+   * names; the values are OR-ed. NULL bytes not allowed.
+   */
+  source_name?: Array<string>;
+
+  /**
+   * Filter by source type. Repeat the parameter to match any of several source
+   * types; the values are OR-ed. NULL bytes not allowed.
+   */
+  source_type?: Array<string>;
 
   /**
    * Filter by submission ID to group records belonging to one logical submission.
-   * NULL bytes not allowed.
+   * Repeat the parameter to match any of several submissions; the values are OR-ed,
+   * and a single occurrence behaves exactly as it always has. Comma-separated values
+   * are NOT split. NULL bytes not allowed.
    */
-  submission_id?: string;
+  submission_id?: Array<string>;
 
   /**
    * Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01
@@ -620,15 +731,46 @@ export interface FeedbackRecordListParams {
   until?: string;
 
   /**
-   * Filter by user ID. NULL bytes not allowed.
+   * Filter by end-user identifier — everything one person submitted. Repeat the
+   * parameter to match any of several users; the values are OR-ed. NULL bytes not
+   * allowed.
    */
-  user_id?: string;
+  user_id?: Array<string>;
+
+  /**
+   * Filter by value_date <= value_date_max (ISO 8601, inclusive). Records whose
+   * value_date is NULL are excluded.
+   */
+  value_date_max?: string;
+
+  /**
+   * Filter by value_date >= value_date_min (ISO 8601, inclusive) — bounds the answer
+   * to a date question, not when the feedback was collected. Records whose
+   * value_date is NULL are excluded.
+   */
+  value_date_min?: string;
 
   /**
    * Filter by the source system's stable option id (e.g. all records for one survey
-   * choice). NULL bytes not allowed.
+   * choice). Repeat the parameter to match any of several options; the values are
+   * OR-ed. NULL bytes not allowed.
    */
-  value_id?: string;
+  value_id?: Array<string>;
+
+  /**
+   * Filter by value_number <= value_number_max (inclusive). Paired with
+   * value_number_min it selects a band: 9..10 is the NPS promoters, 0..6 the
+   * detractors. Records whose value_number is NULL are excluded. Supplying a max
+   * below the min is a 400, not an empty result.
+   */
+  value_number_max?: number;
+
+  /**
+   * Filter by value_number >= value_number_min (inclusive) — e.g. NPS promoters with
+   * value_number_min=9. Records whose value_number is NULL (every non-numeric
+   * answer) are excluded, so this is never a no-op filter.
+   */
+  value_number_min?: number;
 }
 
 export interface FeedbackRecordBulkDeleteParams {
@@ -652,19 +794,99 @@ export interface FeedbackRecordCountParams {
   tenant_id: string;
 
   /**
-   * Filter by field group ID (for ranking/matrix questions). NULL bytes not allowed.
+   * Filter by created_at >= created_since (ISO 8601, inclusive). created_at is when
+   * Hub stored the record; collected_at (see `since`) is when the feedback was
+   * given. They diverge on a historical re-import, so this is the parameter for
+   * "what did this import bring in". Must be between 1970-01-01 and 2080-12-31.
    */
-  field_group_id?: string;
+  created_since?: string;
 
   /**
-   * Filter by field ID. NULL bytes not allowed.
+   * Filter by created_at <= created_until (ISO 8601, inclusive). See created_since
+   * for how created_at differs from collected_at. Must be between 1970-01-01 and
+   * 2080-12-31.
    */
-  field_id?: string;
+  created_until?: string;
 
   /**
-   * Filter by field type. NULL bytes not allowed.
+   * Filter by emotion label. Repeat the parameter to match ANY of the listed
+   * emotions: a record tagged {joy} and a record tagged {joy, anger} both match
+   * `?emotions=joy&emotions=anger`. There is no "must carry all of them" form. An
+   * empty value is ignored rather than rejected, so `?emotions=` is the same as
+   * omitting the filter.
    */
-  field_type?: 'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date';
+  emotions?: Array<'joy' | 'anger' | 'sadness' | 'fear' | 'surprise' | 'disgust'>;
+
+  /**
+   * Filter by field group ID (for ranking/matrix questions). Repeat the parameter to
+   * match any of several groups; the values are OR-ed. NULL bytes not allowed.
+   */
+  field_group_id?: Array<string>;
+
+  /**
+   * Filter by field ID — every answer to one question. Repeat the parameter to match
+   * any of several fields; the values are OR-ed. NULL bytes not allowed.
+   */
+  field_id?: Array<string>;
+
+  /**
+   * Filter by field type. Repeat the parameter to match any of several types; the
+   * values are OR-ed. An empty value is ignored rather than rejected, so
+   * `?field_type=` is the same as omitting the filter.
+   */
+  field_type?: Array<
+    'text' | 'categorical' | 'nps' | 'csat' | 'ces' | 'rating' | 'number' | 'boolean' | 'date'
+  >;
+
+  /**
+   * Filter on whether the record carries emotion labels: true selects records where
+   * emotions IS NOT NULL, false selects those where it IS NULL. Note that false
+   * covers both "not yet classified" and "classified, no emotion detected" — the two
+   * are indistinguishable here. Omit for no constraint.
+   */
+  has_emotions?: boolean;
+
+  /**
+   * Filter on whether sentiment enrichment has produced a label: true selects
+   * records where sentiment IS NOT NULL, false selects those where it IS NULL. Omit
+   * for no constraint.
+   */
+  has_sentiment?: boolean;
+
+  /**
+   * Filter on whether the record has been translated: true selects records where
+   * translation_lang_key IS NOT NULL, false selects those where it IS NULL. Omit for
+   * no constraint.
+   */
+  has_translation?: boolean;
+
+  /**
+   * Filter by the language the feedback was given in. Repeat the parameter to match
+   * any of several languages; the values are OR-ed. NULL bytes not allowed.
+   */
+  language?: Array<string>;
+
+  /**
+   * Filter by sentiment label. Repeat the parameter to match any of several labels
+   * (`?sentiment=negative&sentiment=very_negative`); the values are OR-ed. An empty
+   * value is ignored rather than rejected, so `?sentiment=` is the same as omitting
+   * the filter. Records that have not been enriched carry no sentiment and are
+   * therefore never matched — use has_sentiment=false to find them.
+   */
+  sentiment?: Array<'very_negative' | 'negative' | 'neutral' | 'positive' | 'very_positive' | 'mixed'>;
+
+  /**
+   * Filter by sentiment_score <= sentiment_score_max (inclusive). Records that have
+   * not been enriched are excluded.
+   */
+  sentiment_score_max?: number;
+
+  /**
+   * Filter by sentiment_score >= sentiment_score_min (inclusive). The score is
+   * continuous where the label is bucketed, so this is the parameter for "the most
+   * negative feedback". Records that have not been enriched are excluded.
+   */
+  sentiment_score_min?: number;
 
   /**
    * Filter by collected_at >= since (ISO 8601 format). Must be between 1970-01-01
@@ -673,20 +895,32 @@ export interface FeedbackRecordCountParams {
   since?: string;
 
   /**
-   * Filter by source ID (NULL bytes not allowed)
+   * Filter by source ID. Repeat the parameter to match any of several sources; the
+   * values are OR-ed. NULL bytes not allowed.
    */
-  source_id?: string;
+  source_id?: Array<string>;
 
   /**
-   * Filter by source type. NULL bytes not allowed.
+   * Filter by source display name — the human-readable label stored alongside
+   * source_id. Prefer source_id where the records carry one: a name can be edited or
+   * translated, while the id is stable. Repeat the parameter to match any of several
+   * names; the values are OR-ed. NULL bytes not allowed.
    */
-  source_type?: string;
+  source_name?: Array<string>;
+
+  /**
+   * Filter by source type. Repeat the parameter to match any of several source
+   * types; the values are OR-ed. NULL bytes not allowed.
+   */
+  source_type?: Array<string>;
 
   /**
    * Filter by submission ID to group records belonging to one logical submission.
-   * NULL bytes not allowed.
+   * Repeat the parameter to match any of several submissions; the values are OR-ed,
+   * and a single occurrence behaves exactly as it always has. Comma-separated values
+   * are NOT split. NULL bytes not allowed.
    */
-  submission_id?: string;
+  submission_id?: Array<string>;
 
   /**
    * Filter by collected_at <= until (ISO 8601 format). Must be between 1970-01-01
@@ -695,15 +929,46 @@ export interface FeedbackRecordCountParams {
   until?: string;
 
   /**
-   * Filter by user ID. NULL bytes not allowed.
+   * Filter by end-user identifier — everything one person submitted. Repeat the
+   * parameter to match any of several users; the values are OR-ed. NULL bytes not
+   * allowed.
    */
-  user_id?: string;
+  user_id?: Array<string>;
+
+  /**
+   * Filter by value_date <= value_date_max (ISO 8601, inclusive). Records whose
+   * value_date is NULL are excluded.
+   */
+  value_date_max?: string;
+
+  /**
+   * Filter by value_date >= value_date_min (ISO 8601, inclusive) — bounds the answer
+   * to a date question, not when the feedback was collected. Records whose
+   * value_date is NULL are excluded.
+   */
+  value_date_min?: string;
 
   /**
    * Filter by the source system's stable option id (e.g. all records for one survey
-   * choice). NULL bytes not allowed.
+   * choice). Repeat the parameter to match any of several options; the values are
+   * OR-ed. NULL bytes not allowed.
    */
-  value_id?: string;
+  value_id?: Array<string>;
+
+  /**
+   * Filter by value_number <= value_number_max (inclusive). Paired with
+   * value_number_min it selects a band: 9..10 is the NPS promoters, 0..6 the
+   * detractors. Records whose value_number is NULL are excluded. Supplying a max
+   * below the min is a 400, not an empty result.
+   */
+  value_number_max?: number;
+
+  /**
+   * Filter by value_number >= value_number_min (inclusive) — e.g. NPS promoters with
+   * value_number_min=9. Records whose value_number is NULL (every non-numeric
+   * answer) are excluded, so this is never a no-op filter.
+   */
+  value_number_min?: number;
 }
 
 export interface FeedbackRecordRetrieveSimilarParams {
