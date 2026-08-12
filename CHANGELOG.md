@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-08-12)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/formbricks/hub-typescript/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* add filters and sort control to the feedback-record list (ENG-2059) ([43b5d8e](https://github.com/formbricks/hub-typescript/commit/43b5d8e2ca633c5d8df14796eac567f41f8da66c))
+
 ## 0.11.0 (2026-07-31)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/formbricks/hub-typescript/compare/v0.10.0...v0.11.0)
