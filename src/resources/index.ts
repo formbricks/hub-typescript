@@ -28,7 +28,11 @@ export {
   type TaxonomyListFieldsResponse,
   type TaxonomyListFieldsParams,
 } from './taxonomy/taxonomy';
-export { Tenants, type TenantDeleteDataResponse } from './tenants/tenants';
+export {
+  Tenants,
+  type TenantDeleteDataResponse,
+  type TenantPurgeFeedbackRecordsResponse,
+} from './tenants/tenants';
 export {
   Webhooks,
   type WebhookCreateResponse,
