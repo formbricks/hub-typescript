@@ -6,4 +6,4 @@ export {
   type SettingUpdateResponse,
   type SettingUpdateParams,
 } from './settings';
-export { Tenants, type TenantDeleteDataResponse } from './tenants';
+export { Tenants, type TenantDeleteDataResponse, type TenantPurgeFeedbackRecordsResponse } from './tenants';
