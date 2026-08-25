@@ -150,6 +150,11 @@ export interface TenantDeleteDataResponse {
   deleted_taxonomy_nodes: number;
 
   /**
+   * Number of immutable taxonomy run-input snapshot rows deleted
+   */
+  deleted_taxonomy_run_input_records: number;
+
+  /**
    * Number of taxonomy runs deleted
    */
   deleted_taxonomy_runs: number;
