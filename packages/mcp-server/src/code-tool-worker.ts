@@ -124,6 +124,7 @@ const fuse = new Fuse(
     'client.webhooks.retrieve',
     'client.webhooks.update',
     'client.tenants.deleteData',
+    'client.tenants.purgeFeedbackRecords',
     'client.tenants.settings.retrieve',
     'client.tenants.settings.update',
     'client.taxonomy.listFields',

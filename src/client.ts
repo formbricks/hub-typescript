@@ -55,7 +55,11 @@ import {
   TaxonomyListFieldsParams,
   TaxonomyListFieldsResponse,
 } from './resources/taxonomy/taxonomy';
-import { TenantDeleteDataResponse, Tenants } from './resources/tenants/tenants';
+import {
+  TenantDeleteDataResponse,
+  TenantPurgeFeedbackRecordsResponse,
+  Tenants,
+} from './resources/tenants/tenants';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -837,7 +841,11 @@ export declare namespace FormbricksHub {
     type WebhookListParams as WebhookListParams,
   };
 
-  export { Tenants as Tenants, type TenantDeleteDataResponse as TenantDeleteDataResponse };
+  export {
+    Tenants as Tenants,
+    type TenantDeleteDataResponse as TenantDeleteDataResponse,
+    type TenantPurgeFeedbackRecordsResponse as TenantPurgeFeedbackRecordsResponse,
+  };
 
   export {
     Taxonomy as Taxonomy,

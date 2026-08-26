@@ -41,6 +41,76 @@ export class Tenants extends APIResource {
   deleteData(tenantID: string, options?: RequestOptions): APIPromise<TenantDeleteDataResponse> {
     return this._client.delete(path`/v1/tenants/${tenantID}/data`, options);
   }
+
+  /**
+   * Permanently deletes every feedback record for the specified tenant_id,
+   * everything derived from those records — embeddings and the enrichment stored on
+   * each record (sentiment, emotions, translations) — and the taxonomy built on
+   * them: runs, clusters, nodes, cluster memberships, active-run pointers and node
+   * events.
+   *
+   * This is intended for emptying a dataset that stays in use, so it removes the
+   * tenant's DATA but never its CONFIGURATION: webhooks and tenant settings are left
+   * untouched. That is the difference from `DELETE /v1/tenants/{tenant_id}/data`,
+   * which additionally deletes both and is meant for offboarding a deprovisioned
+   * tenant.
+   *
+   * The taxonomy is removed rather than preserved because it describes records that
+   * no longer exist: its per-node counts are derived from memberships and would all
+   * read zero, while a run's own stored counters (`record_count`, `cluster_count`, a
+   * cluster's `size`) are historical and would keep advertising the old numbers. A
+   * new taxonomy can be generated once the dataset has enough feedback again; manual
+   * node renames and removals are per-run and do not survive a regeneration in any
+   * case.
+   *
+   * The tenant is a required path segment, so it cannot be omitted the way a filter
+   * on a collection delete could be — dropping it routes elsewhere rather than
+   * widening the operation to every tenant.
+   *
+   * Asynchronous: the request schedules the purge and returns 202 immediately,
+   * because the deletion is unbounded and can outlive a request. There is therefore
+   * no deleted count in the response. Poll
+   * `GET /v1/feedback-records/count?tenant_id=...` to observe progress.
+   *
+   * The purge removes only the records that existed when it started — it takes a
+   * high-water mark up front — so feedback ingested while it runs is never deleted.
+   * For a dataset that is no longer receiving feedback the count reaching zero means
+   * the purge is complete; for one still ingesting, a nonzero count is those newer
+   * records. Note this means the count alone cannot distinguish "finished" from
+   * "failed" on an active dataset.
+   *
+   * Idempotent and safe to repeat. Requesting a purge while one is already running
+   * for the same tenant joins the running purge rather than queueing a second one,
+   * and still returns 202. A purge requested after an earlier one finished starts a
+   * new run.
+   *
+   * Records are deleted in committed batches, so a purge interrupted by a restart or
+   * a timeout keeps the progress it made and resumes on retry; the taxonomy is
+   * removed in a final step once the records are gone. While each step runs, the
+   * tenant's write lock is held exclusively and Hub-owned writes for that tenant are
+   * rejected with HTTP 409 (code `tenant_write_conflict`); the lock is released
+   * between steps, and writes for other tenants are never affected. This does not
+   * apply to the request below — scheduling a purge takes no lock, so this endpoint
+   * does not return 409. A batch that cannot acquire the lock is retried by the job
+   * queue without any caller action, up to a bounded number of attempts.
+   *
+   * No webhook events are published for a purge, and no webhooks are deleted.
+   * Enrichment jobs already queued for purged records no-op when they run, since the
+   * record they reference is gone.
+   *
+   * @example
+   * ```ts
+   * const response = await client.tenants.purgeFeedbackRecords(
+   *   'org-123',
+   * );
+   * ```
+   */
+  purgeFeedbackRecords(
+    tenantID: string,
+    options?: RequestOptions,
+  ): APIPromise<TenantPurgeFeedbackRecordsResponse> {
+    return this._client.delete(path`/v1/tenants/${tenantID}/feedback-records`, options);
+  }
 }
 
 export interface TenantDeleteDataResponse {
@@ -80,6 +150,11 @@ export interface TenantDeleteDataResponse {
   deleted_taxonomy_nodes: number;
 
   /**
+   * Number of immutable taxonomy run-input snapshot rows deleted
+   */
+  deleted_taxonomy_run_input_records: number;
+
+  /**
    * Number of taxonomy runs deleted
    */
   deleted_taxonomy_runs: number;
@@ -100,10 +175,32 @@ export interface TenantDeleteDataResponse {
   tenant_id: string;
 }
 
+export interface TenantPurgeFeedbackRecordsResponse {
+  /**
+   * Always `accepted`. The purge runs in the background, so this reports that the
+   * work was scheduled, not that it finished — poll `GET /v1/feedback-records/count`
+   * for the tenant to observe completion.
+   */
+  status: 'accepted';
+
+  /**
+   * Tenant ID whose feedback records are being purged
+   */
+  tenant_id: string;
+
+  /**
+   * Human-readable confirmation
+   */
+  message?: string;
+}
+
 Tenants.Settings = Settings;
 
 export declare namespace Tenants {
-  export { type TenantDeleteDataResponse as TenantDeleteDataResponse };
+  export {
+    type TenantDeleteDataResponse as TenantDeleteDataResponse,
+    type TenantPurgeFeedbackRecordsResponse as TenantPurgeFeedbackRecordsResponse,
+  };
 
   export {
     Settings as Settings,

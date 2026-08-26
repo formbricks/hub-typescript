@@ -61,10 +61,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/tenants/tenants.ts">TenantDeleteDataResponse</a></code>
+- <code><a href="./src/resources/tenants/tenants.ts">TenantPurgeFeedbackRecordsResponse</a></code>
 
 Methods:
 
 - <code title="delete /v1/tenants/{tenant_id}/data">client.tenants.<a href="./src/resources/tenants/tenants.ts">deleteData</a>(tenantID) -> TenantDeleteDataResponse</code>
+- <code title="delete /v1/tenants/{tenant_id}/feedback-records">client.tenants.<a href="./src/resources/tenants/tenants.ts">purgeFeedbackRecords</a>(tenantID) -> TenantPurgeFeedbackRecordsResponse</code>
 
 ## Settings
 

@@ -107,6 +107,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/tenants/{tenant_id}/data',
   },
   {
+    clientCallName: 'client.tenants.purgeFeedbackRecords',
+    fullyQualifiedName: 'tenants.purgeFeedbackRecords',
+    httpMethod: 'delete',
+    httpPath: '/v1/tenants/{tenant_id}/feedback-records',
+  },
+  {
     clientCallName: 'client.tenants.settings.retrieve',
     fullyQualifiedName: 'tenants.settings.retrieve',
     httpMethod: 'get',

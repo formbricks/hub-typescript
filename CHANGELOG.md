@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.13.0 (2026-08-25)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/formbricks/hub-typescript/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* add a records-scoped tenant purge endpoint (ENG-2129) ([a6b9afa](https://github.com/formbricks/hub-typescript/commit/a6b9afa33356b7f582c11c0f56d6d242153ee0da))
+* report why an enrichment is off and what failed, durably (ENG-2375) ([b6c363b](https://github.com/formbricks/hub-typescript/commit/b6c363bf4bc67068b1d7f32892fde0da179750c9))
+
+
+### Bug Fixes
+
+* **taxonomy:** harden run persistence ([721e58b](https://github.com/formbricks/hub-typescript/commit/721e58b7c66a7800040b6b31e277f5f2191f766b))
+
 ## 0.12.0 (2026-08-12)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/formbricks/hub-typescript/compare/v0.11.0...v0.12.0)
