@@ -208,6 +208,18 @@ export namespace TaxonomyListFieldsResponse {
      */
     embedding_count: number;
 
+    /**
+     * Number of missing taxonomy embeddings whose latest bounded attempts failed
+     * transiently and can be retried.
+     */
+    embedding_failed_count: number;
+
+    /**
+     * Number of missing taxonomy embeddings rejected permanently for the current model
+     * and record revision.
+     */
+    embedding_failed_terminal_count: number;
+
     field_id: string;
 
     /**
