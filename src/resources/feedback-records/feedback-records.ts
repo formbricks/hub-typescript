@@ -249,9 +249,16 @@ export interface FeedbackRecordData {
   language?: string;
 
   /**
-   * Additional context
+   * Arbitrary context stored with this record, returned with equivalent values (key
+   * order is normalized, and so are number exponents — `1e2` reads back as `100`).
+   * Omitted when the record has no metadata; a record explicitly stored with a JSON
+   * `null` returns `null`. An object is the supported shape and the only one the
+   * request schemas accept. The wider union is for reading: the column stores
+   * whatever JSON was written, so a record created before that convention can return
+   * an array or a scalar, and an object-only response schema would make a generated
+   * client reject it.
    */
-  metadata?: { [key: string]: unknown };
+  metadata?: unknown | Array<unknown> | string | number | boolean | null;
 
   /**
    * Sentiment polarity inferred from value_text (sentiment enrichment). Read-only;
@@ -463,10 +470,28 @@ export interface FeedbackRecordCreateParams {
   language?: string;
 
   /**
-   * User agent, device, location, referrer, tags, etc. NULL bytes (\x00 or \u0000)
-   * are not allowed in JSON keys or values.
+   * Arbitrary context for this record, stored as JSON and returned with equivalent
+   * values (key order and number formatting are normalized): the dimensions you want
+   * to slice a dashboard by, such as channel, device, browser, OS, country,
+   * referrer, campaign, plan or tags. Values may be strings, numbers, booleans,
+   * null, or nested objects and arrays. Use snake_case keys and keep them stable
+   * across records, since a key is what a dashboard groups by: `customer_tier`, not
+   * a mix of `customerTier` and `tier`. Numbers keep full precision in storage
+   * (unlike `value_number`, which is a float64), so a large integer id round-trips
+   * exactly through this API — though a JavaScript client will still lose precision
+   * above 2^53 when it parses the response. Nothing here is redacted. Metadata is
+   * **not** sent to the LLM or embedding enrichment providers, unlike `value_text` —
+   * but it **is** included in the `feedback_record.created` and
+   * `feedback_record.updated` webhook payloads, so it reaches whatever URL a tenant
+   * has configured. Erasure covers metadata, with one precondition worth knowing:
+   * `DELETE /v1/feedback-records` matches on `user_id` and hard-deletes the whole
+   * row, metadata included — so a record written **without** a `user_id` cannot be
+   * reached that way. Set `user_id` on anything you may later have to erase. Three
+   * kinds of content are rejected with 400, because none of them can be stored:
+   * invalid UTF-8; NULL bytes or unpaired UTF-16 surrogates, in keys or values; and
+   * numbers outside the storable numeric range.
    */
-  metadata?: { [key: string]: unknown };
+  metadata?: { [key: string]: unknown } | null;
 
   /**
    * Reference to survey/form/ticket ID
@@ -521,10 +546,13 @@ export interface FeedbackRecordUpdateParams {
   language?: string;
 
   /**
-   * Update metadata. NULL bytes (\x00 or \u0000) are not allowed in JSON keys or
-   * values.
+   * Replaces the stored metadata object **wholesale** — it is not merged, so send
+   * every key you want to keep or the omitted ones are lost. See the create
+   * operation for the value rules and key conventions, including the same 400
+   * rejections (invalid UTF-8, NULL bytes, unpaired surrogates, out-of-range
+   * numbers).
    */
-  metadata?: { [key: string]: unknown };
+  metadata?: { [key: string]: unknown } | null;
 
   /**
    * User ID (e.g., anonymous ID or email hash)
