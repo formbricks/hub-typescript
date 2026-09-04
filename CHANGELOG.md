@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.14.0 (2026-09-04)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/formbricks/hub-typescript/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* reconcile enrichment coverage instead of hoping events cover it (ENG-2376) ([b8b0543](https://github.com/formbricks/hub-typescript/commit/b8b0543ca4fcb82232ab94fea6511cfdfe366309))
+
+
+### Bug Fixes
+
+* reject unstorable feedback-record metadata as 400 instead of 500 ([6e92268](https://github.com/formbricks/hub-typescript/commit/6e922683622a933f101826d0f279c7dffbc05d95))
+* self-heal missing taxonomy embeddings ([3cf0f50](https://github.com/formbricks/hub-typescript/commit/3cf0f5020e5766b134348b4b87a805cc8a45d6bc))
+
+
+### Documentation
+
+* **mcp:** document code execution modes and the local code runner ([488c003](https://github.com/formbricks/hub-typescript/commit/488c0031bfa6c7cc74aabda813aa12c809b4e5c6))
+
 ## 0.13.0 (2026-08-25)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/formbricks/hub-typescript/compare/v0.12.0...v0.13.0)

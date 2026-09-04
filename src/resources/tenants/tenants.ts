@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as EnrichmentsAPI from './enrichments';
+import { EnrichmentRetryParams, EnrichmentRetryResponse, Enrichments } from './enrichments';
 import * as SettingsAPI from './settings';
 import { SettingRetrieveResponse, SettingUpdateParams, SettingUpdateResponse, Settings } from './settings';
 import { APIPromise } from '../../core/api-promise';
@@ -12,6 +14,7 @@ import { path } from '../../internal/utils/path';
  */
 export class Tenants extends APIResource {
   settings: SettingsAPI.Settings = new SettingsAPI.Settings(this._client);
+  enrichments: EnrichmentsAPI.Enrichments = new EnrichmentsAPI.Enrichments(this._client);
 
   /**
    * Permanently deletes Hub-owned data for the specified tenant_id. This endpoint is
@@ -195,6 +198,7 @@ export interface TenantPurgeFeedbackRecordsResponse {
 }
 
 Tenants.Settings = Settings;
+Tenants.Enrichments = Enrichments;
 
 export declare namespace Tenants {
   export {
@@ -207,5 +211,11 @@ export declare namespace Tenants {
     type SettingRetrieveResponse as SettingRetrieveResponse,
     type SettingUpdateResponse as SettingUpdateResponse,
     type SettingUpdateParams as SettingUpdateParams,
+  };
+
+  export {
+    Enrichments as Enrichments,
+    type EnrichmentRetryResponse as EnrichmentRetryResponse,
+    type EnrichmentRetryParams as EnrichmentRetryParams,
   };
 }
