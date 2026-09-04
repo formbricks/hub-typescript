@@ -125,6 +125,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/tenants/{tenant_id}/settings',
   },
   {
+    clientCallName: 'client.tenants.enrichments.retry',
+    fullyQualifiedName: 'tenants.enrichments.retry',
+    httpMethod: 'post',
+    httpPath: '/v1/tenants/{tenant_id}/enrichments/retry',
+  },
+  {
     clientCallName: 'client.taxonomy.listFields',
     fullyQualifiedName: 'taxonomy.listFields',
     httpMethod: 'get',

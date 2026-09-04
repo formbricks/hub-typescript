@@ -127,6 +127,7 @@ const fuse = new Fuse(
     'client.tenants.purgeFeedbackRecords',
     'client.tenants.settings.retrieve',
     'client.tenants.settings.update',
+    'client.tenants.enrichments.retry',
     'client.taxonomy.listFields',
     'client.taxonomy.runs.getTree',
     'client.taxonomy.runs.list',

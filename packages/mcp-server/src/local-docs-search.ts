@@ -637,6 +637,32 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retry',
+    endpoint: '/v1/tenants/{tenant_id}/enrichments/retry',
+    httpMethod: 'post',
+    summary: 'Retry permanently-failed enrichments for a tenant',
+    description:
+      "Clears the terminal failure markers for a tenant so the reconciler will attempt those\nrecords again.\n\nThe automatic sweep deliberately never revives a terminal record: a terminal failure is a\nproperty of the record's own text — a content-policy block, a refusal, an input past the\nmodel's limit — so re-running it costs a provider call and fails identically. This endpoint\nis the override for when that premise has changed: the text was edited, or the provider\nchanged its policy.\n\nBecause of that, it is **rate limited per (tenant, enrichment)**. Clearing is a request to\nspend a provider call on every record already known to fail, so an unbounded clear would be\na cost-amplification loop. A refused call returns `cooling_down` with the remaining wait\nrather than silently doing nothing.\n\nEvery requested enrichment gets its own outcome — a tenant can have one cleared, one cooling\ndown and one switched off in the same call. Responds 202: clearing is synchronous, but the\nretrying is not.\n",
+    stainlessPath: '(resource) tenants.enrichments > (method) retry',
+    qualified: 'client.tenants.enrichments.retry',
+    params: ['tenant_id: string;', "enrichments?: 'translation' | 'sentiment' | 'emotions'[];"],
+    response:
+      "{ results: { cleared: number; enrichment: 'translation' | 'sentiment' | 'emotions'; outcome: 'cleared' | 'cooling_down' | 'disabled'; disabled_reason?: 'not_configured' | 'switched_off' | 'no_target_language'; retry_after_seconds?: number; }[]; tenant_id: string; }",
+    markdown:
+      "## retry\n\n`client.tenants.enrichments.retry(tenant_id: string, enrichments?: 'translation' | 'sentiment' | 'emotions'[]): { results: object[]; tenant_id: string; }`\n\n**post** `/v1/tenants/{tenant_id}/enrichments/retry`\n\nClears the terminal failure markers for a tenant so the reconciler will attempt those\nrecords again.\n\nThe automatic sweep deliberately never revives a terminal record: a terminal failure is a\nproperty of the record's own text — a content-policy block, a refusal, an input past the\nmodel's limit — so re-running it costs a provider call and fails identically. This endpoint\nis the override for when that premise has changed: the text was edited, or the provider\nchanged its policy.\n\nBecause of that, it is **rate limited per (tenant, enrichment)**. Clearing is a request to\nspend a provider call on every record already known to fail, so an unbounded clear would be\na cost-amplification loop. A refused call returns `cooling_down` with the remaining wait\nrather than silently doing nothing.\n\nEvery requested enrichment gets its own outcome — a tenant can have one cleared, one cooling\ndown and one switched off in the same call. Responds 202: clearing is synchronous, but the\nretrying is not.\n\n\n### Parameters\n\n- `tenant_id: string`\n\n- `enrichments?: 'translation' | 'sentiment' | 'emotions'[]`\n  Which enrichments to clear. Omit or leave empty for all of them, which is the usual\ncall. An unknown name is rejected rather than ignored, so a typo cannot come back as\na successful no-op.\n\n\n### Returns\n\n- `{ results: { cleared: number; enrichment: 'translation' | 'sentiment' | 'emotions'; outcome: 'cleared' | 'cooling_down' | 'disabled'; disabled_reason?: 'not_configured' | 'switched_off' | 'no_target_language'; retry_after_seconds?: number; }[]; tenant_id: string; }`\n\n  - `results: { cleared: number; enrichment: 'translation' | 'sentiment' | 'emotions'; outcome: 'cleared' | 'cooling_down' | 'disabled'; disabled_reason?: 'not_configured' | 'switched_off' | 'no_target_language'; retry_after_seconds?: number; }[]`\n  - `tenant_id: string`\n\n### Example\n\n```typescript\nimport FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub();\n\nconst response = await client.tenants.enrichments.retry('tenant_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.tenants.enrichments.retry',
+        example:
+          "import FormbricksHub from '@formbricks/hub';\n\nconst client = new FormbricksHub({\n  apiKey: process.env['HUB_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.tenants.enrichments.retry('tenant_id');\n\nconsole.log(response.tenant_id);",
+      },
+      http: {
+        example:
+          'curl http://localhost:8080/v1/tenants/$TENANT_ID/enrichments/retry \\\n    -X POST \\\n    -H "Authorization: Bearer $HUB_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'list_fields',
     endpoint: '/v1/taxonomy/fields',
     httpMethod: 'get',
