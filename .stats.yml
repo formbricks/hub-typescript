@@ -1,4 +1,4 @@
-configured_endpoints: 30
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/formbricks/hub-22279638c6cc092848ebc7ee67ab740f4eb76ca4d5308fe95c08068dcf8df5f1.yml
-openapi_spec_hash: df5a01dd11e5c1180caa53b6eea8fd3c
-config_hash: a4efd21029f0fb9bf9e9abd69b06ac84
+configured_endpoints: 31
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/formbricks/hub-b5bfbfc8e46b70df48ad67085e557d90da5628779304a3f61862e2b15e219b0e.yml
+openapi_spec_hash: fa98c61c160eb83f2fde8b164fbc50da
+config_hash: aa102cef0912ff9f0e1befcfb401c4a8

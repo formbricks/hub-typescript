@@ -80,6 +80,16 @@ Methods:
 - <code title="get /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">retrieve</a>(tenantID) -> SettingRetrieveResponse</code>
 - <code title="patch /v1/tenants/{tenant_id}/settings">client.tenants.settings.<a href="./src/resources/tenants/settings.ts">update</a>(tenantID, { ...params }) -> SettingUpdateResponse</code>
 
+## Enrichments
+
+Types:
+
+- <code><a href="./src/resources/tenants/enrichments.ts">EnrichmentRetryResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/tenants/{tenant_id}/enrichments/retry">client.tenants.enrichments.<a href="./src/resources/tenants/enrichments.ts">retry</a>(tenantID, { ...params }) -> EnrichmentRetryResponse</code>
+
 # Taxonomy
 
 Types:
